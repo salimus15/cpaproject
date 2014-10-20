@@ -1,5 +1,14 @@
 
 
+#ifndef NDEBUG
+#	define printMihpIO(X) std::cout << X << std::endl;
+#	define printfMihp(X, ...) printf(X, ##__VA_ARGS__)
+#else
+#	define printMihpIO(X)
+#	define printfMihp(X, ...)
+#endif
+
+
 #include "librairie.h"
 #include <iostream>
 #include <string>
@@ -7,7 +16,7 @@
 using namespace std;
 
 void fonctionEnCpp(const std::string & str){
-	cout << "fonctionEnCpp : str = " << str << endl;
+	printMihpIO("fonctionEnCpp : str = " << str);
 	
 	
 }
@@ -17,7 +26,7 @@ void fonctionEnCpp(const std::string & str){
 /**	@param param : paramètre simple
 */
 void testFonction(int param, const char * str){
-	cout << "testFonction : param = " << param << endl;
+	printMihpIO("testFonction : param = " << param);
 	
 	fonctionEnCpp(str);
 	
@@ -31,7 +40,7 @@ void testFonction(int param, const char * str){
 */
 void mihp_newLoop(const char* functionName, const char* fileName, size_t functionLine, size_t loopLine){
 	
-	cout << "mihp_newLoop : In " << fileName << ":" << functionLine << " in Function '" << functionName << "' , Loop:" << loopLine << endl;
+	printMihpIO("mihp_newLoop : In " << fileName << ":" << functionLine << " in Function '" << functionName << "' , Loop:" << loopLine);
 	
 	
 	
@@ -45,19 +54,24 @@ void mihp_newLoop(const char* functionName, const char* fileName, size_t functio
 */
 void mihp_adress(void* addr, size_t nbBlock, char type){
 	if(addr == NULL) return;
-	if(type == 1) printf("\t\t\tmihp_adress %p Write %lu B\n", addr, nbBlock);
-	else printf("\t\t\tmihp_adress %p Read %lu B\n", addr, nbBlock);
+	if(type == 1){
+		printfMihp("\t\t\tmihp_adress %p Write %lu B\n", addr, nbBlock);
+		
+	}else{
+		printfMihp("\t\t\tmihp_adress %p Read %lu B\n", addr, nbBlock);
+		
+	}
 }
 
 ///fonction qui créée une nouvelle iteration
 void mihp_newIteration(){
-	cout << "\t\tmihp_newIteration" << endl;
+	printMihpIO("\t\tmihp_newIteration");
 	
 }
 
 ///fonction qui permet de lancer l'analyse des écritures et des lectures des adresse mémoires
 void mihp_endLoop(){
-	cout << "\tmihp_endLoop" << endl;
+	printMihpIO("\tmihp_endLoop");
 	
 	
 }

@@ -35,7 +35,7 @@ void functionTestLoop(float* tabFloat, size_t size){
 }
 
 int main(int argc, char** argv){
-	testFonction(42, "chaîne de caractère");
+// 	testFonction(42, "chaîne de caractère");
 	size_t size = 5;
 	
 	float* tabFloat = malloc(sizeof(float)*size);
