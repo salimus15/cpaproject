@@ -19,6 +19,14 @@
 #include <gimple-iterator.h>
 #include <gimple-pretty-print.h>
 
+#ifndef NDEBUG
+#	define printMihpIO(X) std::cout << X << std::endl;
+#	define printfMihp(X, ...) printf(X, ##__VA_ARGS__)
+#else
+#	define printMihpIO(X)
+#	define printfMihp(X, ...)
+#endif
+
 int plugin_is_GPL_compatible;
 
 const pass_data mihpVCheckPassData = {
@@ -43,12 +51,12 @@ class MihpVCheckPass : public gimple_opt_pass{
 		virtual ~MihpVCheckPass(){}
 		
 		bool gate(){
-			std::cout << "MihpVCheckPass::gate : done" << std::endl;
+			printMihpIO("MihpVCheckPass::gate : done");
 			return true;
 		}
 		
 		unsigned int execute(){
-			std::cout << "MihpVCheckPass::execute : done" << std::endl;
+			printMihpIO("MihpVCheckPass::execute : done");
 			return 0;
 		}
 		
@@ -58,7 +66,7 @@ class MihpVCheckPass : public gimple_opt_pass{
 };
 
 int plugin_init(struct plugin_name_args *plugin_info, struct plugin_gcc_version *version){
-	printf("plugin_init : initialisation de mon plugin\n");
+	printfMihp("plugin_init : initialisation de mon plugin\n");
 	if(!plugin_default_version_check (version, &gcc_version)) return 1;
 	
 	struct register_pass_info pass_info;
