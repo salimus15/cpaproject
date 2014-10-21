@@ -21,7 +21,7 @@
 
 int plugin_is_GPL_compatible;
 
-const pass_data my_pass_data = {
+const pass_data mihpVCheckPassData = {
 	GIMPLE_PASS, /* type */
 	"myPasse", /* name */
 	0,
@@ -35,25 +35,25 @@ const pass_data my_pass_data = {
 	0, /* todo_flags_finish */
 };
 
-class MyPass : public gimple_opt_pass{
+class MihpVCheckPass : public gimple_opt_pass{
 	public:
-		MyPass(gcc::context *ctxt)
-			:gimple_opt_pass(my_pass_data, ctxt)
+		MihpVCheckPass(gcc::context *ctxt)
+			:gimple_opt_pass(mihpVCheckPassData, ctxt)
 		{}
-		virtual ~MyPass(){}
+		virtual ~MihpVCheckPass(){}
 		
 		bool gate(){
-			std::cout << "MyPass::gate : done" << std::endl;
+			std::cout << "MihpVCheckPass::gate : done" << std::endl;
 			return true;
 		}
 		
 		unsigned int execute(){
-			std::cout << "MyPass::execute : done" << std::endl;
+			std::cout << "MihpVCheckPass::execute : done" << std::endl;
 			return 0;
 		}
 		
 		opt_pass* clone(){
-			return new MyPass(m_ctxt);
+			return new MihpVCheckPass(m_ctxt);
 		}
 };
 
@@ -63,7 +63,7 @@ int plugin_init(struct plugin_name_args *plugin_info, struct plugin_gcc_version 
 	
 	struct register_pass_info pass_info;
 	
-	pass_info.pass = new MyPass(g);
+	pass_info.pass = new MihpVCheckPass(g);
 	pass_info.reference_pass_name = "cfg";
 	pass_info.ref_pass_instance_number = 0;
 	pass_info.pos_op = PASS_POS_INSERT_AFTER;
