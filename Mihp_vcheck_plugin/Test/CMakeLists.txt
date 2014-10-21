@@ -5,5 +5,7 @@ include_directories(../Mihp_vcheck_lib)
 
 #Test qui utilise les sondes de la librairie Mihp_vcheck sans passer par l'utilisation du plugin
 add_subdirectory(TEST_WITHOUT_PLUGIN)
-
-
+#test qui utilise le plugin pour la compilation
+add_subdirectory(TEST_WITH_SIMPLE_MAIN)
+#test du plugin sur un fichier cpp
+add_subdirectory(TEST_WITH_MAIN_CPP)

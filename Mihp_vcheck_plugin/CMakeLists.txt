@@ -1,6 +1,7 @@
 project(Mihp_vcheck_plugin)
 cmake_minimum_required(VERSION 2.8)
 
+
 #Si on veut compiler en mode optimisé
 set(RELEASE_MODE no CACHE BOOL "Install mode")
 #Si on veut activer la génération de la documentation

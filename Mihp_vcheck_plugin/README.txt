@@ -1,4 +1,11 @@
 
+Avant toute chose, si vous avez plusieurs versions de gcc/g++ installées sur votre système, pensez à définir les variables globales suivantes (dans votre .bashrc par exemple) :
+
+export CC=path/to/gcc
+export CXX=path/to/g++
+
+Si ces variables sont définit, CMake utilisera les compilateurs indiqués.
+
 La compilation se fait dans un dossier temporaire, à la racine du projet :
 	mkdir build
 	cd build
