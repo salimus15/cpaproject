@@ -33,12 +33,11 @@ void testFonction(int param, const char * str){
 ///fonction qui permet de créer une nouvelle boucle
 /**	@param functionName : nom de la fonction où se trouve la boucle à analyser
  * 	@param fileName : nom du fichier dans lequel est la fonction
- * 	@param functionLine : ligne de la fonction
  * 	@param loopLine : ligne du début de la boucle que l'on souhaite analyser
 */
-void mihp_newLoop(const char* functionName, const char* fileName, size_t functionLine, size_t loopLine){
+void mihp_newLoop(const char* functionName, const char* fileName, size_t loopLine){
 	
-	printMihpIO("mihp_newLoop : In " << fileName << ":" << functionLine << " in Function '" << functionName << "' , Loop:" << loopLine);
+	printMihpIO("mihp_newLoop : In " << fileName << ": in Function '" << functionName << "' , Loop:" << loopLine);
 	
 	
 	

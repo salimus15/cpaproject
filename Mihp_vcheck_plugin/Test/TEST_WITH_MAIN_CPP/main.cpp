@@ -12,7 +12,7 @@ void functionTestLoop(float* tabFloat, size_t size){
 	if(tabFloat == NULL || size == 0) return;
 	size_t i;
 	//on dit que c'est la boucle de la ligne 15, de la fonction functionTestLoop définit à la ligne 11 du fichier main.C
-	mihp_newLoop("functionTestLoop", "main.c", 11, 16);
+	mihp_newLoop("functionTestLoop", "main.c", 15);
 	for(i = 0; i < size; ++i){
 		tabFloat[i] = 0.0;
 		mihp_adress(&tabFloat[i], sizeof(tabFloat[i]), MIHP_WRITE);
@@ -21,7 +21,7 @@ void functionTestLoop(float* tabFloat, size_t size){
 	mihp_endLoop();
 	i = 0;
 	//on dit que c'est la boucle de la ligne 15, de la fonction functionTestLoop définit à la ligne 11 du fichier main.C
-	mihp_newLoop("functionTestLoop", "main.c", 11, 23);
+	mihp_newLoop("functionTestLoop", "main.c", 24);
 	while(i < size){
 		tabFloat[i] = (float)i;
 		mihp_adress(&i, sizeof(i), MIHP_READ);
