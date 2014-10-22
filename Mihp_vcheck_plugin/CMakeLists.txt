@@ -26,7 +26,7 @@ if(RELEASE_MODE)
 	message(STATUS "MIHP VCheck Install mode")
 else(RELEASE_MODE)
 	#on passe aussi les warning en erreurs
-	add_definitions(-O0 -Wall -Werror)
+	add_definitions(-O0 -Wall)
 	message(STATUS "MIHP VCheck Debug mode")
 endif(RELEASE_MODE)
 

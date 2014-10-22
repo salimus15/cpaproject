@@ -9,3 +9,6 @@ add_subdirectory(TEST_WITHOUT_PLUGIN)
 add_subdirectory(TEST_WITH_SIMPLE_MAIN)
 #test du plugin sur un fichier cpp
 add_subdirectory(TEST_WITH_MAIN_CPP)
+#test du plugin avec des pragma
+add_subdirectory(TEST_PRAGMA_VCHECK)
+
