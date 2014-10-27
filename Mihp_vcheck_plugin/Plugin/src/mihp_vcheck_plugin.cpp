@@ -49,12 +49,15 @@ using namespace std;
  * 	@param str : string
  * 	@return true si str est dans liste, false sinon
 */
-bool isNameInListeFunction(const ListeString & liste, const std::string & str){
+bool isNameInListeFunction(ListeString & liste, const std::string & str){
 	if(liste.size() == 0) return false;
 	bool isFound(false);
-	ListeString::const_iterator it(liste.begin());
+	ListeString::iterator it(liste.begin());
 	while(!isFound && it != liste.end()){
-		if(*it == str) isFound = true;
+		if(*it == str){
+			isFound = true;
+			it = liste.erase(it);
+		}
 		++it;
 	}
 	return isFound;
@@ -62,6 +65,7 @@ bool isNameInListeFunction(const ListeString & liste, const std::string & str){
 
 ///fonction qui permet de gérer le #pragma mihp vcheck
 /**	@param dummy : variable qui sera inutilisée
+ * 	Que l'on est obliger de mettre dans ce .cpp pour ne pas avoir de warning de variable non utilisée
 */
 static void initMihpPragmaListFunction(cpp_reader *dummy ATTRIBUTE_UNUSED){
 	printfMihp("initMihpPragmaListFunction begin\n");
@@ -116,20 +120,44 @@ const pass_data mihpVCheckPassData = {
 	0, /* todo_flags_finish */
 };
 
+///@brief Classe qui décrit la passe GCC qui permet de vérifier si une boucle interne est vectorisable ou non
 class MihpVCheckPass : public gimple_opt_pass{
 	public:
+		///Constructeur de MihpVCheckPass
+		/**	@param ctxt : contexte gcc
+		*/
 		MihpVCheckPass(gcc::context *ctxt)
 			:gimple_opt_pass(mihpVCheckPassData, ctxt)
 		{}
+		///destructeur de MihpVCheckPass
 		virtual ~MihpVCheckPass(){}
 		
+		///fonction qui active ou non la passe
+		/**	@return true si la passe doit être activée, false sinon
+		*/
 		bool gate(){
-			printMihpIO("MihpVCheckPass::gate : done");
-			return true;
+			printMihpIO("MihpVCheckPass::gate :");
+			std::string functionName(current_function_name());
+			if(isNameInListeFunction(listMihpFunctionName, functionName)){
+				printMihpIO("\tfound '" << functionName << "'");
+				return true;
+			}else return false;
 		}
 		
+		///fonction d'exécution de la passe
+		/**	@return 0 si la fonction a réussie, 1 sinon
+		*/
 		unsigned int execute(){
+			if(cfun == NULL){
+				cerr << "MihpVCheckPass::execute : function undifined" << endl;
+				return 1;
+			}
 			printMihpIO("MihpVCheckPass::execute : done");
+			
+			
+			
+			
+			
 			return 0;
 		}
 		
@@ -140,13 +168,15 @@ class MihpVCheckPass : public gimple_opt_pass{
 
 ///fonction qui peremt de tester si toutes les fonctions spécifiées par l'utilisateur ont été taités
 void callBackCheckMihpPragmaFinish(void *gcc_data, void *user_data){
-	printfMihp("callBackCheckMihpPragmaFinish : begin\n");
+	printfMihp("callBackCheckMihpPragmaFinish :\n");
 	if(listMihpFunctionName.size() != 0){
 		cerr << "pragma mihp vcheck : Toutes les fonctions spécifiées n'ont pas été trouvées" << endl;
 		for(std::list<std::string>::iterator it(listMihpFunctionName.begin()); it != listMihpFunctionName.end(); ++it){
 			std::cout << "fonction '" << *it << "'" << std::endl;
 		}
 		cerr << "\tn'ont pas été trouvées, mais spécfiées." << endl;
+	}else{
+		cout << "\tAll done" << endl;
 	}
 }
 
