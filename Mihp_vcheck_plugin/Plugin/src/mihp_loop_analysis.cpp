@@ -121,17 +121,19 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_
 	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
 	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
 	
-	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3, /*build_pointer_type(TREE_TYPE(TREE_TYPE(op)))*/ NULL,
+	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3,
+// 						/*build_pointer_type(TREE_TYPE(TREE_TYPE(op)))*/ NULL,
+						op,
 						build_int_cst(long_unsigned_type_node, nbBlock),
 						build_int_cst(integer_type_node, isWrited));
 #ifndef NDEBUG
-// 	if(callOpInNode == NULL){
-// 		cerr << "\tcreateGimpleCallForOpInLoop : callOpInNode = NULL" << endl;
-// 		return;
-// 	}else{
-// 		cerr << "\tcreateGimpleCallForOpInLoop : callOpInNode : ";
-// 		print_gimple_stmt(stdout, callOpInNode, 0, 0);
-// 	}
+	if(callOpInNode == NULL){
+		cerr << "\tcreateGimpleCallForOpInLoop : callOpInNode = NULL" << endl;
+		return;
+	}else{
+		cerr << "\tcreateGimpleCallForOpInLoop : callOpInNode : ";
+		print_gimple_stmt(stdout, callOpInNode, 0, 0);
+	}
 #endif
 	
 	
