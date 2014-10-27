@@ -4,7 +4,8 @@
 
 #include "mihp_vcheck.h"
 
-#pragma mihp vcheck functionTestLoop
+// #pragma mihp vcheck functionTestLoop
+#pragma mihp vcheck (functionTestLoop,functionWithoutLoop)
 
 ///fonction de test pour la librairie C++
 /**	@param tabFloat : tableau à modifier
@@ -34,6 +35,11 @@ void functionTestLoop(float* tabFloat, size_t size){
 		mihp_newIteration();
 	}
 	mihp_endLoop();
+}
+
+///fonction sans boucle
+void functionWithoutLoop(){
+	printf("Empty\n");
 }
 
 int main(int argc, char** argv){

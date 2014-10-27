@@ -106,6 +106,38 @@ static void initMihpPragmaListFunction(cpp_reader *dummy ATTRIBUTE_UNUSED){
 	}
 }
 
+///fonction qui créer les Gimple Call vers les sondes de notre librairie d'analyse
+/**	@param boucle : boucle à modifier avec des appels aux sondes de notre librairie d'analyse
+*/
+void addGimpleCallInInnerLoop(struct loop* boucle){
+	if(boucle == NULL) return;                //si la boucle est NULL on s'arrête
+	
+	
+	
+	
+}
+
+
+///fonction qui ajoute les appels de fonctions (sondes) dans les boucles les plus internes de la fonction que l'on doit analyser
+/**	@param boucle : boucle à analyser
+*/
+void addGimpleCallInLoop(struct loop* boucle){
+	if(boucle == NULL) return;                //si la liste est vide on s'arrête
+	struct loop* inner;                       //boucle plus interne
+	gimple_stmt_iterator gsi;
+	gimple stmt;
+	basic_block bb;
+	for(inner = boucle->inner; inner != NULL; inner = inner->next){
+		if(inner->inner == NULL){ //on est bien dans une boucle interne
+			//on rajoute tout les appels de fonctions qui vont bien
+			//on a la garantie que l'on est dans une boucle interne
+			addGimpleCallInInnerLoop(inner);
+		}else{                   //on va dans la boucle la plus interne
+			addGimpleCallInLoop(inner);
+		}
+	}
+}
+
 const pass_data mihpVCheckPassData = {
 	GIMPLE_PASS, /* type */
 	"myPasse", /* name */
@@ -152,12 +184,17 @@ class MihpVCheckPass : public gimple_opt_pass{
 				cerr << "MihpVCheckPass::execute : function undifined" << endl;
 				return 1;
 			}
+			//on récupère l'ensemble des boucle de la fonction
+			struct loops * boucles = loops_for_fn(cfun);
+			if(boucles->tree_root->inner == NULL){ //tree_root est une liste de loops, si inner est NULL c'est qu'il n'y en a pas
+				warning(OPT_Wpragmas, "\tNo loop détected'\n");
+				return 0;
+			}else{
+				printMihpIO("\tloop founded");
+			}
+			//À partir de là, on a la garantie d'avoir au moins une boucle dans la fonction cfun, dans la liste boucles->tree_root
+			addGimpleCallInLoop(boucles->tree_root);
 			printMihpIO("MihpVCheckPass::execute : done");
-			
-			
-			
-			
-			
 			return 0;
 		}
 		
