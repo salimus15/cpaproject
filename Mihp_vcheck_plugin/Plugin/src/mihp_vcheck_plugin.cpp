@@ -180,6 +180,11 @@ void callBackCheckMihpPragmaFinish(void *gcc_data, void *user_data){
 	}
 }
 
+///fonction d'initialisation du plugin
+/**	@param plugin_info : informations sur le plugin
+ * 	@param version : version du plugin
+ * 	@return 0 si l'initialisation a réussie, 1 sinon
+*/
 int plugin_init(struct plugin_name_args *plugin_info, struct plugin_gcc_version *version){
 	printfMihp("plugin_init : initialisation du plugin mihp vcheck\n");
 	if(!plugin_default_version_check (version, &gcc_version)) return 1;
