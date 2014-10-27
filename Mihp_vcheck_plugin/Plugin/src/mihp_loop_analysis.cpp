@@ -85,10 +85,10 @@ void createGimpleCallAfterExitLoop(struct loop* boucle, const char * functionNam
 	gimple callAfterLoopNode = gimple_build_call(enter_functionBuild, 0);
 #ifndef NDEBUG
 	if(callAfterLoopNode == NULL){
-		cerr << "\tcreateGimpleCallAfterLatchLoop : callAfterLoopNode = NULL" << endl;
+		cerr << "\tcreateGimpleCallAfterExitLoop : callAfterLoopNode = NULL" << endl;
 		return;
 	}else{
-		cerr << "\tcreateGimpleCallAfterLatchLoop : callAfterLoopNode : ";
+		cerr << "\tcreateGimpleCallAfterExitLoop : callAfterLoopNode : ";
 		print_gimple_stmt(stdout, callAfterLoopNode, 0, 0);
 	}
 #endif
@@ -106,6 +106,97 @@ void createGimpleCallAfterExitLoop(struct loop* boucle, const char * functionNam
 	}
 }
 
+///fonction qui créé l'appel à la fonction qui gère les accès aux variables
+/**	@param functionName : nom de la fonction à appeler
+ * 	@param op : opérande à passée en paramètre à la fonction
+ * 	@param nbBlock : taille de l'accès mémoire
+ * 	@param isWrited : true si on écrit, false si on lit l'opérande
+ * 	@param bb : block de base à la fin duquel on va ajouter l'appel de la fonction functionName
+*/
+void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_t nbBlock, bool isWrited, basic_block bb){
+	if(functionName == NULL) return;
+	
+	//on définit la fonction, type retourné et paramètre(s)
+	//on a bien un void f(const void*, size_t, int )
+	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
+	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
+	
+	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3, /*build_pointer_type(TREE_TYPE(TREE_TYPE(op)))*/ NULL,
+						build_int_cst(long_unsigned_type_node, nbBlock),
+						build_int_cst(integer_type_node, isWrited));
+#ifndef NDEBUG
+// 	if(callOpInNode == NULL){
+// 		cerr << "\tcreateGimpleCallForOpInLoop : callOpInNode = NULL" << endl;
+// 		return;
+// 	}else{
+// 		cerr << "\tcreateGimpleCallForOpInLoop : callOpInNode : ";
+// 		print_gimple_stmt(stdout, callOpInNode, 0, 0);
+// 	}
+#endif
+	
+	
+	
+}
+
+///fonction qui analyse une opérande d'un GIMPLE_ASSIGN
+/**	@param op : opérande à analyser
+ * 	@param isWrited : true si l'opérande est écrite, false sinon
+ * 	@param bb : block de base à la fin duquel sera ajouter l'appel à la fonction qui inserera l'appel à la fonction mihp_address
+*/
+void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
+	switch(TREE_CODE(op)){
+// 		case INTEGER_CST: 
+// 		case REAL_CST: 
+// 		case VAR_DECL:
+// 		case PARM_DECL:
+// 		case CONST_DECL:
+// 		case STRING_CST:
+// 		case SSA_NAME:
+// 		case MEM_REF:
+		case ADDR_EXPR: 
+			createGimpleCallForOpInLoop("mihp_adress", op, 0, isWrited, bb);
+			break;
+		case ARRAY_REF:
+			analyseSingleOperand(TREE_OPERAND(op,0), isWrited, bb);   //l'adresse de base
+			analyseSingleOperand(TREE_OPERAND(op,1), false, bb);      //le décallage de l'opérateur []
+			break;
+		default:
+			createGimpleCallForOpInLoop("mihp_adress", op, 0, isWrited, bb);
+			break;
+	}
+}
+
+void analyseLoopBlockStmtOp(struct loop* boucle){
+	if(boucle == NULL) return;
+	basic_block* listeBlock = get_loop_body(boucle);
+	if(listeBlock == NULL){                       //si la boucle est vide on s'arrête
+		warning(OPT_Wpragmas, "\tEmpty loop'\n");
+		return;
+	}
+	gimple_stmt_iterator gsi;
+	gimple stmt;
+	basic_block bb;
+	const_tree op;
+	for(size_t i(0); i < boucle->num_nodes; ++i){                            //on parcours tout les blocks de base
+		bb = listeBlock[i];
+		for(gsi = gsi_start_bb(bb); !gsi_end_p(gsi); gsi_next(&gsi)){   //on parcours tout les statements
+			stmt = gsi_stmt(gsi);
+			//Il va falloir tester le type de statement pour appeler la fonction mihp_adress()
+			if(gimple_code(stmt) == GIMPLE_ASSIGN){                 //on ne s'intéresse au'aux Gimple Assign
+				printfMihp("\tGIMPLE_ASSIGN : BLOCK INDEX %d : LINE %d\n\t\t", bb->index, gimple_lineno(stmt));
+				print_gimple_stmt(stdout, stmt, 0, 0);
+				printf("\t\t\tOpération %s\n", get_tree_code_name(gimple_assign_rhs_code(stmt)));
+				for(size_t i(0); i < gimple_num_ops(stmt); i++){  //on parcours toutes les opérandes
+					op = gimple_op(stmt, i);
+					if(!op)continue;
+					analyseSingleOperand(op, i == 0, bb); //on analyse l'opérande courante
+				}
+				
+			}
+		}
+	}
+}
+
 ///fonction qui créer les Gimple Call vers les sondes de notre librairie d'analyse
 /**	@param boucle : boucle à modifier avec des appels aux sondes de notre librairie d'analyse
  * 	Cette fonction ne teste pas si la boucle passée en paramètre est la plus interne ou non, car c'est la fonction addGimpleCallInLoop qui nous garantie cela
@@ -118,39 +209,8 @@ void addGimpleCallInInnerLoop(struct loop* boucle){
 	createGimpleCallAfterLatchLoop(boucle->latch, "mihp_newIteration");
 	//on ajoute l'appel de fonction à la fin de la boucle
 	createGimpleCallAfterExitLoop(boucle, "mihp_endLoop");
-// 	gimple_stmt_iterator gsi;
-// 	gimple stmt;
-// 	basic_block bb;
-	basic_block* listeBlock = get_loop_body(boucle);
-	if(listeBlock == NULL){                       //si la boucle est vide on s'arrête
-		warning(OPT_Wpragmas, "\tEmpty loop'\n");
-		return;
-	}
-// 	if(boucle->superloops != NULL){
-// 		printfMihp("superloops exists!!!!\n");
-// 		printMihpIO("superloops lentgh : " << boucle->superloops->length());
-// 		if(!boucle->superloops->is_empty()){
-// 			struct loop * ptOuterLoop = boucle->superloops->last();
-// 			printfMihp("ptOuterLoop content :\n");
-// // 			printAllStmtBasicBlock(ptOuterLoop);
-// 			printAllBlockInLoop(ptOuterLoop);
-// 		}
-// 	}
-	
-// 	for(size_t i(0); i < boucle->num_nodes; ++i){ //on parcours tout les blocks de base
-// 		bb = listeBlock[i];
-// 		printAllStmtBasicBlock(bb);
-// // 		for(gsi = gsi_start_bb(bb); !gsi_end_p(gsi); gsi_next(&gsi)){
-// // 			stmt = gsi_stmt(gsi);
-// // 			//Il va falloir tester le type de statement pour appeler la fonction mihp_adress()
-// // 			print_gimple_stmt(stdout, stmt, 0, 0);
-// // 			printfMihp("\t\t\tBLOCK INDEX %d : LINE %d\n", bb->index, gimple_lineno(stmt));
-// // 		}
-// 	}
-	
-	
-	
-	
+	//on analyse les opérandes des blocks contenus dans la boucle
+	analyseLoopBlockStmtOp(boucle);
 }
 
 ///fonction qui ajoute les appels de fonctions (sondes) dans les boucles les plus internes de la fonction que l'on doit analyser
@@ -163,7 +223,7 @@ void addGimpleCallInLoop(struct loop* boucle){
 		if(inner->inner == NULL){ //on est bien dans une boucle interne
 			//on rajoute tout les appels de fonctions qui vont bien
 			//on a la garantie que l'on est dans une boucle interne
-			printAllBlockInLoop(inner);
+// 			printAllBlockInLoop(inner);
 			addGimpleCallInInnerLoop(inner);
 		}else{                   //on va dans la boucle la plus interne
 			addGimpleCallInLoop(inner);
