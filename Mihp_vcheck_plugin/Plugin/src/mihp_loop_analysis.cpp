@@ -25,14 +25,14 @@ void createGimpleCallBeforeLoop(basic_block loopHeader, const char * functionNam
 	tree enter_functionDefintion = build_function_type_list(void_type_node, string_type_node, integer_type_node, NULL_TREE);
 	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
 	
-	gimple callPrintfNode = gimple_build_call(enter_functionBuild, 3, mystring_args_tree, mystringFName_args_tree, build_int_cst(integer_type_node, loopLine));
+	gimple callBeforeLoopNode = gimple_build_call(enter_functionBuild, 3, mystring_args_tree, mystringFName_args_tree, build_int_cst(integer_type_node, loopLine));
 #ifndef NDEBUG
-	if(callPrintfNode == NULL){
-		cerr << "\tcreateGimpleCallBeforeLoop : callPrintfNode = NULL" << endl;
+	if(callBeforeLoopNode == NULL){
+		cerr << "\tcreateGimpleCallBeforeLoop : callBeforeLoopNode = NULL" << endl;
 		return;
 	}else{
-		cerr << "\tcreateGimpleCallBeforeLoop : callPrintfNode : ";
-		print_gimple_stmt(stdout, callPrintfNode, 0, 0);
+		cerr << "\tcreateGimpleCallBeforeLoop : callBeforeLoopNode : ";
+		print_gimple_stmt(stdout, callBeforeLoopNode, 0, 0);
 	}
 #endif
 	edge_iterator it = ei_start(loopHeader->preds);
@@ -40,7 +40,7 @@ void createGimpleCallBeforeLoop(basic_block loopHeader, const char * functionNam
 	ei_cond(it, &currentEdge);
 	basic_block prevBlock = currentEdge->src;              //on a bien le premier précédent block
 	gimple_stmt_iterator gsi = gsi_start_bb(prevBlock);    //on récupère l'itérateur
-	gsi_insert_before(&gsi, callPrintfNode, GSI_NEW_STMT);
+	gsi_insert_before(&gsi, callBeforeLoopNode, GSI_NEW_STMT);
 }
 
 ///fonction qui permet de créer une nouvelle boucle
@@ -72,6 +72,40 @@ void createGimpleCallAfterLatchLoop(basic_block loopLatch, const char * function
 	
 }
 
+///fonction qui ajoute un appel à une fonction après la fin d'une boucle
+/**	@param boucle : boucle après laquelle on veut appeler la fonction functionName
+ * 	@param functionName : nom de la fonction à appeler
+*/
+void createGimpleCallAfterExitLoop(struct loop* boucle, const char * functionName){
+	if(boucle == NULL || functionName == NULL) return;
+	//on définit la fonction, type retourné et paramètre(s)
+	tree enter_functionDefintion = build_function_type_list(void_type_node, NULL_TREE);
+	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
+	
+	gimple callAfterLoopNode = gimple_build_call(enter_functionBuild, 0);
+#ifndef NDEBUG
+	if(callAfterLoopNode == NULL){
+		cerr << "\tcreateGimpleCallAfterLatchLoop : callAfterLoopNode = NULL" << endl;
+		return;
+	}else{
+		cerr << "\tcreateGimpleCallAfterLatchLoop : callAfterLoopNode : ";
+		print_gimple_stmt(stdout, callAfterLoopNode, 0, 0);
+	}
+#endif
+	//on récupère toutes les arrêtes qui sortent de la boucle 
+	vec<edge> loopExitEdges = get_loop_exit_edges(boucle);
+	basic_block nextBlock;
+	gimple_stmt_iterator gsi;
+	size_t i(0);
+	edge exitEdge;
+	while(loopExitEdges.iterate(i, &exitEdge)){
+		nextBlock = exitEdge->dest;              //on a bien le block suivant
+		gsi = gsi_start_bb(nextBlock);             //on récupère l'itérateur
+		gsi_insert_before(&gsi, callAfterLoopNode, GSI_NEW_STMT);
+		++i;
+	}
+}
+
 ///fonction qui créer les Gimple Call vers les sondes de notre librairie d'analyse
 /**	@param boucle : boucle à modifier avec des appels aux sondes de notre librairie d'analyse
  * 	Cette fonction ne teste pas si la boucle passée en paramètre est la plus interne ou non, car c'est la fonction addGimpleCallInLoop qui nous garantie cela
@@ -82,7 +116,8 @@ void addGimpleCallInInnerLoop(struct loop* boucle){
 	createGimpleCallBeforeLoop(boucle->header, "mihp_newLoop", current_function_name(), main_input_filename, getLoopLine(boucle));
 	//on ajout l'appel de fonction avant le latch
 	createGimpleCallAfterLatchLoop(boucle->latch, "mihp_newIteration");
-	
+	//on ajoute l'appel de fonction à la fin de la boucle
+	createGimpleCallAfterExitLoop(boucle, "mihp_endLoop");
 // 	gimple_stmt_iterator gsi;
 // 	gimple stmt;
 // 	basic_block bb;
@@ -91,7 +126,6 @@ void addGimpleCallInInnerLoop(struct loop* boucle){
 		warning(OPT_Wpragmas, "\tEmpty loop'\n");
 		return;
 	}
-	
 // 	if(boucle->superloops != NULL){
 // 		printfMihp("superloops exists!!!!\n");
 // 		printMihpIO("superloops lentgh : " << boucle->superloops->length());
@@ -114,12 +148,9 @@ void addGimpleCallInInnerLoop(struct loop* boucle){
 // // 		}
 // 	}
 	
-// 	edge latchEdge = loop_latch_edge(boucle); //on récupère l'arrête du latch de la boucle
-	//on va pouvoir appeler mihp_newIteration()
 	
-	//on récupère toutes les arrêtes qui sortent de la boucle 
-// 	vec<edge> loopExitEdges = get_loop_exit_edges(boucle);
-	//on va pouvoir appeler mihp_endLoop()
+	
+	
 }
 
 ///fonction qui ajoute les appels de fonctions (sondes) dans les boucles les plus internes de la fonction que l'on doit analyser
