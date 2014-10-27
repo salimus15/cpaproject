@@ -32,14 +32,16 @@
 
 #ifndef NDEBUG
 #	define printMihpIO(X) std::cerr << X << std::endl;
-#	define printfMihp(X, ...) printf(X, ##__VA_ARGS__)
+#	define printfMihp(X, ...) printf(X, ##__VA_ARGS__);
 #else
 #	define printMihpIO(X)
 #	define printfMihp(X, ...)
 #endif
 
 void printAllStmtBasicBlock(basic_block bb);
-
+void printAllPrevousBasicBlock(basic_block bb);
+void printAllNextBasicBlock(basic_block bb);
+void printAllBlockInLoop(struct loop* boucle);
 
 
 #endif

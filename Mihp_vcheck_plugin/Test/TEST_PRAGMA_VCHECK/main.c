@@ -14,12 +14,12 @@
 void functionTestLoop(float* tabFloat, size_t size){
 	if(tabFloat == NULL || size == 0) return;
 	int i;
-	//on dit que c'est la boucle de la ligne 15, de la fonction functionTestLoop définit à la ligne 11 du fichier main.C
+	//on dit que c'est la boucle de la ligne 18, de la fonction functionTestLoop du fichier main.C
 	for(i = 0; i < size; ++i){
 		tabFloat[i] = 0.0;
 	}
 	i = 0;
-	//on dit que c'est la boucle de la ligne 15, de la fonction functionTestLoop définit à la ligne 11 du fichier main.C
+	//on dit que c'est la boucle de la ligne 23, de la fonction functionTestLoop du fichier main.C
 	while(i < size){
 		tabFloat[i] = (float)i;
 		++i;
