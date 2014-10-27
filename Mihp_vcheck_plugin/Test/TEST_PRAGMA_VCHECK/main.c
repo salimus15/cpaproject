@@ -4,8 +4,8 @@
 
 #include "mihp_vcheck.h"
 
-// #pragma mihp vcheck functionTestLoop
-#pragma mihp vcheck (functionTestLoop,functionWithoutLoop)
+#pragma mihp vcheck functionTestLoop
+// #pragma mihp vcheck (functionTestLoop,functionWithoutLoop)
 
 ///fonction de test pour la librairie C++
 /**	@param tabFloat : tableau à modifier

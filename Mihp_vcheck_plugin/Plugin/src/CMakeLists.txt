@@ -6,7 +6,7 @@ add_definitions(-O0)
 add_compile_options(-fno-rtti)
 # set(COMPILE_FLAGS )
 #on compile les sources du plugin
-add_library(mihpvcheckplugin SHARED mihp_vcheck_plugin.cpp)
+add_library(mihpvcheckplugin SHARED mihp_debug_plugin.cpp mihp_loop_analysis.cpp mihp_vcheck_plugin.cpp)
 # set(otherFlags -fPIC )
 # set_target_properties(mihpvcheckplugin PROPERTIES COMPILE_FLAGS -fno-rtti)
 # set_target_properties(mihpvcheckplugin PROPERTIES COMPILE_FLAGS -fPIC)
