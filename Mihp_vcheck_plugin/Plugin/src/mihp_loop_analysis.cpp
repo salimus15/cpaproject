@@ -125,6 +125,7 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_
 // 						/*build_pointer_type(TREE_TYPE(TREE_TYPE(op)))*/ NULL,
 // 						build_reference_type(TREE_TYPE(op)),  //construit un type &
 // 						build_pointer_type(TREE_TYPE(op)),    //construit un type *
+						
 						op,
 						build_int_cst(long_unsigned_type_node, nbBlock),
 						build_int_cst(integer_type_node, isWrited));
