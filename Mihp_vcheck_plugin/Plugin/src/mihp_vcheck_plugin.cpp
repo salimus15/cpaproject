@@ -1,39 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
 
-#include <gcc-plugin.h>
+#include "mihp_loop_analysis.h"
 #include <plugin-version.h>
-#include <plugin-api.h>
-
-#include <is-a.h>
-#include <tree.h>
-#include <basic-block.h>
-#include <internal-fn.h>
-#include <gimple-expr.h>
-#include <tree-ssa-alias.h>
-#include <gimple.h>
-#include <tree-pass.h>
-#include <context.h>
-#include <function.h>
-#include <gimple-iterator.h>
-#include <gimple-pretty-print.h>
-#include <tree-iterator.h>
-#include <cfgloop.h>
-#include <c-family/c-pragma.h>
-#include <diagnostic-core.h>
-#include <vec.h>
-#include <list>
-#include <string>
-
-
-#ifndef NDEBUG
-#	define printMihpIO(X) std::cout << X << std::endl;
-#	define printfMihp(X, ...) printf(X, ##__VA_ARGS__)
-#else
-#	define printMihpIO(X)
-#	define printfMihp(X, ...)
-#endif
 
 typedef std::list<std::string> ListeString;
 
@@ -49,19 +16,22 @@ using namespace std;
  * 	@param str : string
  * 	@return true si str est dans liste, false sinon
 */
-bool isNameInListeFunction(const ListeString & liste, const std::string & str){
+bool isNameInListeFunction(ListeString & liste, const std::string & str){
 	if(liste.size() == 0) return false;
-	bool isFound(false);
-	ListeString::const_iterator it(liste.begin());
-	while(!isFound && it != liste.end()){
-		if(*it == str) isFound = true;
+	ListeString::iterator it(liste.begin());
+	while(it != liste.end()){
+		if(*it == str){
+			liste.erase(it);
+			return true;
+		}
 		++it;
 	}
-	return isFound;
+	return false;
 }
 
 ///fonction qui permet de gérer le #pragma mihp vcheck
 /**	@param dummy : variable qui sera inutilisée
+ * 	Que l'on est obliger de mettre dans ce .cpp pour ne pas avoir de warning de variable non utilisée
 */
 static void initMihpPragmaListFunction(cpp_reader *dummy ATTRIBUTE_UNUSED){
 	printfMihp("initMihpPragmaListFunction begin\n");
@@ -116,19 +86,50 @@ const pass_data mihpVCheckPassData = {
 	0, /* todo_flags_finish */
 };
 
+///@brief Classe qui décrit la passe GCC qui permet de vérifier si une boucle interne est vectorisable ou non
 class MihpVCheckPass : public gimple_opt_pass{
 	public:
+		///Constructeur de MihpVCheckPass
+		/**	@param ctxt : contexte gcc
+		*/
 		MihpVCheckPass(gcc::context *ctxt)
 			:gimple_opt_pass(mihpVCheckPassData, ctxt)
 		{}
+		///destructeur de MihpVCheckPass
 		virtual ~MihpVCheckPass(){}
 		
+		///fonction qui active ou non la passe
+		/**	@return true si la passe doit être activée, false sinon
+		*/
 		bool gate(){
-			printMihpIO("MihpVCheckPass::gate : done");
-			return true;
+			if(cfun == NULL) return false;
+			std::string functionName(current_function_name());
+			printMihpIO("MihpVCheckPass::gate : '" << functionName << "'");
+			if(isNameInListeFunction(listMihpFunctionName, functionName)){
+				printMihpIO("\tfound '" << functionName << "'");
+				return true;
+			}else return false;
 		}
 		
+		///fonction d'exécution de la passe
+		/**	@return 0 si la fonction a réussie, 1 sinon
+		*/
 		unsigned int execute(){
+			printMihpIO("MihpVCheckPass::execute : begin");
+			if(cfun == NULL){
+				cerr << "MihpVCheckPass::execute : function undifined" << endl;
+				return 1;
+			}
+			//on récupère l'ensemble des boucle de la fonction
+			struct loops * boucles = loops_for_fn(cfun);
+			if(boucles->tree_root->inner == NULL){ //tree_root est une liste de loops, si inner est NULL c'est qu'il n'y en a pas
+				warning(OPT_Wpragmas, "\tNo loop détected'\n");
+				return 0;
+			}else{
+				printMihpIO("\tloop founded");
+			}
+			//À partir de là, on a la garantie d'avoir au moins une boucle dans la fonction cfun, dans la liste boucles->tree_root
+			addGimpleCallInLoop(boucles->tree_root);
 			printMihpIO("MihpVCheckPass::execute : done");
 			return 0;
 		}
@@ -140,16 +141,23 @@ class MihpVCheckPass : public gimple_opt_pass{
 
 ///fonction qui peremt de tester si toutes les fonctions spécifiées par l'utilisateur ont été taités
 void callBackCheckMihpPragmaFinish(void *gcc_data, void *user_data){
-	printfMihp("callBackCheckMihpPragmaFinish : begin\n");
+	printfMihp("callBackCheckMihpPragmaFinish :\n");
 	if(listMihpFunctionName.size() != 0){
 		cerr << "pragma mihp vcheck : Toutes les fonctions spécifiées n'ont pas été trouvées" << endl;
 		for(std::list<std::string>::iterator it(listMihpFunctionName.begin()); it != listMihpFunctionName.end(); ++it){
 			std::cout << "fonction '" << *it << "'" << std::endl;
 		}
 		cerr << "\tn'ont pas été trouvées, mais spécfiées." << endl;
+	}else{
+		cout << "\tAll done" << endl;
 	}
 }
 
+///fonction d'initialisation du plugin
+/**	@param plugin_info : informations sur le plugin
+ * 	@param version : version du plugin
+ * 	@return 0 si l'initialisation a réussie, 1 sinon
+*/
 int plugin_init(struct plugin_name_args *plugin_info, struct plugin_gcc_version *version){
 	printfMihp("plugin_init : initialisation du plugin mihp vcheck\n");
 	if(!plugin_default_version_check (version, &gcc_version)) return 1;
@@ -158,6 +166,7 @@ int plugin_init(struct plugin_name_args *plugin_info, struct plugin_gcc_version 
 	
 	pass_info.pass = new MihpVCheckPass(g);
 	pass_info.reference_pass_name = "cfg";
+// 	pass_info.reference_pass_name = "ssa";
 	pass_info.ref_pass_instance_number = 0;
 	pass_info.pos_op = PASS_POS_INSERT_AFTER;
 	

@@ -48,7 +48,7 @@ void mihp_newLoop(const char* functionName, const char* fileName, size_t loopLin
  * 	@param nbBlock : nombre de blocks que l'on écrit ou que l'on lit
  * 	@param type : 1 si on écrit, 0 si on lit
 */
-void mihp_adress(void* addr, size_t nbBlock, char type){
+void mihp_adress(void* addr, size_t nbBlock, int type){
 	if(addr == NULL) return;
 	if(type == 1){
 		printfMihp("\t\t\tmihp_adress %p Write %lu B\n", addr, nbBlock);

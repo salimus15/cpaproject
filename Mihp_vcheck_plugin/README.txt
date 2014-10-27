@@ -14,6 +14,11 @@ Compilation simple du projet complet :
 
 	cmake ..
 	make
+	
+Vous pouvez aussi définir les compilateurs comme ceci si ils sont dans $HOME/usr/bin :
+
+	CC=$HOME/usr/bin/gcc CXX=$HOME/usr/bin/g++ cmake ..
+	make
 
 par défaut en mode debuggage.
 
