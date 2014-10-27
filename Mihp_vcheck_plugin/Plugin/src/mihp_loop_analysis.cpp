@@ -123,6 +123,8 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_
 	
 	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3,
 // 						/*build_pointer_type(TREE_TYPE(TREE_TYPE(op)))*/ NULL,
+// 						build_reference_type(TREE_TYPE(op)),  //construit un type &
+// 						build_pointer_type(TREE_TYPE(op)),    //construit un type *
 						op,
 						build_int_cst(long_unsigned_type_node, nbBlock),
 						build_int_cst(integer_type_node, isWrited));
@@ -136,8 +138,14 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_
 	}
 #endif
 	
-	
-	
+	edge_iterator it;
+	edge currentEdge;
+	basic_block nextBlock;
+	FOR_EACH_EDGE(currentEdge, it, bb->succs){
+		nextBlock = currentEdge->dest;
+		gimple_stmt_iterator gsi = gsi_start_bb(nextBlock);    //on récupère l'itérateur
+// 		gsi_insert_before(&gsi, callOpInNode, GSI_NEW_STMT);
+	}
 }
 
 ///fonction qui analyse une opérande d'un GIMPLE_ASSIGN
