@@ -7,7 +7,7 @@ void createGimpleCallBeforeLoop(basic_block loopHeader, basic_block loopLatch, c
 
 void createGimpleCallAfterLatchLoop(basic_block loopLatch, const char * functionName);
 
-void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_t nbBlock, bool isWrited, basic_block bb);
+void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool isWrited, basic_block bb);
 void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb);
 void analyseLoopBlockStmtOp(struct loop* boucle);
 

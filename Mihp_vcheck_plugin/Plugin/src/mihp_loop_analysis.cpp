@@ -109,13 +109,24 @@ void createGimpleCallAfterExitLoop(struct loop* boucle, const char * functionNam
 ///fonction qui créé l'appel à la fonction qui gère les accès aux variables
 /**	@param functionName : nom de la fonction à appeler
  * 	@param op : opérande à passée en paramètre à la fonction
- * 	@param nbBlock : taille de l'accès mémoire
  * 	@param isWrited : true si on écrit, false si on lit l'opérande
  * 	@param bb : block de base à la fin duquel on va ajouter l'appel de la fonction functionName
+ * 
+ * Tree de type : tree_typed, type : tree->tree_typed.type
+ * 
+ * 
+ * 
 */
-void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_t nbBlock, bool isWrited, basic_block bb){
+void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
-	
+	size_t nbBlock;  //taille de l'accès mémoire
+	if(TREE_CODE(TREE_TYPE(op)) == INTEGER_TYPE) nbBlock = 4;
+	else if(TREE_CODE(TREE_TYPE(op)) == BOOLEAN_TYPE) nbBlock = 1;
+	else if(TREE_CODE(TREE_TYPE(op)) == REAL_TYPE) nbBlock = 4;
+	else if(TREE_CODE(TREE_TYPE(op)) == TI_FLOAT_TYPE) nbBlock = 400;
+// 	else if(TREE_TYPE(op) == 42) nbBlock = 42;
+	else nbBlock = 1;
+	printfMihp("\t\t%s\n", get_tree_code_name(TREE_CODE(op)));
 	//on définit la fonction, type retourné et paramètre(s)
 	//on a bien un void f(const void*, size_t, int )
 	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
@@ -125,9 +136,10 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_
 // 						/*build_pointer_type(TREE_TYPE(TREE_TYPE(op)))*/ NULL,
 // 						build_reference_type(TREE_TYPE(op)),  //construit un type &
 // 						build_pointer_type(TREE_TYPE(op)),    //construit un type *
-						
 						op,
-						build_int_cst(long_unsigned_type_node, nbBlock),
+// 						TREE_TYPE(op),
+						build_int_cst(long_unsigned_type_node, sizeof(op)),
+// 						build_int_cst(long_unsigned_type_node, nbBlock),
 						build_int_cst(integer_type_node, isWrited));
 #ifndef NDEBUG
 	if(callOpInNode == NULL){
@@ -156,23 +168,46 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, size_
 */
 void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
 	switch(TREE_CODE(op)){
-// 		case INTEGER_CST: 
-// 		case REAL_CST: 
-// 		case VAR_DECL:
-// 		case PARM_DECL:
-// 		case CONST_DECL:
-// 		case STRING_CST:
-// 		case SSA_NAME:
-// 		case MEM_REF:
-		case ADDR_EXPR: 
-			createGimpleCallForOpInLoop("mihp_adress", op, 0, isWrited, bb);
+		case INTEGER_CST:
+			printfMihp("\t\033[33mINTEGER_CST\033[0m\n"); //c'est une constante donc on ne fait rien
+			break;
+		case REAL_CST:
+			printfMihp("\t\033[33mREAL_CST\033[0m\t"); //c'est une constante donc on ne fait rien
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+			break;
+		case VAR_DECL:
+			printfMihp("\t\033[33mVAR_DECL\033[0m\t");
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+			break;
+		case PARM_DECL:
+			printfMihp("\t\033[33mPARM_DECL\033[0m\t");
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+			break;
+		case CONST_DECL:
+			printfMihp("\t\033[33mCONST_DECL\033[0m\t");
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+			break;
+		case STRING_CST:
+			printfMihp("\t\033[33mSTRING_CST\033[0m\n");
+			break;
+		case SSA_NAME:
+			printfMihp("\t\033[33mSSA_NAME\033[0m\n");
+			break;
+		case MEM_REF:
+			printfMihp("\t\033[33mMEM_REF\033[0m\t");
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+			break;
+		case ADDR_EXPR:
+			printfMihp("\tADDR_EXPR\t");
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 		case ARRAY_REF:
-			analyseSingleOperand(TREE_OPERAND(op,0), isWrited, bb);   //l'adresse de base
-			analyseSingleOperand(TREE_OPERAND(op,1), false, bb);      //le décallage de l'opérateur []
+			printfMihp("\tARRAY_REF\t");analyseSingleOperand(TREE_OPERAND(op,0), isWrited, bb);   //l'adresse de base
+			printfMihp("\tARRAY_REF\t");analyseSingleOperand(TREE_OPERAND(op,1), false, bb);      //le décallage de l'opérateur []
 			break;
 		default:
-			createGimpleCallForOpInLoop("mihp_adress", op, 0, isWrited, bb);
+			printfMihp("\tdefault\t");
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 	}
 }
