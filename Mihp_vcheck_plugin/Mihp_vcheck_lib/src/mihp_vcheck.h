@@ -12,6 +12,7 @@ extern "C" {
 
 void mihp_newLoop(const char* functionName, const char* fileName, size_t loopLine);
 void mihp_adress(void* addr, size_t nbBlock, int type);
+void mihp_adressc(void* addr, size_t nbBlock, int type);
 void mihp_newIteration();
 void mihp_endLoop();
 

@@ -8,6 +8,8 @@
 #include <gcc-plugin.h>
 #include <plugin-api.h>
 
+#include <cp/cp-tree.h>
+
 #include <is-a.h>
 #include <tree.h>
 #include <basic-block.h>

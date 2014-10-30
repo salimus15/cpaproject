@@ -132,6 +132,7 @@ size_t getSizeofOperandGimple(const_tree op){
 	else if(TREE_TYPE(op) == unsigned_intTI_type_node){nbBlock = 4;	printfMihp("\t\033[34munsigned int TI\033[0m");}	//unsigned int TI
 	
 	else if(TREE_TYPE(op) == float_ptr_type_node){nbBlock = 4;		printfMihp("\t\033[34mfloat*\033[0m");}		//float*
+	else if(TREE_TYPE(op) == dfloat32_ptr_type_node){nbBlock = 4;		printfMihp("\t\033[34mconst float*\033[0m");}		//float*
 	else if(TREE_TYPE(op) == double_ptr_type_node){nbBlock = 8;		printfMihp("\t\033[34mdouble*\033[0m");}	//double*
 	else if(TREE_TYPE(op) == long_double_ptr_type_node){nbBlock = 16;	printfMihp("\t\033[34mlong double*\033[0m");}	//long double*
 	else if(TREE_TYPE(op) == integer_ptr_type_node){nbBlock = 4;		printfMihp("\t\033[34mint*\033[0m");}		//int*
@@ -146,11 +147,6 @@ size_t getSizeofOperandGimple(const_tree op){
  * 	@param op : opérande à passée en paramètre à la fonction
  * 	@param isWrited : true si on écrit, false si on lit l'opérande
  * 	@param bb : block de base à la fin duquel on va ajouter l'appel de la fonction functionName
- * 
- * Tree de type : tree_typed, type : tree->tree_typed.type
- * 
- * 
- * 
 */
 void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
@@ -163,11 +159,29 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
 	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
 	
+// 	tree type = op->type;
+// 	tree refOp = build3(BIT_FIELD_REF, type, op, TYPE_SIZE(type), bitsize_int(0/*offset * BITS_PER_UNIT*/));
+// 	tree refOp = build0(BIT_FIELD_REF, TREE_TYPE(op));
+// 	tree refOp = build1(ADDR_EXPR, TREE_TYPE(op),  TREE_TYPE(op));
+// 	tree refOp = build1(ADDR_EXPR, NULL_TREE, TREE_TYPE(op));
+// 	tree refOp = build1(ADDR_EXPR, NULL_TREE, (tree)op);
+// 	tree refOp = build1(ADDR_EXPR, TYPE_POINTER_TO(TREE_TYPE(op)), (tree)op);
+	
+// 	tree refOp = build1(ADDR_EXPR, build_pointer_type(TREE_TYPE(TREE_TYPE(op))), (tree)op);
+// 	tree refOp = build1(ADDR_EXPR, build_pointer_type(TREE_TYPE(op)), build_ptrmem_type(TREE_TYPE(op), TREE_TYPE(op))); //ça compile, mais le plugin est inutilisable
+// 	tree refOp = build1(ADDR_EXPR, build_ptrmemfunc_access_expr(TREE_TYPE(op), TREE_TYPE(op)), build_pointer_type(TREE_TYPE(op)));
+	
+	tree refOp = build1(ADDR_EXPR, TYPE_POINTER_TO(TREE_TYPE(op)), (tree)op);
+	
+// 	tree refOp = build1(ADDR_EXPR, build_ptrmem_type(TREE_TYPE(op), TREE_TYPE(op)), build_pointer_type(TREE_TYPE(op))); //complie, mais problème au linkage du test
+// 	tree refOp = build1(ADDR_EXPR, build_pointer_type(TREE_TYPE(op)), build_pointer_type(TREE_TYPE(op)));
+	
 	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3,
 // 						/*build_pointer_type(TREE_TYPE(TREE_TYPE(op)))*/ NULL,
 // 						build_reference_type(TREE_TYPE(op)),  //construit un type &
 // 						build_pointer_type(TREE_TYPE(op)),    //construit un type *
-						op,
+// 						op,
+						refOp,
 // 						TREE_TYPE(op),
 // 						build_int_cst(long_unsigned_type_node, sizeof(op)),
 						build_int_cst(long_unsigned_type_node, nbBlock),
@@ -190,6 +204,7 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 		nextBlock = currentEdge->dest;
 		gimple_stmt_iterator gsi = gsi_start_bb(nextBlock);    //on récupère l'itérateur
 		gsi_insert_before(&gsi, callOpInNode, GSI_NEW_STMT);
+// 		break;
 	}
 #endif
 }
@@ -218,7 +233,7 @@ void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
 			break;
 		case CONST_DECL:
 			printfMihp("\t\033[33mCONST_DECL\033[0m");
-			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+// 			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 		case STRING_CST:
 			printfMihp("\t\033[33mSTRING_CST\033[0m\n");
@@ -268,9 +283,9 @@ void analyseLoopBlockStmtOp(struct loop* boucle){
 				for(size_t i(0); i < gimple_num_ops(stmt); i++){  //on parcours toutes les opérandes
 					op = gimple_op(stmt, i);
 					if(!op)continue;
-					analyseSingleOperand(op, i == 0, bb); //on analyse l'opérande courante
+					//il y a un truc à arranger ici
+					if(bb != boucle->latch && bb != boucle->header) analyseSingleOperand(op, i == 0, boucle->latch); //on analyse l'opérande courante
 				}
-				
 			}
 		}
 	}

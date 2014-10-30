@@ -5,7 +5,8 @@
 #include "mihp_vcheck.h"
 
 // #pragma mihp vcheck functionTestLoop
-#pragma mihp vcheck functionAddTab
+// #pragma mihp vcheck functionAddTab
+#pragma mihp vcheck (functionTestLoop,functionAddTab)
 // #pragma mihp vcheck (functionTestLoop,functionWithoutLoop)
 
 ///fonction qui fait une addititon de deux tableaux, et la renvoie dans un troisième
@@ -55,6 +56,15 @@ int main(int argc, char** argv){
 	
 	functionTestLoop(tabFloat, size);
 	
+	float* tabResult = malloc(sizeof(float)*size);
+	float* tabA = malloc(sizeof(float)*size);
+	float* tabB = malloc(sizeof(float)*size);
+	
+	functionAddTab(tabResult, tabA, tabB, size);
+	
+	free(tabResult);
+	free(tabA);
+	free(tabB);
 	free(tabFloat);
 	
 	return 0;
