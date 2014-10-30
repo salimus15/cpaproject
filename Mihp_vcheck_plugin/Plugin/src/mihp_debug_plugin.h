@@ -28,6 +28,7 @@
 #include <c-family/c-common.h>
 #include <diagnostic-core.h>
 #include <tree-ssa-operands.h>
+#include <tree-ssa-sccvn.h>
 #include <output.h>
 #include <vec.h>
 #include <list>
