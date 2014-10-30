@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <vec.h>
 #include <list>
 #include <string>
 
@@ -10,12 +9,9 @@
 
 typedef std::list<std::string> ListeString;
 
-struct dependencies{
-	Mihp_Adress adr1;
-	Mihp_Adress adr2;
-};
 
-typedef dependencies dependence; 
+
+//typedef std::list<std::pair<Mihp_Adress, Mihp_Adress>> dependence; 
 
 #ifndef NDEBUG
 #	define printMihpIO(X) std::cout << X << std::endl;
@@ -25,7 +21,7 @@ typedef dependencies dependence;
 #	define printfMihp(X, ...)
 #endif
 
-
+#define OFFSET(X, Y) ((char*)(X) + (Y))
 
 #define print_mihp_err(X) std::cout << "!!! ERROR -->  " << X << endl;
 #define print_mihp_war(X) std::cout << "!! WARNING --> " << X << endl;
