@@ -152,8 +152,8 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 	if(functionName == NULL) return;
 	
 // 	size_t nbBlock(getSizeofOperandGimple(op));
-	size_t nbBlock = sizeof_vn_nary_op(TREE_CODE_LENGTH(TREE_CODE (op))); //renvoie 32 pour toutes les opérandes
-	
+// 	size_t nbBlock = sizeof_vn_nary_op(TREE_CODE_LENGTH(TREE_CODE (op))); //renvoie 32 pour toutes les opérandes
+	size_t nbBlock = int_size_in_bytes(TREE_TYPE (op));
 	//on définit la fonction, type retourné et paramètre(s)
 	//on a bien un void f(const void*, size_t, int )
 	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
