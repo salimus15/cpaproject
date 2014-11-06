@@ -2,6 +2,7 @@
 #include "mihp_vcheck.h"
 #include <iostream>
 #include <string>
+#include "mihp_loop.h"
 
 #ifndef NDEBUG
 #	define printMihpIO(X) std::cout << X << std::endl;
@@ -15,8 +16,6 @@ using namespace std;
 
 void fonctionEnCpp(const std::string & str){
 	printMihpIO("fonctionEnCpp : str = " << str);
-	
-	
 }
 
 
