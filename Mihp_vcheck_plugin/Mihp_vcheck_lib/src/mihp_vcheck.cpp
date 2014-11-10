@@ -59,24 +59,6 @@ void mihp_adress(void* addr, size_t nbBlock, int type){
 	}
 }
 
-extern "C" {
-///fonction qui permet de sauvegarder une lecture ou d'une écriture à une adresse en C
-/**	@param addr : addresse à laquelle on écrit
- * 	@param nbBlock : nombre de blocks que l'on écrit ou que l'on lit
- * 	@param type : 1 si on écrit, 0 si on lit
-*/
-	void mihp_adressc(void* addr, size_t nbBlock, int type){
-		if(addr == NULL) return;
-		if(type == 1){
-			printfMihp("\t\t\tmihp_adress %p Write %lu B\n", addr, nbBlock);
-			
-		}else{
-			printfMihp("\t\t\tmihp_adress %p Read %lu B\n", addr, nbBlock);
-			
-		}
-	}
-}
-
 ///fonction qui créée une nouvelle iteration
 void mihp_newIteration(){
 	printMihpIO("\t\tmihp_newIteration");

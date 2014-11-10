@@ -34,6 +34,10 @@
 
 Le but de ce projet est de fournir un plugin GCC et une librairie permettant d'étudier les accès mémoire du programme et ainsi déterminer si certaines boucles sont vectorisables ou non.
 
+\section{\color{blue}Analyse du problème et architecture du projet}
+
+Comme les plugins GCC 4.9 s'écrivent en C++, nous avons choisi le langage C++. Nous avons séparé le projet en deux grandes parties. La première est un plugin GCC qui permet d'ajouter des appels de fonction pour la deuxième partie qui elle est une librairies qui analyse les accès mémoires. Pour permettre une avancée simultannée des deux parties nous avons ajouté des fonctions en C qui permettent d'appeler la librairie manuellement et ce sans utiliser le plugin, et permettait aussi de tester le plugin sans avoir à utiliser la librairie.
+
 \section{\color{blue}L'analyse dynamique}
 
 L'analyse dynamique conciste à rajouter des appels de fonction à la librairie d'analyse lors de la compilation. Ces fonctions seront appelées durant l'exécution du programme à analyser.
@@ -79,8 +83,14 @@ d'insérer les appels à la librarie d'analyse lors de la compilation
 
 \section{\color{blue}La librairie d'analyse}
 
-La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si 
+La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non.
 
+
+\section*{\color{blue}Problèmes rencontrés}
+
+
+
+\section{\color{blue}Conclusion}
 
 
 
