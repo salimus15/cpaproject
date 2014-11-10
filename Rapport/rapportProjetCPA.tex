@@ -1,0 +1,89 @@
+\documentclass[12pt,french]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{geometry}
+\geometry{verbose,lmargin=2.5cm}
+\usepackage{calc}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\pagestyle{empty}
+\usepackage{babel}
+\addto\extrasfrench{%
+   \providecommand{\og}{\leavevmode\flqq~}%
+   \providecommand{\fg}{\ifdim\lastskip>\z@\unskip\fi~\frqq}%
+}
+
+\title{\color{blue}Projet CPA \\ Vectorisation de boucle}
+
+\author{Pierre Aubert, Salim Nahi, Puchen Liu}
+
+% Pour compilé
+% mkdir build
+% cd build
+% pdflatex ../rapportProjetCPA.tex
+
+\begin{document}
+
+\maketitle
+
+\section*{\color{blue}Introduction}
+
+Le but de ce projet est de fournir un plugin GCC et une librairie permettant d'étudier les accès mémoire du programme et ainsi déterminer si certaines boucles sont vectorisables ou non.
+
+\section{\color{blue}L'analyse dynamique}
+
+L'analyse dynamique conciste à rajouter des appels de fonction à la librairie d'analyse lors de la compilation. Ces fonctions seront appelées durant l'exécution du programme à analyser.
+
+	\subsection{\color{blue}Spécification d'une fonction à analyser}
+
+Pour spécifier une fonction à prendre en compte avec le plugin, il faut ajouter un pragma de la forme suivante :
+
+% \inputencoding{latin9}
+\begin{center}
+\color{green}
+\begin{lstlisting}
+#pragma mihp vcheck ...
+\end{lstlisting}
+\end{center}
+% \inputencoding{utf8}
+
+Il est possible de préciser une fonction à analyser :
+
+\begin{center}
+\color{green}
+\begin{lstlisting}
+#pragma mihp vcheck fonction
+\end{lstlisting}
+\end{center}
+
+Ou une liste de fonction à analyser :
+
+\begin{center}
+\color{green}
+\begin{lstlisting}
+#pragma mihp vcheck (func1, func2, func3, ..., funcN)
+\end{lstlisting}
+\end{center}
+
+
+
+\section{\color{blue}Le plugin}
+
+Le plugin permet, dans un premier temps,
+d'insérer les appels à la librarie d'analyse lors de la compilation
+
+
+\section{\color{blue}La librairie d'analyse}
+
+La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si 
+
+
+
+
+\end{document}
+
+
