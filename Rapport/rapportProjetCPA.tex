@@ -36,11 +36,16 @@ Le but de ce projet est de fournir un plugin GCC et une librairie permettant d'�
 
 \section{\color{blue}Analyse du problème et architecture du projet}
 
-Comme les plugins GCC 4.9 s'écrivent en C++, nous avons choisi le langage C++. Nous avons séparé le projet en deux grandes parties. La première est un plugin GCC qui permet d'ajouter des appels de fonction pour la deuxième partie qui elle est une librairies qui analyse les accès mémoires. Pour permettre une avancée simultannée des deux parties nous avons ajouté des fonctions en C qui permettent d'appeler la librairie manuellement et ce sans utiliser le plugin, et permettait aussi de tester le plugin sans avoir à utiliser la librairie.
+Comme les plugins GCC 4.9 s'écrivent en C++, nous avons choisi le langage C++. Nous avons séparé le projet en deux grandes parties. La première est un plugin GCC qui permet d'ajouter des appels de fonction pour la deuxième partie qui elle est une librairies qui analyse les accès mémoires. Pour permettre une avancée simultannée des deux parties nous avons ajouté des fonctions en C qui permettent d'appeler la librairie manuellement et ce sans utiliser le plugin, et permettait aussi de tester le plugin sans avoir à utiliser la librairie. Nous avons également dévoloppé plusieurs tests afin de vérifier le bon fonctionnement des parties développées.
 
 \section{\color{blue}L'analyse dynamique}
 
-L'analyse dynamique conciste à rajouter des appels de fonction à la librairie d'analyse lors de la compilation. Ces fonctions seront appelées durant l'exécution du programme à analyser.
+L'analyse dynamique conciste à rajouter des appels de fonction à la librairie d'analyse lors de la compilation. Ces fonctions seront appelées durant l'exécution du programme à analyser. 
+
+
+\section{\color{blue}Le plugin}
+
+Le plugin permet, dans un premier temps, d'insérer les appels à la librarie d'analyse lors de la compilation puis, dans un second temps d'effectuer une analyse statique des boucles les plus internes afin de déterminer avant l'exécution si elles sont vectorisables, ou non.
 
 	\subsection{\color{blue}Spécification d'une fonction à analyser}
 
@@ -73,20 +78,32 @@ Ou une liste de fonction à analyser :
 \end{lstlisting}
 \end{center}
 
+	\subsection{\color{blue}Analyse d'une boucle}
 
+Dans ce projet, nous ne traiterons que les boucles les plus internes. Pour ce faire, nous analyserons chaque fonction spécifiée dans le \textbf{pragma mihp vcheck}. L'analyse conciste dans un premier temps de vérifier que la fonction spécifiée contient bien une boucle, une fois que la boucle la plus interne à été déterminée, le plugin ajoute différents appels à la librairie :
+\vspace{0.5cm}
+\begin{itemize}
+\item Une fonction qui spécifie le début d'une boucle
+\item Une fonction qui spécifie la fin d'une boucle
+\item Une fonction qui spécifie une nouvelle iteration
+\item Une fonction qui spécifie un accès mémoire
+\end{itemize}
+\vspace{0.5cm}
 
-\section{\color{blue}Le plugin}
-
-Le plugin permet, dans un premier temps,
-d'insérer les appels à la librarie d'analyse lors de la compilation
-
+Le début de la boucle est précisé par la fonction
+\textbf{mihp\_newLoop}
+, cette fonction sera appelée juste avant le \textbf{header} de la boucle. La fonction \textbf{mihp\_endLoop} spécifie la fin d'une boucle et sera appelée sur chaque arrête sortante de la boucle. La fonction \textbf{mihp\_newIteration} indique une nouvelle itération, et sera appelée juste avant le
+\textbf{latch} de la boucle. La fonction \textbf{mihp\_address} quant à elle, sera appelée pour chaque opérande d'un \textbf{statement gimple} du type \textbf{GIMPLE\_ASSIGN}.
 
 \section{\color{blue}La librairie d'analyse}
 
 La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non.
 
+\section{\color{blue}Les tests}
 
-\section*{\color{blue}Problèmes rencontrés}
+
+
+\section{\color{blue}Problèmes rencontrés}
 
 
 
