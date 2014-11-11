@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
+
 #include <list>
 #include <string>
 
@@ -17,12 +15,12 @@
 
 class Mihp_Adress{
 	
-	protected:
+	private:
 	
 		
-			// Adresse de la variable 
-	bool acc_type;    // acc_type = 0 when reading & acc_type = 1 when writing.
-	  // taille de la variable ie: nombre de block à considerer à partir de p_adr
+			
+	
+	  
 		
 		
 		/** \fn void CopieMihpAdress( const Mihp_Adress & other)
@@ -35,12 +33,16 @@ class Mihp_Adress{
 		
 		
 	public:
-	size_t data_tsize;
-	void * p_adr;
+	size_t data_tsize;	// taille de la variable ie: nombre de block à considerer à partir de p_adr
+	void * p_adr;	// Adresse de la variable 
+	
+	bool acc_type;    // acc_type = 0 when reading & acc_type = 1 when writing.
 		/** \fn Mihp_Adress()
 		* \brief Constructeur de la classe
 		*/
 	Mihp_Adress();
+	
+	Mihp_Adress( void * adr, const size_t & tsize, const bool & typeacc);
 		
 		/** \fn Mihp_Adress(const Mihp_Adress & other)
 		* \brief Constructeur par copie de la classe
@@ -63,7 +65,7 @@ class Mihp_Adress{
 		/** \fn bool Mihp_Adress_get_t()
 		* \brief fonction qui retourne le type d'accés à l'adresse mémoire
 		* elle retourne la valeur de la variable  acc_type, si c'est une écriture ou une lecture
-		* \return 0 si c'est une lecture et 1 si c'est une écriture
+		* \return false si c'est une lecture et true si c'est une écriture
 		*/
 	bool Mihp_Adress_get_t() const;
 		 

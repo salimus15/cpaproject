@@ -1,9 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
 #include <list>
 #include <string>
-
 #include "mihp_iteration.h"
 
 #ifndef MIHP_LOOP_H
@@ -38,11 +34,14 @@ class Mihp_Loop{
 		/** \fn Mihp_Loop(
 		* \brief Constructeur de la classe
 		*/
-		Mihp_Loop();		
+		Mihp_Loop();
+		
+		Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb );		
 		
 		/** \fn Mihp_Loop(const Mihp_Loop & other)
 		* \brief Constructeur par copie de la classe
 		*/
+		
 		Mihp_Loop(const Mihp_Loop & other);
 		
 		/** \fn ~Mihp_Loop()(
@@ -71,6 +70,8 @@ class Mihp_Loop{
 		bool MihpCheckRecouvement();
 		
 		void MihpCheckIterDep();
+		
+		void AfficherIterations();
 };
 
 #endif

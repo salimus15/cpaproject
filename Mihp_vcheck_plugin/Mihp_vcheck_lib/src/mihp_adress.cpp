@@ -1,9 +1,8 @@
+
+#include "mihp_adress.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <list>
-#include <string>
-#include "mihp_adress.h"
 #include "tools.h"
 
 void Mihp_Adress :: CopieMihpAdress( const Mihp_Adress & other){
@@ -22,6 +21,13 @@ Mihp_Adress :: Mihp_Adress(){
 
 Mihp_Adress :: ~Mihp_Adress(){}
 
+Mihp_Adress :: Mihp_Adress( void * adr, const size_t & tsize, const bool & typeacc){
+	p_adr = adr;
+	data_tsize = tsize;
+	acc_type = typeacc;
+
+}
+
 
 Mihp_Adress :: Mihp_Adress (const Mihp_Adress & other){
 	CopieMihpAdress(other);
@@ -34,9 +40,6 @@ Mihp_Adress :: Mihp_Adress (const Mihp_Adress & other){
  	return *this;
  	
 }
-
-
-
 
 
  bool Mihp_Adress :: Mihp_Adress_get_t() const{

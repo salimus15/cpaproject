@@ -1,10 +1,8 @@
+#include "mihp_loop.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <list>
-#include <string>
 #include "tools.h"
-#include "mihp_loop.h"
 
 
 Mihp_Loop :: Mihp_Loop(){ 
@@ -14,10 +12,19 @@ Mihp_Loop :: Mihp_Loop(){
 	it = iters.begin(); 
 }
 
+Mihp_Loop :: Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb ){
+	func_name = funname;
+	file_name = filname;
+	loop_nline = linnumb;
 
+}
+
+Mihp_Loop :: ~Mihp_Loop(){}
 void Mihp_Loop :: Mihp_add_iter(const Mihp_Iteration & new_iter){
 	
+	
 	iters.push_back(new_iter);
+	
 }
 /*
 Mihp_Iteration Mihp_Loop :: Mihp_get_next_iter(){
@@ -52,9 +59,45 @@ void Mihp_Loop :: MihpCheckIterDep(){
 }
 
 
-// Verifie si il ya des recouverements entre les iterations	 
+
+
+// Verifie si il ya des recouverements entre les iterations et verifie si ils empechent la vectorisation ou non.	 
 bool Mihp_Loop :: MihpCheckRecouvement(){
-return true;
+	int vector_size = MAX_INT;
+	int temp = 0;
+	std :: list<Mihp_Iteration> :: iterator other_it;
+	//list_dependences dependences = std::list< paire_adr>();
+	printfMihp(" On entre da la fonction dAnalyse \n");
+	for (it = iters.begin(); it != iters.end(); ++it){
+			
+		other_it = it;
+		++other_it;
+		
+		while(other_it != iters.end()){
+			if(it->MihpCheckIterRecouvrement(*other_it)){
+				return true;
+			}else{
+			temp++;
+			++other_it;	
+			}
+		}
+			if(temp < vector_size)	
+			vector_size = temp;
+		temp = 0;
+		}
+		
+		
+printfMihp(" La taille maximale du vecteur est de %d \n", vector_size);	
+printfMihp(" On sort da la fonction dAnalyse \n");
+return false;
 }
 
 
+void Mihp_Loop :: AfficherIterations(){
+	int i = 1;
+	for (it = iters.begin(); it != iters.end(); ++it){
+		printf(" Iteration  %d : \n", i);
+		it->AfficherAdresses();
+		++i;
+	}
+}

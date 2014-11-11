@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
+
 #include <list>
 #include <string>
 
@@ -9,6 +7,9 @@
 #ifndef MIHP_ITERATION_H
 #define MIHP_ITERATION_H
 
+
+//typedef std::pair<Mihp_Adress, Mihp_Adress> paire_adr;
+//typedef std::list< paire_adr > list_dependences; 
 typedef Mihp_Adress Mihp_Adress;
 
 
@@ -53,7 +54,7 @@ class Mihp_Iteration{
 		*/
 		~Mihp_Iteration();
 		
-		
+		void MihpIterationClear();
 		/// ajout d'un élément a la liste des adresses
 		void MihpAddAdr(const Mihp_Adress & new_adr);
 		
@@ -68,6 +69,9 @@ class Mihp_Iteration{
 		*/
 		bool MihpCheckAdressRecouvrement(const void *  a_d1, const void *  a_f1, const void *  a_d2, const void *  a_f2 );
 			
+			
+		bool dependencesAnalysing(const Mihp_Adress & adress1, const Mihp_Adress & adress2 );
+			
 		/** \fn bool MihpCheckIterRecouvrement(const Mihp_Iteration & other)
 		*	\brief teste si il y a des recouvrement entre l'iteration courante et l'iteration other
 		*	\param other iteration dont on souhaite si elle a des recouvrements avec l'iteration courante 
@@ -79,7 +83,7 @@ class Mihp_Iteration{
 		/// récupère l'élément suivant si il y en a sinon NULL
 		//Mihp_Adress MihpGetNext_adr();
 	
-		
+		void AfficherAdresses();
 		
 };
 
