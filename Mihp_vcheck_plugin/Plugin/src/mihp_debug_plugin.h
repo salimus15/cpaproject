@@ -8,6 +8,8 @@
 #include <gcc-plugin.h>
 #include <plugin-api.h>
 
+#include <cp/cp-tree.h>
+
 #include <is-a.h>
 #include <tree.h>
 #include <basic-block.h>
@@ -26,6 +28,7 @@
 #include <c-family/c-common.h>
 #include <diagnostic-core.h>
 #include <tree-ssa-operands.h>
+#include <tree-ssa-sccvn.h>
 #include <output.h>
 #include <vec.h>
 #include <list>

@@ -2,7 +2,7 @@ project(Mihp_vcheck_plugin)
 cmake_minimum_required(VERSION 2.8)
 
 # ceci sont les sources du plugin
-add_definitions(-O0)
+# add_definitions(-O0)
 add_compile_options(-fno-rtti)
 # set(COMPILE_FLAGS )
 #on compile les sources du plugin

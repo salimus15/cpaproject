@@ -4,7 +4,7 @@
 #include "mihp_debug_plugin.h"
 
 //on n'ajout pas l'appel à la fonction mihp_address n'est pas correcte avec print_gimple_stmt
-#define DONT_ADD_GIMPLE_NODE_MIHP_ADDRESS
+// #define DONT_ADD_GIMPLE_NODE_MIHP_ADDRESS
 
 void createGimpleCallBeforeLoop(basic_block loopHeader, basic_block loopLatch, const char * functionName, const char * currentFunctionName, const char* fileName, size_t loopLine);
 

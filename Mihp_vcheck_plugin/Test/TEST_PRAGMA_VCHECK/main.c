@@ -4,8 +4,9 @@
 
 #include "mihp_vcheck.h"
 
-// #pragma mihp vcheck functionTestLoop
-#pragma mihp vcheck functionAddTab
+#pragma mihp vcheck functionTestLoop
+// #pragma mihp vcheck functionAddTab
+// #pragma mihp vcheck (functionTestLoop,functionAddTab)
 // #pragma mihp vcheck (functionTestLoop,functionWithoutLoop)
 
 ///fonction qui fait une addititon de deux tableaux, et la renvoie dans un troisième
@@ -19,6 +20,7 @@ void functionAddTab(float* result, const float* a, const float* b, size_t size){
 	int i;
 	for(i = 0; i < size; ++i){
 		result[i] = a[i] + b[i];
+// 		result[i] = 0;
 	}
 }
 
@@ -27,7 +29,7 @@ void functionAddTab(float* result, const float* a, const float* b, size_t size){
 /**	@param tabFloat : tableau à modifier
  * 	@param size : taille du tableau
 */
-void functionTestLoop(float* tabFloat, size_t size){
+void functionTestLoop(double* tabFloat, size_t size){
 	if(tabFloat == NULL || size == 0) return;
 	int i;
 	//on dit que c'est la boucle de la ligne 18, de la fonction functionTestLoop du fichier main.C
@@ -37,7 +39,7 @@ void functionTestLoop(float* tabFloat, size_t size){
 	i = 0;
 	//on dit que c'est la boucle de la ligne 23, de la fonction functionTestLoop du fichier main.C
 	while(i < size){
-		tabFloat[i] = (float)i;
+		tabFloat[i] = (double)i;
 		++i;
 	}
 }
@@ -51,10 +53,19 @@ int main(int argc, char** argv){
 // 	testFonction(42, "chaîne de caractère");
 	size_t size = 5;
 	
-	float* tabFloat = malloc(sizeof(float)*size);
+	double* tabFloat = malloc(sizeof(double)*size);
 	
 	functionTestLoop(tabFloat, size);
 	
+	float* tabResult = malloc(sizeof(float)*size);
+	float* tabA = malloc(sizeof(float)*size);
+	float* tabB = malloc(sizeof(float)*size);
+	
+	functionAddTab(tabResult, tabA, tabB, size);
+	
+	free(tabResult);
+	free(tabA);
+	free(tabB);
 	free(tabFloat);
 	
 	return 0;
