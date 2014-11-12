@@ -95,6 +95,8 @@ Le début de la boucle est précisé par la fonction
 , cette fonction sera appelée juste avant le \textbf{header} de la boucle. La fonction \textbf{mihp\_endLoop} spécifie la fin d'une boucle et sera appelée sur chaque arrête sortante de la boucle. La fonction \textbf{mihp\_newIteration} indique une nouvelle itération, et sera appelée juste avant le
 \textbf{latch} de la boucle. La fonction \textbf{mihp\_address} quant à elle, sera appelée pour chaque opérande d'un \textbf{statement gimple} du type \textbf{GIMPLE\_ASSIGN}.
 
+Dans un premier temps nous avons pris en compte toutes les opérandes non constantes, puisque les opérandes constantes ne peuvent être que lues (ce qui ne pose aucun problème pour la vectorisation). Comme gimple converti toutes les expressions en diadiques ou en triadique, il créé des variables temporaires de la forme \textbf{D.XXXX}, les adresses de ces variables sont généralement \textbf{0x1}, \textbf{0x2}, \textbf{0x3}, ect. Nous avons donc fait des tests pour vérifier que cela ne posait pas de problème avec notre librairie d'analyse (qui sera détaillée dans la section suivante).
+
 \section{\color{blue}La librairie d'analyse}
 
 La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non.
@@ -105,7 +107,7 @@ La librarie d'analyse effectue l'analyse des accès mémoire du programme et va 
 
 \section{\color{blue}Problèmes rencontrés}
 
-
+Les principaux problèmes rencontrés lors de l'impémentation du plugin ont été pour ajouter l'appel à la fonction \textbf{mihp\_address}, car l'utilisation de la fonction \textbf{print\_gimple\_stmt} ne permet pas de vérifier dans tout les cas si le prototype de la fonction qui sera appelée par gimple est le bon ou non.
 
 \section{\color{blue}Conclusion}
 

@@ -203,7 +203,7 @@ void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
 			break;
 		case VAR_DECL:
 			printfMihp("\t\033[33mVAR_DECL\033[0m");
-			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+// 			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 		case PARM_DECL:
 			printfMihp("\t\033[33mPARM_DECL\033[0m");
