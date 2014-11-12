@@ -25,7 +25,7 @@ void functionTestLoop(float* tabFloat, size_t size){
 	mihp_newLoop("functionTestLoop", "main.c", 24);
 	while(i < size){
 		tabFloat[i] = (float)i;
-// 		mihp_adress(&i, sizeof(i), MIHP_READ);
+//		mihp_adress(&i, sizeof(i), MIHP_READ);
 		mihp_adress(&tabFloat[i], sizeof(tabFloat[i]), MIHP_WRITE);
 		++i;
 // 		mihp_adress(&i, sizeof(i), MIHP_READ);  //je ne sais pas si le ++ est considéré comme un assignement par Gimple, il faudra faire des tests
@@ -37,7 +37,7 @@ void functionTestLoop(float* tabFloat, size_t size){
 
 int main(int argc, char** argv){
 // 	testFonction(42, "chaîne de caractère");
-	size_t size = 5;
+	size_t size = 10;
 	
 	float* tabFloat = malloc(sizeof(float)*size);
 	

@@ -13,7 +13,7 @@
 
 class Mihp_Loop{
 	
-	private:
+	public:
 		std::string func_name;		// nom dela fonction contenant la boucle
 		std::string file_name;		// nom du fichier où la boucle est définie
 		size_t loop_nline;		// numéro de ligne de la boucle actuelle dans le fichier
@@ -28,7 +28,7 @@ class Mihp_Loop{
 		*/	
 		void CopieLoop(const Mihp_Loop & other);
 		
-	public:
+	
 		
 		
 		/** \fn Mihp_Loop(
@@ -47,7 +47,8 @@ class Mihp_Loop{
 		/** \fn ~Mihp_Loop()(
 		* \brief Destructeur de la classe
 		*/		
-		~Mihp_Loop();
+		
+		virtual ~Mihp_Loop();
 		
 		void MihpSetFuncName(const std :: string & fname);
 		
@@ -59,9 +60,11 @@ class Mihp_Loop{
 		/// ajout d'un élément a la liste des iterations
 		void Mihp_add_iter(const Mihp_Iteration & new_iter);
 		
+		// ajoute une nouvelle adresse a l'iteration courante ( derniere)
+		void Mihp_add_adr( const Mihp_Adress & new_adr);
 		/// récupère l'élément suivant si il y en a sinon NULL
 		//Mihp_Iteration Mihp_get_next_iter();
-	
+		void MihpLoopClear();
 		
 		/** \fn bool MihpCheckRecouvement()
 		*	\brief test si il y a des recouvrement entre les adresses, inter-iterations

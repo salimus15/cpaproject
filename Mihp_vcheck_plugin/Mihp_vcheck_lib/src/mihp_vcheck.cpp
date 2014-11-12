@@ -6,9 +6,9 @@
 #include "mihp_iteration.h"
 #include "mihp_adress.h"
 
-Mihp_Adress adress_util = Mihp_Adress();
-Mihp_Iteration iteration_util = Mihp_Iteration();
-Mihp_Loop loop_util = Mihp_Loop();
+Mihp_Adress adress_util;
+Mihp_Iteration iteration_util;
+Mihp_Loop loop_util;
 
 #ifndef NDEBUG
 #	define printMihpIO(X) std::cout << X << std::endl;
@@ -76,8 +76,11 @@ void mihp_newIteration(){
 
 ///fonction qui permet de lancer l'analyse des écritures et des lectures des adresse mémoires
 void mihp_endLoop(){
+
 	printMihpIO("\tmihp_endLoop");
-//	loop_util.MihpCheckRecouvement();
-	loop_util.AfficherIterations();
+	loop_util.MihpCheckRecouvement();
+	//loop_util.AfficherIterations();
+	loop_util.MihpLoopClear();
 }
+
 

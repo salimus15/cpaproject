@@ -12,6 +12,20 @@ Mihp_Loop :: Mihp_Loop(){
 	it = iters.begin(); 
 }
 
+void Mihp_Loop :: CopieLoop(const Mihp_Loop & other){
+		
+	iters = other.iters;
+	it = iters.begin();
+}
+
+
+
+Mihp_Loop :: Mihp_Loop(const Mihp_Loop & other){
+	CopieLoop(other);
+}
+
+
+
 Mihp_Loop :: Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb ){
 	func_name = funname;
 	file_name = filname;
@@ -26,6 +40,14 @@ void Mihp_Loop :: Mihp_add_iter(const Mihp_Iteration & new_iter){
 	iters.push_back(new_iter);
 	
 }
+
+void Mihp_Loop :: MihpLoopClear(){
+	for(it = iters.begin(); it != iters.end(); ++it){
+		it->MihpIterationClear();
+				
+	}
+	iters.clear();	
+}
 /*
 Mihp_Iteration Mihp_Loop :: Mihp_get_next_iter(){
 	if(it != iters.end()){
@@ -35,6 +57,13 @@ Mihp_Iteration Mihp_Loop :: Mihp_get_next_iter(){
 
 }
 */
+
+void Mihp_Loop :: Mihp_add_adr( const Mihp_Adress & new_adr){
+	it = iters.end();
+	it->MihpAddAdr(new_adr);
+}
+
+
 void Mihp_Loop :: MihpSetFuncName(const std :: string & fname){
 	func_name = fname;
 }
@@ -75,21 +104,23 @@ bool Mihp_Loop :: MihpCheckRecouvement(){
 		
 		while(other_it != iters.end()){
 			if(it->MihpCheckIterRecouvrement(*other_it)){
+			if(temp < vector_size) 	vector_size = temp;
+				printfMihp(" La taille maximale du vecteur est de %d \n", vector_size);	
+				printfMihp(" On sort da la fonction dAnalyse \n");
 				return true;
 			}else{
-			temp++;
-			++other_it;	
+				temp++;
+				++other_it;	
 			}
 		}
-			if(temp < vector_size)	
-			vector_size = temp;
+		if(temp < vector_size) 	vector_size = temp;
 		temp = 0;
-		}
+	}
 		
 		
-printfMihp(" La taille maximale du vecteur est de %d \n", vector_size);	
-printfMihp(" On sort da la fonction dAnalyse \n");
-return false;
+	printfMihp(" \033[37mBoucle Completement vectorisable\033[0m  \n");	
+	printfMihp(" On sort da la fonction dAnalyse \n");
+	return false;
 }
 
 

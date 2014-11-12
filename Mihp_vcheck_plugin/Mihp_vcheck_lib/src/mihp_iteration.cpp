@@ -60,7 +60,7 @@ bool Mihp_Iteration :: dependencesAnalysing(const Mihp_Adress & adress1, const M
 	
 	if(!adress1.Mihp_Adress_get_t() && adress2.Mihp_Adress_get_t()){
 			printfMihp("-- lecture suivie d'une écriture sur la meme adresse memoire \n");
-	return false;
+	return true;
 	}
 	
 	if(!adress1.Mihp_Adress_get_t() && !adress2.Mihp_Adress_get_t()){
@@ -70,7 +70,7 @@ bool Mihp_Iteration :: dependencesAnalysing(const Mihp_Adress & adress1, const M
 		
 	if(adress1.Mihp_Adress_get_t() && adress2.Mihp_Adress_get_t()){
 			printfMihp("-- deux écritures sur la meme adresse memoire \n");
-	return false;
+	return true;
 	}
 	return false;	
 }
@@ -84,7 +84,7 @@ printf("@1 de %p >>>  %p et @2 de  %p >>>  %p \n", a_d1, a_f1, a_d2, a_f2);
 bool Mihp_Iteration :: MihpCheckIterRecouvrement(const Mihp_Iteration & other){
 	//int i = 0;
 	std :: list<Mihp_Adress> ::const_iterator it_other;
-	//paire_adr collision;
+	
 	bool thereIsRecouvrement = false;
 	
 	for(it = adres_acc.begin(); it != adres_acc.end(); ++it){
@@ -95,8 +95,9 @@ bool Mihp_Iteration :: MihpCheckIterRecouvrement(const Mihp_Iteration & other){
 					it_other->p_adr ,  OFFSET(it_other->p_adr ,it_other->data_tsize))){
 				
 				if(dependencesAnalysing(*it, *it_other)){
-							
+						
 					thereIsRecouvrement = true;			
+					return thereIsRecouvrement;	
 				}
 			} 	
 		
