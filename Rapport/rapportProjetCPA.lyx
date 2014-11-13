@@ -1,0 +1,614 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+
+\usepackage{listings}
+
+\usepackage{calc}
+\usepackage{amsfonts}
+
+\usepackage{babel}
+\addto\extrasfrench{%
+   \providecommand{\og}{\leavevmode\flqq~}%
+   \providecommand{\fg}{\ifdim\lastskip>\z@\unskip\fi~\frqq}%
+}
+
+\title{Projet CPA \\ Vectorisation de boucle}
+
+\author{Pierre Aubert, Salim Nahi, Puchen Liu}
+
+% Pour compilé
+% mkdir build
+% cd build
+% pdflatex ../rapportProjetCPA.tex
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language french
+\language_package default
+\inputencoding utf8
+\fontencoding T1
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\fontcolor #0000ff
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle empty
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Introduction
+\end_layout
+
+\begin_layout Standard
+Le but de ce projet est de fournir un plugin GCC et une librairie permettant
+ d'étudier les accès mémoire du programme et ainsi déterminer si certaines
+ boucles sont vectorisables ou non.
+\end_layout
+
+\begin_layout Section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Analyse du problème et architecture du projet
+\end_layout
+
+\begin_layout Standard
+Comme les plugins GCC 4.9 s'écrivent en C++, nous avons choisi le langage
+ C++.
+ Nous avons séparé le projet en deux grandes parties.
+ La première est un plugin GCC qui permet d'ajouter des appels de fonction
+ pour la deuxième partie qui elle est une librairies qui analyse les accès
+ mémoires.
+ Pour permettre une avancée simultannée des deux parties nous avons ajouté
+ des fonctions en C qui permettent d'appeler la librairie manuellement et
+ ce sans utiliser le plugin, et permettait aussi de tester le plugin sans
+ avoir à utiliser la librairie.
+ Nous avons également dévoloppé plusieurs tests afin de vérifier le bon
+ fonctionnement des parties développées.
+\end_layout
+
+\begin_layout Section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+L'analyse dynamique
+\end_layout
+
+\begin_layout Standard
+L'analyse dynamique conciste à rajouter des appels de fonction à la librairie
+ d'analyse lors de la compilation.
+ Ces fonctions seront appelées durant l'exécution du programme à analyser.
+\end_layout
+
+\begin_layout Section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Le plugin
+\end_layout
+
+\begin_layout Standard
+Le plugin permet, dans un premier temps, d'insérer les appels à la librarie
+ d'analyse lors de la compilation puis, dans un second temps d'effectuer
+ une analyse statique des boucles les plus internes afin de déterminer avant
+ l'exécution si elles sont vectorisables, ou non.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Spécification d'une fonction à analyser
+\end_layout
+
+\begin_layout Standard
+Pour spécifier une fonction à prendre en compte avec le plugin, il faut
+ ajouter un pragma de la forme suivante :
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+% 
+\backslash
+inputencoding{latin9}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{green}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset listings
+inline false
+status collapsed
+
+\begin_layout Plain Layout
+
+#pragma mihp vcheck ...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+% 
+\backslash
+inputencoding{utf8}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Il est possible de préciser une fonction à analyser :
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{green}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset listings
+inline false
+status collapsed
+
+\begin_layout Plain Layout
+
+#pragma mihp vcheck fonction
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ou une liste de fonction à analyser :
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{green}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset listings
+inline false
+status collapsed
+
+\begin_layout Plain Layout
+
+#pragma mihp vcheck (func1, func2, func3, ..., funcN)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Analyse d'une boucle
+\end_layout
+
+\begin_layout Standard
+Dans ce projet, nous ne traiterons que les boucles les plus internes.
+ Pour ce faire, nous analyserons chaque fonction spécifiée dans le 
+\series bold
+pragma mihp vcheck
+\series default
+.
+ L'analyse conciste dans un premier temps de vérifier que la fonction spécifiée
+ contient bien une boucle, une fois que la boucle la plus interne à été
+ déterminée, le plugin ajoute différents appels à la librairie : 
+\begin_inset VSpace 0.5cm
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+Une fonction qui spécifie le début d'une boucle 
+\end_layout
+
+\begin_layout Itemize
+Une fonction qui spécifie la fin d'une boucle 
+\end_layout
+
+\begin_layout Itemize
+Une fonction qui spécifie une nouvelle iteration 
+\end_layout
+
+\begin_layout Itemize
+Une fonction qui spécifie un accès mémoire 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 0.5cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le début de la boucle est précisé par la fonction 
+\series bold
+mihp_newLoop
+\series default
+ , cette fonction sera appelée juste avant le 
+\series bold
+header
+\series default
+ de la boucle.
+ La fonction 
+\series bold
+mihp_endLoop
+\series default
+ spécifie la fin d'une boucle et sera appelée sur chaque arrête sortante
+ de la boucle.
+ La fonction 
+\series bold
+mihp_newIteration
+\series default
+ indique une nouvelle itération, et sera appelée juste avant le 
+\series bold
+latch
+\series default
+ de la boucle.
+ La fonction 
+\series bold
+mihp_address
+\series default
+ quant à elle, sera appelée pour chaque opérande d'un 
+\series bold
+statement gimple
+\series default
+ du type 
+\series bold
+GIMPLE_ASSIGN
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+Dans un premier temps nous avons pris en compte toutes les opérandes non
+ constantes, puisque les opérandes constantes ne peuvent être que lues (ce
+ qui ne pose aucun problème pour la vectorisation).
+ Comme gimple converti toutes les expressions en diadiques ou en triadique,
+ il créé des variables temporaires de la forme 
+\series bold
+D.XXXX
+\series default
+, les adresses de ces variables sont généralement 
+\series bold
+0x1
+\series default
+, 
+\series bold
+0x2
+\series default
+, 
+\series bold
+0x3
+\series default
+, ect.
+ Nous avons donc fait des tests pour vérifier que cela ne posait pas de
+ problème avec notre librairie d'analyse (qui sera détaillée dans la section
+ suivante).
+\end_layout
+
+\begin_layout Section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+La librairie d'analyse
+\end_layout
+
+\begin_layout Standard
+La librarie d'analyse effectue l'analyse des accès mémoire du programme
+ et va indiquer si la boucle est vectorisable ou non, elle prend en entrée
+ les differentes adresses mémoire des variables manipulées durant chaque
+ itération de la boucle ainsi que le type de manipulation (lecture ou écriture)
+ et compare dans un premier temps les adresses accédées entre une itération
+ et ses suivantes ceci pour verifier si il y a des recouvrements entre les
+ adresses mémoire (voir partie 4.2).
+ Si recouvrement il y a, on teste le types de recouvrement en verifiant
+ les types d'accés qui ont été efféctués sur ses adresses (voir tableau
+ XX).
+\end_layout
+
+\begin_layout Standard
+Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp_Adress
+, Mihp_Iteration, Mihp_Loop pour recevoir les données envoyées grace au
+ plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme
+ de nos classes: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/salim/Documents/cpaproject/Presentation/images/diagrammeDeClasseLibVCheck.png
+	lyxscale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramme de classe 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Les tests
+\end_layout
+
+\begin_layout Section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Problèmes rencontrés
+\end_layout
+
+\begin_layout Standard
+Les principaux problèmes rencontrés lors de l'impémentation du plugin ont
+ été pour ajouter l'appel à la fonction 
+\series bold
+mihp_address
+\series default
+, car l'utilisation de la fonction 
+\series bold
+print_gimple_stmt
+\series default
+ ne permet pas de vérifier dans tout les cas si le prototype de la fonction
+ qui sera appelée par gimple est le bon ou non.
+\end_layout
+
+\begin_layout Section
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{blue}
+\end_layout
+
+\end_inset
+
+Conclusion
+\end_layout
+
+\end_body
+\end_document
