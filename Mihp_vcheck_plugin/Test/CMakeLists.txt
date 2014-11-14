@@ -9,4 +9,7 @@ add_subdirectory(TEST_WITH_SIMPLE_MAIN)
 add_subdirectory(TEST_WITH_MAIN_CPP)
 #test du plugin avec des pragma
 add_subdirectory(TEST_PRAGMA_VCHECK)
-
+#test du plugin sans plugin avec une fonction ayant une boucle vectorisable et une autre non
+add_subdirectory(TEST_WITH_NO_PLUGIN)
+#test du plugin sans plugin avec deux fonction ayant des boucles vectorisables mais pour des taille de vecteur specifiques
+add_subdirectory(TEST_WITHOUT_PLUGIN_VECTOR_SIZE)

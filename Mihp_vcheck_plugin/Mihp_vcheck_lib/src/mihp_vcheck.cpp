@@ -43,8 +43,10 @@ void testFonction(int param, const char * str){
 void mihp_newLoop(const char* functionName, const char* fileName, size_t loopLine){
 	
 	printMihpIO("mihp_newLoop : In " << fileName << ": in Function '" << functionName << "' , Loop:" << loopLine);
-	
-	
+		
+	loop_util.MihpSetFileName(fileName);
+	loop_util.MihpSetFuncName(functionName);
+	loop_util.MihpSetLineNum(loopLine);
 	
 }
 

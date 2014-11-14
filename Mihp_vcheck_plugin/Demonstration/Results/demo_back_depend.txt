@@ -1,244 +1,299 @@
-mihp_newLoop : In /home/pierre/projects/Console/PROJET_MIHP_Vectorisation_de_boucle/cpaproject/Mihp_vcheck_plugin/Demonstration/DEMO_BACK_DEPEND/main.c: in Function 'functionDependTest' , Loop:20
+mihp_newLoop : In /home/salim/Documents/cpaproject/Mihp_vcheck_plugin/Demonstration/DEMO_BACK_DEPEND/main.c: in Function 'functionDependTest' , Loop:20
 		mihp_newIteration
-			mihp_adress 0x2 Read 4 B
-			mihp_adress 0x1 Write 8 B
-			mihp_adress 0x1 Read 8 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0xf3b070 Read 8 B
-			mihp_adress 0xf3b074 Write 8 B
-			mihp_adress 0x2 Read 4 B
-			mihp_adress 0x1 Write 8 B
-			mihp_adress 0x1 Read 8 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0xf3b090 Read 8 B
-			mihp_adress 0xf3b094 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x2 Read 4 B
-			mihp_adress 0x1 Write 8 B
-			mihp_adress 0x1 Read 8 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b010 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x2 Read 4 B
-			mihp_adress 0x1 Write 8 B
-			mihp_adress 0x1 Read 8 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b014 Write 8 B
-			mihp_adress 0x2 Read 4 B
-			mihp_adress 0x1 Write 8 B
-			mihp_adress 0x1 Read 8 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0xf3b030 Read 8 B
-			mihp_adress 0xf3b034 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x2 Read 4 B
-			mihp_adress 0x1 Write 8 B
-			mihp_adress 0x1 Read 8 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0xf3b050 Read 8 B
-			mihp_adress 0xf3b054 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x2 Read 4 B
-			mihp_adress 0x2 Write 4 B
+			mihp_adress 0x132e070 Read 8 B
+			mihp_adress 0x132e090 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e030 Read 8 B
+			mihp_adress 0x132e050 Read 8 B
 		mihp_newIteration
-			mihp_adress 0x3 Read 4 B
-			mihp_adress 0x2 Write 8 B
-			mihp_adress 0x2 Read 8 B
-			mihp_adress 0x8 Write 8 B
-			mihp_adress 0x8 Read 8 B
-			mihp_adress 0xf3b070 Read 8 B
-			mihp_adress 0xf3b078 Write 8 B
-			mihp_adress 0x3 Read 4 B
-			mihp_adress 0x2 Write 8 B
-			mihp_adress 0x2 Read 8 B
-			mihp_adress 0x8 Write 8 B
-			mihp_adress 0x8 Read 8 B
-			mihp_adress 0xf3b090 Read 8 B
-			mihp_adress 0xf3b098 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x3 Read 4 B
-			mihp_adress 0x2 Write 8 B
-			mihp_adress 0x2 Read 8 B
-			mihp_adress 0x8 Write 8 B
-			mihp_adress 0x8 Read 8 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b014 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x3 Read 4 B
-			mihp_adress 0x2 Write 8 B
-			mihp_adress 0x2 Read 8 B
-			mihp_adress 0x8 Write 8 B
-			mihp_adress 0x8 Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b018 Write 8 B
-			mihp_adress 0x3 Read 4 B
-			mihp_adress 0x2 Write 8 B
-			mihp_adress 0x2 Read 8 B
-			mihp_adress 0x8 Write 8 B
-			mihp_adress 0x8 Read 8 B
-			mihp_adress 0xf3b030 Read 8 B
-			mihp_adress 0xf3b038 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x3 Read 4 B
-			mihp_adress 0x2 Write 8 B
-			mihp_adress 0x2 Read 8 B
-			mihp_adress 0x8 Write 8 B
-			mihp_adress 0x8 Read 8 B
-			mihp_adress 0xf3b050 Read 8 B
-			mihp_adress 0xf3b058 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x3 Read 4 B
-			mihp_adress 0x3 Write 4 B
+			mihp_adress 0x132e070 Read 8 B
+			mihp_adress 0x132e090 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e030 Read 8 B
+			mihp_adress 0x132e050 Read 8 B
 		mihp_newIteration
-			mihp_adress 0x4 Read 4 B
-			mihp_adress 0x3 Write 8 B
-			mihp_adress 0x3 Read 8 B
-			mihp_adress 0xc Write 8 B
-			mihp_adress 0xc Read 8 B
-			mihp_adress 0xf3b070 Read 8 B
-			mihp_adress 0xf3b07c Write 8 B
-			mihp_adress 0x4 Read 4 B
-			mihp_adress 0x3 Write 8 B
-			mihp_adress 0x3 Read 8 B
-			mihp_adress 0xc Write 8 B
-			mihp_adress 0xc Read 8 B
-			mihp_adress 0xf3b090 Read 8 B
-			mihp_adress 0xf3b09c Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 4 B
-			mihp_adress 0x3 Write 8 B
-			mihp_adress 0x3 Read 8 B
-			mihp_adress 0xc Write 8 B
-			mihp_adress 0xc Read 8 B
-			mihp_adress 0x8 Write 8 B
-			mihp_adress 0x8 Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b018 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 4 B
-			mihp_adress 0x3 Write 8 B
-			mihp_adress 0x3 Read 8 B
-			mihp_adress 0xc Write 8 B
-			mihp_adress 0xc Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b01c Write 8 B
-			mihp_adress 0x4 Read 4 B
-			mihp_adress 0x3 Write 8 B
-			mihp_adress 0x3 Read 8 B
-			mihp_adress 0xc Write 8 B
-			mihp_adress 0xc Read 8 B
-			mihp_adress 0xf3b030 Read 8 B
-			mihp_adress 0xf3b03c Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 4 B
-			mihp_adress 0x3 Write 8 B
-			mihp_adress 0x3 Read 8 B
-			mihp_adress 0xc Write 8 B
-			mihp_adress 0xc Read 8 B
-			mihp_adress 0xf3b050 Read 8 B
-			mihp_adress 0xf3b05c Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 4 B
-			mihp_adress 0x4 Write 4 B
+			mihp_adress 0x132e070 Read 8 B
+			mihp_adress 0x132e090 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e030 Read 8 B
+			mihp_adress 0x132e050 Read 8 B
 		mihp_newIteration
-			mihp_adress 0x5 Read 4 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0x10 Write 8 B
-			mihp_adress 0x10 Read 8 B
-			mihp_adress 0xf3b070 Read 8 B
-			mihp_adress 0xf3b080 Write 8 B
-			mihp_adress 0x5 Read 4 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0x10 Write 8 B
-			mihp_adress 0x10 Read 8 B
-			mihp_adress 0xf3b090 Read 8 B
-			mihp_adress 0xf3b0a0 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x5 Read 4 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0x10 Write 8 B
-			mihp_adress 0x10 Read 8 B
-			mihp_adress 0xc Write 8 B
-			mihp_adress 0xc Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b01c Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x5 Read 4 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0x10 Write 8 B
-			mihp_adress 0x10 Read 8 B
-			mihp_adress 0xf3b010 Read 8 B
-			mihp_adress 0xf3b020 Write 8 B
-			mihp_adress 0x5 Read 4 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0x10 Write 8 B
-			mihp_adress 0x10 Read 8 B
-			mihp_adress 0xf3b030 Read 8 B
-			mihp_adress 0xf3b040 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x5 Read 4 B
-			mihp_adress 0x4 Write 8 B
-			mihp_adress 0x4 Read 8 B
-			mihp_adress 0x10 Write 8 B
-			mihp_adress 0x10 Read 8 B
-			mihp_adress 0xf3b050 Read 8 B
-			mihp_adress 0xf3b060 Write 8 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x4 Read 1 B
-			mihp_adress 0x4 Read 0 B
-			mihp_adress 0x5 Read 4 B
-			mihp_adress 0x5 Write 4 B
+			mihp_adress 0x132e070 Read 8 B
+			mihp_adress 0x132e090 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e010 Read 8 B
+			mihp_adress 0x132e030 Read 8 B
+			mihp_adress 0x132e050 Read 8 B
 		mihp_newIteration
 	mihp_endLoop
- On entre da la fonction dAnalyse 
-@1 de 0x2 >>>  0x6 et @2 de  0x3 >>>  0x7 
+ Analyse de la boucle a la ligne20 de la fonctionfunctionDependTestdu fichier /home/salim/Documents/cpaproject/Mihp_vcheck_plugin/Demonstration/DEMO_BACK_DEPEND/main.c
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
 -- deux lectures sur la meme adresse memoire 
-@1 de 0x2 >>>  0x6 et @2 de  0x2 >>>  0xa 
--- lecture suivie d'une écriture sur la meme adresse memoire 
- boucle non vectorisable
- On commence l'analyse de la boucle a la ligne 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e070 >>>  0x132e078 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e090 >>>  0x132e098 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e010 >>>  0x132e018 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+-- deux lectures sur la meme adresse memoire 
+adresse 1 de 0x132e030 >>>  0x132e038 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e070 >>>  0x132e078 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e090 >>>  0x132e098 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e010 >>>  0x132e018 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e030 >>>  0x132e038 
+adresse 1 de 0x132e050 >>>  0x132e058 	 et 	 adresse2 de  0x132e050 >>>  0x132e058 
+-- deux lectures sur la meme adresse memoire 
+ [37mBoucle Completement vectorisable[0m : Line  20 function functionDependTest
+	 file /home/salim/Documents/cpaproject/Mihp_vcheck_plugin/Demonstration/DEMO_BACK_DEPEND/main.c
+ On sort da la fonction dAnalyse 

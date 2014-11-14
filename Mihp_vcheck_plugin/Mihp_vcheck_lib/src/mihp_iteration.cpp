@@ -54,12 +54,12 @@ bool Mihp_Iteration :: dependencesAnalysing(const Mihp_Adress & adress1, const M
 	
 //	printfMihp("++ adresse 1 : %p ;  adresse 2 : %p \n ", collision.first.Mihp_Adress_get_adr(), collision.second.Mihp_Adress_get_adr());
 	if(adress1.Mihp_Adress_get_t() && !adress2.Mihp_Adress_get_t()){
-			printfMihp("-- écriture suivie d'une lecture sur la meme adresse memoire \n");
+		printfMihp("-- écriture suivie d'une lecture sur la meme adresse memoire \n");
 	return true;
 	}
 	
 	if(!adress1.Mihp_Adress_get_t() && adress2.Mihp_Adress_get_t()){
-			printfMihp("-- lecture suivie d'une écriture sur la meme adresse memoire \n");
+		printfMihp("-- lecture suivie d'une écriture sur la meme adresse memoire \n");
 	return true;
 	}
 	
@@ -69,7 +69,7 @@ bool Mihp_Iteration :: dependencesAnalysing(const Mihp_Adress & adress1, const M
 	}
 		
 	if(adress1.Mihp_Adress_get_t() && adress2.Mihp_Adress_get_t()){
-			printfMihp("-- deux écritures sur la meme adresse memoire \n");
+		printfMihp("-- deux écritures sur la meme adresse memoire \n");
 	return true;
 	}
 	return false;	
@@ -77,13 +77,13 @@ bool Mihp_Iteration :: dependencesAnalysing(const Mihp_Adress & adress1, const M
 
 
 bool Mihp_Iteration :: MihpCheckAdressRecouvrement(const void * a_d1, const void *  a_f1, const void * a_d2, const void * a_f2 ){
-printf("@1 de %p >>>  %p et @2 de  %p >>>  %p \n", a_d1, a_f1, a_d2, a_f2);
+printfMihp("adresse 1 de %p >>>  %p \t et \t adresse2 de  %p >>>  %p \n", a_d1, a_f1, a_d2, a_f2);
 	return (((a_d1 >= a_d2)&&(a_d1 < a_f2)) || ((a_d2 >= a_d1)&&(a_d2 < a_f1)));
 }
 
 bool Mihp_Iteration :: MihpCheckIterRecouvrement(const Mihp_Iteration & other){
 	//int i = 0;
-	std :: list<Mihp_Adress> ::const_iterator it_other;
+	std :: list<Mihp_Adress> :: const_iterator it_other;
 	
 	bool thereIsRecouvrement = false;
 	
@@ -109,7 +109,7 @@ bool Mihp_Iteration :: MihpCheckIterRecouvrement(const Mihp_Iteration & other){
 void Mihp_Iteration :: AfficherAdresses(){
 	int i = 1;
 	for(it = adres_acc.begin(); it != adres_acc.end(); ++it){
-		printf("\t Adresse %d : %p \n ", i, it->Mihp_Adress_get_adr());
+		printfMihp("\t Adresse %d : %p \n ", i, it->Mihp_Adress_get_adr());
 		++i;
 	}
 }
