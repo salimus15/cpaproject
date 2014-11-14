@@ -8,7 +8,8 @@ set(RELEASE_MODE no CACHE BOOL "Install mode")
 set(DOC_MODE no CACHE BOOL "Doc mode")
 #si on veut activer les tests
 set(TESTS yes CACHE BOOL "Active Tests")
-
+#si on veut activer la démonstration
+set(DEMO_MODE yes CACHE BOOL "Active Demonstration")
 
 exec_program(gcc
 		"${CMAKE_CURRENT_SOURCE_DIR}/build"
@@ -35,12 +36,16 @@ if(TESTS)
 	add_subdirectory(Test)
 endif(TESTS)
 
+if(DEMO_MODE)
+	enable_testing()
+	add_subdirectory(Demonstration)
+endif(DEMO_MODE)
+
 #On ajoute la génération de la doc sur demande
 if(DOC_MODE)
 	add_subdirectory(doc)
 else(DOC_MODE)
 	message(STATUS "No documentation")
 endif(DOC_MODE)
-
 
 
