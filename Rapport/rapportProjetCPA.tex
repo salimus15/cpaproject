@@ -97,7 +97,54 @@ Le début de la boucle est précisé par la fonction
 
 Dans un premier temps nous avons pris en compte toutes les opérandes non constantes, puisque les opérandes constantes ne peuvent être que lues (ce qui ne pose aucun problème pour la vectorisation). Comme gimple converti toutes les expressions en diadiques ou en triadique, il créé des variables temporaires de la forme \textbf{D.XXXX}, les adresses de ces variables sont généralement \textbf{0x1}, \textbf{0x2}, \textbf{0x3}, ect. Nous avons donc fait des tests pour vérifier que cela ne posait pas de problème avec notre librairie d'analyse (qui sera détaillée dans la section suivante).
 
+Nous avons vite mis en évidence que les variables temporaires créées par Gimple allaient nous poser problème, car elles ont toujours les mêmes adresses. La méthode naïve, consiste à tenir uniquement compte des varaibles décrites par \textbf{PARM\_DECL}, ce qui nous permet de n'utiliser que les variables définies dans le fichier source. Le problème c'est que ces varaibles sont toujours accédées en lecture. Il n'est donc pas possible de se contenter uniquement de ces varaibles.
+
+Si nous prenons une itération simple, comme celle ci-dessous :
+
+\begin{center}
+\color{blue}
+\begin{lstlisting}
+c[i] = a[i] + b[i];
+\end{lstlisting}
+\end{center}
+
+Il est naturel d'imaginer les appels de fonctions suivants :
+
+\begin{center}
+\color{blue}
+\begin{lstlisting}
+mihp_address(&b[i], sizeof(b[i]), MIHP_READ);
+mihp_address(&a[i], sizeof(a[i]), MIHP_READ);
+mihp_address(&c[i], sizeof(c[i]), MIHP_WRITE);
+\end{lstlisting}
+\end{center}
+
+Mais si nous observons, ce que génère Gimple :
+
+\begin{center}
+\color{blue}
+\begin{lstlisting}
+D.2741 = (long unsigned int) i;
+D.2742 = D.2741 * 4;
+D.2743 = c + D.2742;              => &c[i]
+D.2744 = (long unsigned int) i;
+D.2745 = D.2744 * 4;
+D.2746 = a + D.2745;              => &a[i]
+D.2747 = *D.2746;                 => a[i]
+D.2748 = (long unsigned int) i;
+D.2749 = D.2748 * 4;
+D.2750 = b + D.2749;              => &b[i]
+D.2751 = *D.2750;                 => b[i]
+D.2752 = D.2747 + D.2751;         => tmp = a[i] + b[i]
+*D.2743 = D.2752;                 => c[i] = tmp
+\end{lstlisting}
+\end{center}
+
+Donc, on vois dans cet exemple que si une varaible \textbf{PARM\_DECL} n'est pas l'opérande la plus a gauche, alors on lit d'adresse qui est dans l'opérande de gauche. Et si l'opérande de gauche est un \textbf{ADDR\_EXPR}, cette adresse sera alors écrite.
+
+
 \section{\color{blue}La librairie d'analyse}
+
 La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir partie 4.2). Si recouvrement il y a, on teste le types de recouvrement en verifiant les types d'accés qui ont été efféctués sur ses adresses (voir tableau XX).
 
 Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes: 	

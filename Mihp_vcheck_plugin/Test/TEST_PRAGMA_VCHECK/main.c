@@ -4,8 +4,8 @@
 
 #include "mihp_vcheck.h"
 
-#pragma mihp vcheck functionTestLoop
-// #pragma mihp vcheck functionAddTab
+// #pragma mihp vcheck functionTestLoop
+#pragma mihp vcheck functionAddTab
 // #pragma mihp vcheck (functionTestLoop,functionAddTab)
 // #pragma mihp vcheck (functionTestLoop,functionWithoutLoop)
 
@@ -19,8 +19,9 @@ void functionAddTab(float* result, const float* a, const float* b, size_t size){
 	if(result == NULL || a == NULL || b == NULL || size == 0) return;
 	int i;
 	for(i = 0; i < size; ++i){
-		result[i] = a[i] + b[i];
-// 		result[i] = 0;
+// 		result[i] = a[i] + b[i];
+		result[i] = 0.0;
+		
 	}
 }
 
@@ -54,12 +55,16 @@ int main(int argc, char** argv){
 	size_t size = 5;
 	
 	double* tabFloat = malloc(sizeof(double)*size);
-	
+	printf("tabFloat : %p\n", tabFloat);
 	functionTestLoop(tabFloat, size);
 	
 	float* tabResult = malloc(sizeof(float)*size);
 	float* tabA = malloc(sizeof(float)*size);
 	float* tabB = malloc(sizeof(float)*size);
+	
+	printf("tabResult : %p\n", tabResult);
+	printf("tabA : %p\n", tabA);
+	printf("tabB : %p\n", tabB);
 	
 	functionAddTab(tabResult, tabA, tabB, size);
 	
