@@ -196,11 +196,7 @@ void createGimpleCallForOpInLoopMemRef(const char * functionName, const_tree op,
 #endif
 	
 #ifndef DONT_ADD_GIMPLE_NODE_MIHP_ADDRESS
-	edge_iterator it = ei_start(bb->succs);
-	edge currentEdge;
-	ei_cond(it, &currentEdge);
-	basic_block prevBlock = currentEdge->dest;              //on a bien le premier précédent block
-	gimple_stmt_iterator gsi = gsi_last_bb(prevBlock);      //on récupère l'itérateur, on se met à la fin des statements
+	gimple_stmt_iterator gsi = gsi_last_bb(bb);      //on récupère l'itérateur, on se met à la fin des statements
 	gsi_insert_after(&gsi, callOpInNode, GSI_NEW_STMT);
 #endif
 }
@@ -285,6 +281,7 @@ bool isStatementContainsLeftMemRef(const_tree & op, gimple stmt){
 	if(nbOperand == 0) return false;
 	//on prend l'opérande de gauche
 	op = gimple_op(stmt, 0);
+	printf("isStatementContainsLeftMemRef : op : %s\n", (char *)(get_tree_code_name(TREE_CODE(op))));
 	if(TREE_CODE(op) == MEM_REF) return true;       //si c'est un MEM_REF, on est content
 	else return false;
 }
@@ -318,6 +315,7 @@ void analyseLoopBlockStmtOp(struct loop* boucle){
 				if(isStatementContainsParmDecl(op, stmt)){      //si c'est un PARM_DECL, on lit son adresse
 					createGimpleCallForOpInLoop("mihp_adress", op, false, bb);
 				}else if(isStatementContainsLeftMemRef(op, stmt)){  //si c'est un MEM_REF à gauche, on écrit à son adresse
+					printfMihp("Found MEM_REF!!!!!!!!!!!!!!!!!!!!!!!\n");
 					createGimpleCallForOpInLoopMemRef("mihp_adress", op, true, bb);
 				}
 				
