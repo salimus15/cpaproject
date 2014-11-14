@@ -94,42 +94,58 @@ void Mihp_Loop :: MihpCheckIterDep(){
 // Verifie si il ya des recouverements entre les iterations et verifie si ils empechent la vectorisation ou non.	 
 bool Mihp_Loop :: MihpCheckRecouvement(){
 	int vectorSize = MAX_INT;
-	int temp = 0;
+	int temp = 1;
+	bool therIsDependance = false;
 	std :: list<Mihp_Iteration> :: iterator otherIt;
-	//list_dependences dependences = std::list< paire_adr>();
-	printfMihp(" On entre da la fonction dAnalyse \n");
+
+	//printfMihp(" On entre da la fonction dAnalyse \n");
+#ifndef NDEBUG
+	cout << " Analyse de la boucle a la ligne"<< loop_nline <<" de la fonction" <<func_name<< "du fichier " <<  file_name << endl;
+
+#endif	
 	for (it = iters.begin(); it != iters.end(); ++it){
 			
 		otherIt = it;
-		++otherIt;
-		
-		while(otherIt != iters.end()){
+		++otherIt;  /* on compare bien avec les iteration a partir de la suivante */		
+	
+		while(otherIt != iters.end()){	
+			/* on teste si il y a une dependances bloquante */ 
 			if(it->MihpCheckIterRecouvrement(*otherIt)){
+				therIsDependance = true;
 				if(temp < vectorSize) 	vectorSize = temp;
-
-				if( vectorSize != 0){
-					cout << " La taille maximale du vecteur est de" << vectorSize << endl;
+				if(vectorSize <= 1){
+	
+					cout << " la boucle a la ligne"<< loop_nline <<" de la fonction " << func_name<< " du fichier " << endl << file_name << " est non vectorisable"<<endl;
+					return false;
+	
 				}else{
-					cout << " boucle non vectorisable" << endl;
+					break;
 				}
-				
-				printfMihp(" On commence l'analyse de la boucle a la ligne \n");
-
-				return true;
+			//return false;
 			}else{
 				temp++;
 				++otherIt;	
 			}
 		}
-		if(temp < vectorSize) 	vectorSize = temp;
-		temp = 0;
-	}
-		
-		
-	cout <<" \033[37mBoucle Completement vectorisable\033[0m " << endl;	
-	printfMihp(" On sort da la fonction dAnalyse \n");
-	return false;
 	
+		if(temp < vectorSize) 	vectorSize = temp;
+		temp = 1;
+	
+	}
+	if( therIsDependance == true){
+		if( vectorSize > 1){
+			cout << " La taille maximale du vecteur est de" << vectorSize << endl;
+		
+		}else{
+			cout << " la boucle a la ligne"<< loop_nline <<" de la fonction " << func_name<< " du fichier " << endl << file_name << " est non vectorisable"<<endl;
+			return false;
+		}	
+	} else{	
+		cout <<" \033[37mBoucle Completement vectorisable\033[0m : Line  " << loop_nline << " function " << func_name << endl <<"\t file " << file_name<< endl;	
+		printfMihp(" On sort da la fonction dAnalyse \n");
+		return true;
+	}
+	return true;
 }
 
 
