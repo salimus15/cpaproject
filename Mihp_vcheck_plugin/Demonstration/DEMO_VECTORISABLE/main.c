@@ -21,7 +21,7 @@ void functionAddTab(float* result, const float* a, const float* b, size_t size){
 }
 
 int main(int argc, char** argv){
-	size_t size = 5;
+	int size = 5;
 	
 	float* tabResult = malloc(sizeof(float)*size);
 	float* tabA = malloc(sizeof(float)*size);

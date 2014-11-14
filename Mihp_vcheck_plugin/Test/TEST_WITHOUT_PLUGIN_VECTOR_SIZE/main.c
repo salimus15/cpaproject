@@ -18,9 +18,9 @@ void vectorisize(float* tabFloat, size_t size){
 		tabFloat[i] = 1.0;
 		mihp_adress(&tabFloat[i], sizeof(tabFloat[i]), MIHP_WRITE);
 		if((i % 4)==3){
-		tabFloat[i] = tabFloat[i-3];
-		mihp_adress(&tabFloat[i-3], sizeof(tabFloat[i-3]), MIHP_READ);
-		mihp_adress(&tabFloat[i], sizeof(tabFloat[i-3]), MIHP_WRITE);
+			tabFloat[i] = tabFloat[i-3];
+			mihp_adress(&tabFloat[i-3], sizeof(tabFloat[i-3]), MIHP_READ);
+			mihp_adress(&tabFloat[i], sizeof(tabFloat[i-3]), MIHP_WRITE);
 		}
 		mihp_newIteration();
 	}

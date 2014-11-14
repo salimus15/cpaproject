@@ -104,7 +104,7 @@ bool Mihp_Loop :: MihpCheckRecouvement(){
 
 #endif	
 	for (it = iters.begin(); it != iters.end(); ++it){
-			
+			temp = 1;
 		otherIt = it;
 		++otherIt;  /* on compare bien avec les iteration a partir de la suivante */		
 	
@@ -115,7 +115,7 @@ bool Mihp_Loop :: MihpCheckRecouvement(){
 				if(temp < vectorSize) 	vectorSize = temp;
 				if(vectorSize <= 1){
 	
-					cout << " la boucle a la ligne"<< loop_nline <<" de la fonction " << func_name<< " du fichier " << endl << file_name << " est non vectorisable"<<endl;
+					cout << " la boucle a la ligne "<< loop_nline <<" de la fonction " << func_name<< " du fichier " << endl << file_name << " est non vectorisable"<<endl;
 					return false;
 	
 				}else{
@@ -128,16 +128,16 @@ bool Mihp_Loop :: MihpCheckRecouvement(){
 			}
 		}
 	
-		if(temp < vectorSize) 	vectorSize = temp;
-		temp = 1;
+		//if(temp < vectorSize) 	vectorSize = temp;
+		cout << " vect_size : " << vectorSize<< endl;
 	
 	}
 	if( therIsDependance == true){
 		if( vectorSize > 1){
-			cout << " La taille maximale du vecteur est de" << vectorSize << endl;
+			cout << " La taille maximale du vecteur est de " << vectorSize << endl;
 		
 		}else{
-			cout << " la boucle a la ligne"<< loop_nline <<" de la fonction " << func_name<< " du fichier " << endl << file_name << " est non vectorisable"<<endl;
+			cout << " boucle a la ligne "<< loop_nline <<" de la fonction " << func_name<< " du fichier " << endl << file_name << " est non vectorisable"<<endl;
 			return false;
 		}	
 	} else{	
