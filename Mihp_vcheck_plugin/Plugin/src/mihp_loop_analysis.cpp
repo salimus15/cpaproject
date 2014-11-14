@@ -106,42 +106,6 @@ void createGimpleCallAfterExitLoop(struct loop* boucle, const char * functionNam
 	}
 }
 
-///fonction qui permet de renvoyer la taille d'une opérande gimple suivant son type
-/**	@param op : opérande dotn on veut la taille
- * 	@return taille de l'opérande
-*/
-size_t getSizeofOperandGimple(const_tree op){
-	size_t nbBlock(0);  //taille de l'accès mémoire
-	
-	//méthode bourin pour récuperer la taille de l'opérande (à défaut de faire un truc classe comme ajouter un sizeof)
-	//mais je n'ai pas encore trouvé comment faire
-	if(TREE_TYPE(op) == float_type_node){nbBlock = 4;		printfMihp("\t\033[34mfloat\033[0m");}			//float
-	else if(TREE_TYPE(op) == double_type_node){nbBlock = 8;		printfMihp("\t\033[34mdouble\033[0m");}			//double
-	else if(TREE_TYPE(op) == long_double_type_node){nbBlock = 16;	printfMihp("\t\033[34mlong double\033[0m");}		//long double
-	
-	else if(TREE_TYPE(op) == intQI_type_node){nbBlock = 4;		printfMihp("\t\033[34mint QI\033[0m");}			//int QI
-	else if(TREE_TYPE(op) == intHI_type_node){nbBlock = 4;		printfMihp("\t\033[34mint HI\033[0m");}			//int HI
-	else if(TREE_TYPE(op) == intSI_type_node){nbBlock = 4;		printfMihp("\t\033[34mint SI\033[0m");}			//int SI
-	else if(TREE_TYPE(op) == intDI_type_node){nbBlock = 4;		printfMihp("\t\033[34mint DI\033[0m");}			//int DI
-	else if(TREE_TYPE(op) == intTI_type_node){nbBlock = 4;		printfMihp("\t\033[34mint TI\033[0m");}			//int TI
-	
-	else if(TREE_TYPE(op) == unsigned_intQI_type_node){nbBlock = 4;	printfMihp("\t\033[34munsigned int QI\033[0m");}	//unsigned int QI
-	else if(TREE_TYPE(op) == unsigned_intHI_type_node){nbBlock = 4;	printfMihp("\t\033[34munsigned int HI\033[0m");}	//unsigned int HI
-	else if(TREE_TYPE(op) == unsigned_intSI_type_node){nbBlock = 4;	printfMihp("\t\033[34munsigned int SI\033[0m");}	//unsigned int SI
-	else if(TREE_TYPE(op) == unsigned_intDI_type_node){nbBlock = 4;	printfMihp("\t\033[34munsigned int DI\033[0m");}	//unsigned int DI
-	else if(TREE_TYPE(op) == unsigned_intTI_type_node){nbBlock = 4;	printfMihp("\t\033[34munsigned int TI\033[0m");}	//unsigned int TI
-	
-	else if(TREE_TYPE(op) == float_ptr_type_node){nbBlock = 4;		printfMihp("\t\033[34mfloat*\033[0m");}		//float*
-	else if(TREE_TYPE(op) == dfloat32_ptr_type_node){nbBlock = 4;		printfMihp("\t\033[34mconst float*\033[0m");}		//float*
-	else if(TREE_TYPE(op) == double_ptr_type_node){nbBlock = 8;		printfMihp("\t\033[34mdouble*\033[0m");}	//double*
-	else if(TREE_TYPE(op) == long_double_ptr_type_node){nbBlock = 16;	printfMihp("\t\033[34mlong double*\033[0m");}	//long double*
-	else if(TREE_TYPE(op) == integer_ptr_type_node){nbBlock = 4;		printfMihp("\t\033[34mint*\033[0m");}		//int*
-	
-	else if(TREE_TYPE(op) == ptr_type_node){nbBlock = sizeof(void*);		printfMihp("\t\033[34mvoid*\033[0m");}		//void*
-	else if(TREE_TYPE(op) == const_ptr_type_node){nbBlock = sizeof(const void*);	printfMihp("\t\033[34mconst void*\033[0m");}	//const void*
-	return nbBlock;
-}
-
 ///fonction qui créé l'appel à la fonction qui gère les accès aux variables
 /**	@param functionName : nom de la fonction à appeler
  * 	@param op : opérande à passée en paramètre à la fonction
@@ -151,8 +115,6 @@ size_t getSizeofOperandGimple(const_tree op){
 void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
 	
-// 	size_t nbBlock(getSizeofOperandGimple(op));
-// 	size_t nbBlock = sizeof_vn_nary_op(TREE_CODE_LENGTH(TREE_CODE (op))); //renvoie 32 pour toutes les opérandes
 	size_t nbBlock = int_size_in_bytes(TREE_TYPE (op));
 	//on définit la fonction, type retourné et paramètre(s)
 	//on a bien un void f(const void*, size_t, int )
@@ -195,31 +157,31 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
 	switch(TREE_CODE(op)){
 		case INTEGER_CST:
-			printfMihp("\t\033[33mINTEGER_CST\033[0m\n"); //c'est une constante donc on ne fait rien
+// 			printfMihp("\t\033[33mINTEGER_CST\033[0m\n"); //c'est une constante donc on ne fait rien
 			break;
 		case REAL_CST:
-			printfMihp("\t\033[33mREAL_CST\033[0m"); //c'est une constante donc on ne fait rien
+// 			printfMihp("\t\033[33mREAL_CST\033[0m"); //c'est une constante donc on ne fait rien
 // 			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 		case VAR_DECL:
-			printfMihp("\t\033[33mVAR_DECL\033[0m");
-// 			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+// 			printfMihp("\t\033[33mVAR_DECL\033[0m");
+			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 		case PARM_DECL:
 			printfMihp("\t\033[33mPARM_DECL\033[0m");
 			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 		case CONST_DECL:
-			printfMihp("\t\033[33mCONST_DECL\033[0m\n"); //c'est une constante donc on ne fait rien
+// 			printfMihp("\t\033[33mCONST_DECL\033[0m\n"); //c'est une constante donc on ne fait rien
 			break;
 		case STRING_CST:
-			printfMihp("\t\033[33mSTRING_CST\033[0m\n");
+// 			printfMihp("\t\033[33mSTRING_CST\033[0m\n");
 			break;
 		case SSA_NAME:
-			printfMihp("\t\033[33mSSA_NAME\033[0m\n");
+// 			printfMihp("\t\033[33mSSA_NAME\033[0m\n");
 			break;
 		case MEM_REF:
-			printfMihp("\t\033[33mMEM_REF\033[0m\n");
+// 			printfMihp("\t\033[33mMEM_REF\033[0m\n");
 // 			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
 			break;
 		case ADDR_EXPR:
@@ -231,7 +193,7 @@ void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
 			printfMihp("\tARRAY_REF\t");analyseSingleOperand(TREE_OPERAND(op,1), false, bb);      //le décallage de l'opérateur []
 			break;
 		default:
-			printfMihp("\tdefault\n");
+// 			printfMihp("\tdefault\n");
 			break;
 	}
 }
@@ -262,14 +224,15 @@ void analyseLoopBlockStmtOp(struct loop* boucle){
 			stmt = gsi_stmt(gsi);
 			//Il va falloir tester le type de statement pour appeler la fonction mihp_adress()
 			if(gimple_code(stmt) == GIMPLE_ASSIGN){                 //on ne s'intéresse au'aux Gimple Assign
-				printfMihp("\tGIMPLE_ASSIGN : BLOCK INDEX %d : LINE %d\n\t\t", bb->index, gimple_lineno(stmt));
-				print_gimple_stmt(stdout, stmt, 0, 0);
-				printf("\t\t\tOpération %s\n", get_tree_code_name(gimple_assign_rhs_code(stmt)));
-				for(size_t i(0); i < gimple_num_ops(stmt); i++){  //on parcours toutes les opérandes
-					op = gimple_op(stmt, i);
+// 				printfMihp("\tGIMPLE_ASSIGN : BLOCK INDEX %d : LINE %d\n\t\t", bb->index, gimple_lineno(stmt));
+// 				print_gimple_stmt(stdout, stmt, 0, 0);
+// 				printf("\t\t\tOpération %s\n", get_tree_code_name(gimple_assign_rhs_code(stmt)));
+				int nbOperand = gimple_num_ops(stmt), numOp;
+				for(int j(0); j < nbOperand; j++){  //on parcours toutes les opérandes
+					numOp = nbOperand - j - 1;
+					op = gimple_op(stmt, numOp);
 					if(!op)continue;
-					analyseSingleOperand(op, i == 0, boucle->header); //on analyse l'opérande courante (boucle->latch ou boucle->header)
-// 					return;
+					analyseSingleOperand(op, numOp == 0, boucle->header); //on analyse l'opérande courante (boucle->latch ou boucle->header)
 				}
 			}
 		}
@@ -302,10 +265,10 @@ void addGimpleCallInLoop(struct loop* boucle){
 		if(inner->inner == NULL){ //on est bien dans une boucle interne
 			//on rajoute tout les appels de fonctions qui vont bien
 			//on a la garantie que l'on est dans une boucle interne
-			printAllBlockInLoop(inner);
+// 			printAllBlockInLoop(inner);
 			addGimpleCallInInnerLoop(inner);
-			printfMihp("Après addGimpleCallInInnerLoop :\n");
-			printAllBlockInLoop(inner);
+// 			printfMihp("Après addGimpleCallInInnerLoop :\n");
+// 			printAllBlockInLoop(inner);
 		}else{                   //on va dans la boucle la plus interne
 			addGimpleCallInLoop(inner);
 		}

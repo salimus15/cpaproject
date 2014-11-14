@@ -20,12 +20,9 @@ include_directories(${INCLUDE_PLUGIN_GCC}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Mihp_vcheck_lib/src)
 
 if(RELEASE_MODE)
-	#le -DNOCHECKS permet d'enlever les if au début des fonctions pour vérifier si un pointeur est NULL our des choses comme ça.
-	#C'est un peut un mode super optimisé sans filet
 	add_definitions(-O3 -DNDEBUG)
 	message(STATUS "MIHP VCheck Install mode")
 else(RELEASE_MODE)
-	#on passe aussi les warning en erreurs
 	add_definitions(-O0 -Wall)
 	message(STATUS "MIHP VCheck Debug mode")
 endif(RELEASE_MODE)
