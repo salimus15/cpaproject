@@ -1,2 +1,148 @@
+mihp_newLoop : In /home/pierre/projects/Console/PROJET_MIHP_Vectorisation_de_boucle/cpaproject/Mihp_vcheck_plugin/Demonstration/DEMO_VECTORISABLE/main.c: in Function 'functionAddTab' , Loop:18
+		mihp_newIteration
+			mihp_adress 0x1 Read 4 B
+			mihp_adress 0x174b010 Read 8 B
+			mihp_adress 0x174b010 Write 8 B
+			mihp_adress 0x1 Read 4 B
+			mihp_adress 0x174b030 Read 8 B
+			mihp_adress 0x174b030 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x1 Read 4 B
+			mihp_adress 0x174b050 Read 8 B
+			mihp_adress 0x174b050 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x1 Read 4 B
+			mihp_adress 0x1 Write 4 B
+		mihp_newIteration
+			mihp_adress 0x2 Read 4 B
+			mihp_adress 0x1 Write 8 B
+			mihp_adress 0x1 Read 8 B
+			mihp_adress 0x4 Write 8 B
+			mihp_adress 0x4 Read 8 B
+			mihp_adress 0x174b010 Read 8 B
+			mihp_adress 0x174b014 Write 8 B
+			mihp_adress 0x2 Read 4 B
+			mihp_adress 0x1 Write 8 B
+			mihp_adress 0x1 Read 8 B
+			mihp_adress 0x4 Write 8 B
+			mihp_adress 0x4 Read 8 B
+			mihp_adress 0x174b030 Read 8 B
+			mihp_adress 0x174b034 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x2 Read 4 B
+			mihp_adress 0x1 Write 8 B
+			mihp_adress 0x1 Read 8 B
+			mihp_adress 0x4 Write 8 B
+			mihp_adress 0x4 Read 8 B
+			mihp_adress 0x174b050 Read 8 B
+			mihp_adress 0x174b054 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x2 Read 4 B
+			mihp_adress 0x2 Write 4 B
+		mihp_newIteration
+			mihp_adress 0x3 Read 4 B
+			mihp_adress 0x2 Write 8 B
+			mihp_adress 0x2 Read 8 B
+			mihp_adress 0x8 Write 8 B
+			mihp_adress 0x8 Read 8 B
+			mihp_adress 0x174b010 Read 8 B
+			mihp_adress 0x174b018 Write 8 B
+			mihp_adress 0x3 Read 4 B
+			mihp_adress 0x2 Write 8 B
+			mihp_adress 0x2 Read 8 B
+			mihp_adress 0x8 Write 8 B
+			mihp_adress 0x8 Read 8 B
+			mihp_adress 0x174b030 Read 8 B
+			mihp_adress 0x174b038 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x3 Read 4 B
+			mihp_adress 0x2 Write 8 B
+			mihp_adress 0x2 Read 8 B
+			mihp_adress 0x8 Write 8 B
+			mihp_adress 0x8 Read 8 B
+			mihp_adress 0x174b050 Read 8 B
+			mihp_adress 0x174b058 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x3 Read 4 B
+			mihp_adress 0x3 Write 4 B
+		mihp_newIteration
+			mihp_adress 0x4 Read 4 B
+			mihp_adress 0x3 Write 8 B
+			mihp_adress 0x3 Read 8 B
+			mihp_adress 0xc Write 8 B
+			mihp_adress 0xc Read 8 B
+			mihp_adress 0x174b010 Read 8 B
+			mihp_adress 0x174b01c Write 8 B
+			mihp_adress 0x4 Read 4 B
+			mihp_adress 0x3 Write 8 B
+			mihp_adress 0x3 Read 8 B
+			mihp_adress 0xc Write 8 B
+			mihp_adress 0xc Read 8 B
+			mihp_adress 0x174b030 Read 8 B
+			mihp_adress 0x174b03c Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 4 B
+			mihp_adress 0x3 Write 8 B
+			mihp_adress 0x3 Read 8 B
+			mihp_adress 0xc Write 8 B
+			mihp_adress 0xc Read 8 B
+			mihp_adress 0x174b050 Read 8 B
+			mihp_adress 0x174b05c Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 4 B
+			mihp_adress 0x4 Write 4 B
+		mihp_newIteration
+			mihp_adress 0x5 Read 4 B
+			mihp_adress 0x4 Write 8 B
+			mihp_adress 0x4 Read 8 B
+			mihp_adress 0x10 Write 8 B
+			mihp_adress 0x10 Read 8 B
+			mihp_adress 0x174b010 Read 8 B
+			mihp_adress 0x174b020 Write 8 B
+			mihp_adress 0x5 Read 4 B
+			mihp_adress 0x4 Write 8 B
+			mihp_adress 0x4 Read 8 B
+			mihp_adress 0x10 Write 8 B
+			mihp_adress 0x10 Read 8 B
+			mihp_adress 0x174b030 Read 8 B
+			mihp_adress 0x174b040 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x5 Read 4 B
+			mihp_adress 0x4 Write 8 B
+			mihp_adress 0x4 Read 8 B
+			mihp_adress 0x10 Write 8 B
+			mihp_adress 0x10 Read 8 B
+			mihp_adress 0x174b050 Read 8 B
+			mihp_adress 0x174b060 Write 8 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x4 Read 1 B
+			mihp_adress 0x4 Read 0 B
+			mihp_adress 0x5 Read 4 B
+			mihp_adress 0x5 Write 4 B
+		mihp_newIteration
+	mihp_endLoop
+ On entre da la fonction dAnalyse 
 @1 de 0x1 >>>  0x5 et @2 de  0x2 >>>  0x6 
+-- deux lectures sur la meme adresse memoire 
 @1 de 0x1 >>>  0x5 et @2 de  0x1 >>>  0x9 
+-- lecture suivie d'une écriture sur la meme adresse memoire 
+ boucle non vectorisable
+ On commence l'analyse de la boucle a la ligne 

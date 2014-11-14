@@ -149,7 +149,7 @@ void callBackCheckMihpPragmaFinish(void *gcc_data, void *user_data){
 		}
 		cerr << "\tn'ont pas été trouvées, mais spécfiées." << endl;
 	}else{
-		printfMihp("\tAll done");
+		printfMihp("\tAll done\n");
 	}
 }
 

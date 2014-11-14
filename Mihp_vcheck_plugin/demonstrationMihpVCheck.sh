@@ -7,7 +7,8 @@ fi
 
 cd build
 
-cmake .. -DRELEASE_MODE=yes
+# CC=$HOME/usr/bin/gcc CXX=$HOME/usr/bin/g++ cmake .. -DRELEASE_MODE=yes
+CC=$HOME/usr/bin/gcc CXX=$HOME/usr/bin/g++ cmake .. -DRELEASE_MODE=no
 
 make
 
@@ -20,5 +21,6 @@ make
 #un cas avec une dépendance arrière (non-vevtorisable)
 ./Demonstration/DEMO_BACK_DEPEND/demo_back_depend > ../Demonstration/Results/demo_back_depend.txt
 
-
+#on vire les fichiers du dossier build
+rm -fr *
 
