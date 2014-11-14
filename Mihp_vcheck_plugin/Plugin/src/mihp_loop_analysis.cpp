@@ -111,8 +111,8 @@ void createGimpleCallAfterExitLoop(struct loop* boucle, const char * functionNam
 void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
 	
-// 	size_t nbBlock = int_size_in_bytes(TREE_TYPE(op));
-	size_t nbBlock = 4;
+	size_t nbBlock = int_size_in_bytes(TREE_TYPE(TREE_TYPE(op)));
+// 	size_t nbBlock = 4;
 	//on définit la fonction, type retourné et paramètre(s)
 	//on a bien un void f(const void*, size_t, int )
 	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
@@ -158,8 +158,8 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 void createGimpleCallForOpInLoopMemRef(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
 	tree refOp = OBJ_TYPE_REF_EXPR(op);
-// 	size_t nbBlock = int_size_in_bytes(TREE_TYPE(refOp));
-	size_t nbBlock = 4;
+	size_t nbBlock = int_size_in_bytes(TREE_TYPE(TREE_TYPE(refOp)));
+// 	size_t nbBlock = 4;
 // 	size_t nbBlock = 1;
 	//on définit la fonction, type retourné et paramètre(s)
 	//on a bien un void f(const void*, size_t, int )
