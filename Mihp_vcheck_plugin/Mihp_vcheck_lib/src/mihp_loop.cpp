@@ -4,6 +4,7 @@
 #include <iostream>
 #include "tools.h"
 
+using namespace std;
 
 Mihp_Loop :: Mihp_Loop(){ 
 	func_name = ""; 
@@ -92,35 +93,43 @@ void Mihp_Loop :: MihpCheckIterDep(){
 
 // Verifie si il ya des recouverements entre les iterations et verifie si ils empechent la vectorisation ou non.	 
 bool Mihp_Loop :: MihpCheckRecouvement(){
-	int vector_size = MAX_INT;
+	int vectorSize = MAX_INT;
 	int temp = 0;
-	std :: list<Mihp_Iteration> :: iterator other_it;
+	std :: list<Mihp_Iteration> :: iterator otherIt;
 	//list_dependences dependences = std::list< paire_adr>();
 	printfMihp(" On entre da la fonction dAnalyse \n");
 	for (it = iters.begin(); it != iters.end(); ++it){
 			
-		other_it = it;
-		++other_it;
+		otherIt = it;
+		++otherIt;
 		
-		while(other_it != iters.end()){
-			if(it->MihpCheckIterRecouvrement(*other_it)){
-			if(temp < vector_size) 	vector_size = temp;
-				printfMihp(" La taille maximale du vecteur est de %d \n", vector_size);	
-				printfMihp(" On sort da la fonction dAnalyse \n");
+		while(otherIt != iters.end()){
+			if(it->MihpCheckIterRecouvrement(*otherIt)){
+				if(temp < vectorSize) 	vectorSize = temp;
+
+				if( vectorSize != 0){
+					cout << " La taille maximale du vecteur est de" << vectorSize << endl;
+				}else{
+					cout << " boucle non vectorisable" << endl;
+				}
+				
+				printfMihp(" On commence l'analyse de la boucle a la ligne \n");
+
 				return true;
 			}else{
 				temp++;
-				++other_it;	
+				++otherIt;	
 			}
 		}
-		if(temp < vector_size) 	vector_size = temp;
+		if(temp < vectorSize) 	vectorSize = temp;
 		temp = 0;
 	}
 		
 		
-	printfMihp(" \033[37mBoucle Completement vectorisable\033[0m  \n");	
+	cout <<" \033[37mBoucle Completement vectorisable\033[0m " << endl;	
 	printfMihp(" On sort da la fonction dAnalyse \n");
 	return false;
+	
 }
 
 
