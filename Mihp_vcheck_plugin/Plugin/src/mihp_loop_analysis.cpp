@@ -122,7 +122,7 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
 	
 	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3,
-						op,  //compile, et fonctionne, je ne vois pas trop pourquoi, mais comme ça fait trois jours que je galère, je prends
+						op, //compile, et fonctionne, je ne vois pas trop pourquoi, mais comme ça fait trois jours que je galère, je prends
 						build_int_cst(long_unsigned_type_node, nbBlock),
 						build_int_cst(integer_type_node, isWrited));
 	// type void* = build_pointer_type (void_type_node)
@@ -135,6 +135,60 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 		return;
 	}else{
 		cerr << "\tcreateGimpleCallForOpInLoop : callOpInNode : ";
+		print_gimple_stmt(stdout, callOpInNode, 0, 0);
+	}
+#endif
+	
+#ifndef DONT_ADD_GIMPLE_NODE_MIHP_ADDRESS
+	edge_iterator it = ei_start(bb->succs);
+	edge currentEdge;
+	ei_cond(it, &currentEdge);
+	basic_block prevBlock = currentEdge->dest;              //on a bien le premier précédent block
+	gimple_stmt_iterator gsi = gsi_last_bb(prevBlock);      //on récupère l'itérateur, on se met à la fin des statements
+	gsi_insert_after(&gsi, callOpInNode, GSI_NEW_STMT);
+#endif
+}
+
+///fonction qui créé l'appel à la fonction qui gère les accès aux variables, pour des MEM_REF
+/**	@param functionName : nom de la fonction à appeler
+ * 	@param op : opérande à passée en paramètre à la fonction
+ * 	@param isWrited : true si on écrit, false si on lit l'opérande
+ * 	@param bb : block de base à la fin duquel on va ajouter l'appel de la fonction functionName
+*/
+void createGimpleCallForOpInLoopMemRef(const char * functionName, const_tree op, bool isWrited, basic_block bb){
+	if(functionName == NULL) return;
+	
+	size_t nbBlock = int_size_in_bytes(TREE_TYPE(op));
+	//on définit la fonction, type retourné et paramètre(s)
+	//on a bien un void f(const void*, size_t, int )
+	
+// 	tree op_type = build_pointer_type(TREE_TYPE(op));
+// 	tree op_unref_tree = build1(ADDR_EXPR, op_type, (tree)op);
+// 	tree op_unref_tree = build0(FDESC_EXPR, (tree)op);
+// 		tree op_unref_tree = build0(POINTER_TYPE, (tree)op);
+// 	tree op_unref_tree = build1(NOP_EXPR, op_type, (tree)op);
+// 	tree op_unref_tree = build1(TARGET_MEM_REF, op_type, (tree)op);
+	
+	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
+	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
+	
+	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3,
+// 						op_unref_tree,
+// 						op->base,
+// 						op,
+						OBJ_TYPE_REF_EXPR(op),
+						build_int_cst(long_unsigned_type_node, nbBlock),
+						build_int_cst(integer_type_node, isWrited));
+	// type void* = build_pointer_type (void_type_node)
+	// build_reference_type(TREE_TYPE(op));  //construit un type &
+	// build_pointer_type(TREE_TYPE(op));    //construit un type *
+	//addr = create_tmp_var (build_pointer_type (TREE_TYPE (decl)), NULL); //créé une variable temporaire
+#ifndef NDEBUG
+	if(callOpInNode == NULL){
+		cerr << "\tcreateGimpleCallForOpInLoopMemRef : callOpInNode = NULL" << endl;
+		return;
+	}else{
+		cerr << "\tcreateGimpleCallForOpInLoopMemRef : callOpInNode : ";
 		print_gimple_stmt(stdout, callOpInNode, 0, 0);
 	}
 #endif
@@ -181,8 +235,8 @@ void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
 // 			printfMihp("\t\033[33mSSA_NAME\033[0m\n");
 			break;
 		case MEM_REF:
-// 			printfMihp("\t\033[33mMEM_REF\033[0m\n");
-// 			createGimpleCallForOpInLoop("mihp_adress", op, isWrited, bb);
+			printfMihp("\t\033[33mMEM_REF\033[0m");
+			createGimpleCallForOpInLoopMemRef("mihp_adress", op, isWrited, bb);
 			break;
 		case ADDR_EXPR:
 			printfMihp("\tADDR_EXPR\t");
@@ -268,7 +322,7 @@ void addGimpleCallInLoop(struct loop* boucle){
 // 			printAllBlockInLoop(inner);
 			addGimpleCallInInnerLoop(inner);
 // 			printfMihp("Après addGimpleCallInInnerLoop :\n");
-// 			printAllBlockInLoop(inner);
+			printAllBlockInLoop(inner);
 		}else{                   //on va dans la boucle la plus interne
 			addGimpleCallInLoop(inner);
 		}
