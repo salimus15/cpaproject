@@ -267,8 +267,8 @@ void addGimpleCallInLoop(struct loop* boucle){
 			//on a la garantie que l'on est dans une boucle interne
 // 			printAllBlockInLoop(inner);
 			addGimpleCallInInnerLoop(inner);
-			printfMihp("Après addGimpleCallInInnerLoop :\n");
-			printAllBlockInLoop(inner);
+// 			printfMihp("Après addGimpleCallInInnerLoop :\n");
+// 			printAllBlockInLoop(inner);
 		}else{                   //on va dans la boucle la plus interne
 			addGimpleCallInLoop(inner);
 		}
