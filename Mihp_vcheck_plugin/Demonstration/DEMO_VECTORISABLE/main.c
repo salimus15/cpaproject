@@ -12,7 +12,7 @@
  * 	@param b: tableau
  * 	@param size : taille des tableaux
 */
-void functionAddTab(float* result, const float* a, const float* b, size_t size){
+void functionAddTab(float * result, const float * a, const float * b, size_t size){
 	if(result == NULL || a == NULL || b == NULL || size == 0) return;
 	int i;
 	for(i = 0; i < size; ++i){
@@ -23,9 +23,9 @@ void functionAddTab(float* result, const float* a, const float* b, size_t size){
 int main(int argc, char** argv){
 	int size = 5;
 	
-	float* tabResult = malloc(sizeof(float)*size);
-	float* tabA = malloc(sizeof(float)*size);
-	float* tabB = malloc(sizeof(float)*size);
+	float * tabResult = malloc(sizeof(float )*size);
+	float * tabA = malloc(sizeof(float )*size);
+	float * tabB = malloc(sizeof(float )*size);
 	
 	functionAddTab(tabResult, tabA, tabB, size);
 	
