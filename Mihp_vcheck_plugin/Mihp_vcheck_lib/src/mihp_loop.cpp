@@ -129,7 +129,7 @@ bool Mihp_Loop :: MihpCheckRecouvement(){
 		}
 	
 		//if(temp < vectorSize) 	vectorSize = temp;
-		cout << " vect_size : " << vectorSize<< endl;
+		//cout << " vect_size : " << vectorSize<< endl;
 	
 	}
 	if( therIsDependance == true){

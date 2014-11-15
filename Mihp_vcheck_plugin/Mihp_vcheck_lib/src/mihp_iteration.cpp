@@ -50,11 +50,15 @@ Mihp_Adress Mihp_Iteration :: Mihp_get_next_adr(){
 *  et renvoie 1 si c'est une dependance qui risque d'alterer la vectorisation 
 *	et 0 si c'est une dependance qui est sans rique 
 */
-bool Mihp_Iteration :: dependencesAnalysing(const Mihp_Adress & adress1, const Mihp_Adress & adress2){
+bool Mihp_Iteration :: dependencesAnalysing(const Mihp_Adress & adress1, const Mihp_Adress & adress2, const int & indiceFirstAdr, const int & indiceSecondAdr){
 	
 //	printfMihp("++ adresse 1 : %p ;  adresse 2 : %p \n ", collision.first.Mihp_Adress_get_adr(), collision.second.Mihp_Adress_get_adr());
 	if(adress1.Mihp_Adress_get_t() && !adress2.Mihp_Adress_get_t()){
 		printfMihp("-- écriture suivie d'une lecture sur la meme adresse memoire \n");
+		if ( indiceFirstAdr < indiceSecondAdr){
+			printfMihp("\t l'ecriture se fait avant la lecture donc cela ne doit pas etre problematique ");
+			return false;
+		}
 	return true;
 	}
 	
@@ -82,26 +86,27 @@ printfMihp("adresse 1 de %p >>>  %p \t et \t adresse2 de  %p >>>  %p \n", a_d1, 
 }
 
 bool Mihp_Iteration :: MihpCheckIterRecouvrement(const Mihp_Iteration & other){
-	//int i = 0;
+	int i, j; /* variables pour recuperer les positions des acces sur une meme adresse **/
 	std :: list<Mihp_Adress> :: const_iterator it_other;
 	
 	bool thereIsRecouvrement = false;
-	
+	i = 0;
 	for(it = adres_acc.begin(); it != adres_acc.end(); ++it){
-		
+		j = 0;
 		for (it_other = other.adres_acc.begin(); it_other != other.adres_acc.end(); ++it_other){
-			
+
 			if(MihpCheckAdressRecouvrement(it->p_adr,  OFFSET(it->p_adr ,it->data_tsize), \
 					it_other->p_adr ,  OFFSET(it_other->p_adr ,it_other->data_tsize))){
 				
-				if(dependencesAnalysing(*it, *it_other)){
+				if(dependencesAnalysing(*it, *it_other, i, j)){
 						
 					thereIsRecouvrement = true;			
 					return thereIsRecouvrement;	
 				}
 			} 	
-		
+			++j;	
 		}	
+	 ++i;	
 	}
 	return thereIsRecouvrement;
 }

@@ -70,7 +70,7 @@ class Mihp_Iteration{
 		bool MihpCheckAdressRecouvrement(const void *  a_d1, const void *  a_f1, const void *  a_d2, const void *  a_f2 );
 			
 			
-		bool dependencesAnalysing(const Mihp_Adress & adress1, const Mihp_Adress & adress2 );
+		bool dependencesAnalysing(const Mihp_Adress & adress1, const Mihp_Adress & adress2, const int & indiceFirstAdr, const int & indiceSecondAdr);
 			
 		/** \fn bool MihpCheckIterRecouvrement(const Mihp_Iteration & other)
 		*	\brief teste si il y a des recouvrement entre l'iteration courante et l'iteration other
