@@ -156,7 +156,7 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 */
 void createGimpleCallForOpInLoopMemRef(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
-	//ne fonctionne pas sur autre chose qu'un pointeur
+	
 	tree refOp = OBJ_TYPE_REF_EXPR(op);
 	tree fisrtTypeUnref = TREE_TYPE(refOp);
 	size_t nbBlock;

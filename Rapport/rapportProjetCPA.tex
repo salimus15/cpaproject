@@ -10,6 +10,13 @@
 \usepackage{color}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{graphviz}
+% \usepackage[unicode=true,pdfusetitle,bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,breaklinks=false,pdfborder={0 0 0},backref=section,colorlinks=true]{hyperref}
+
+\usepackage[pdfborder={0 0 0},colorlinks=true]{hyperref}
+\usepackage{esint}
+\usepackage[toc,page]{appendix}
+
 \pagestyle{empty}
 \usepackage{babel}
 \addto\extrasfrench{%
@@ -17,6 +24,7 @@
    \providecommand{\fg}{\ifdim\lastskip>\z@\unskip\fi~\frqq}%
 }
 
+%maintenant qu'on à des figures il faut penser à compiler deux fois de suite
 \title{\color{blue}Projet CPA \\ Vectorisation de boucle}
 
 \author{Pierre Aubert, Salim Nahi, Puchen Liu}
@@ -30,9 +38,13 @@
 
 \maketitle
 
+
+
 \section*{\color{blue}Introduction}
 
 Le but de ce projet est de fournir un plugin GCC et une librairie permettant d'étudier les accès mémoire du programme et ainsi déterminer si certaines boucles sont vectorisables ou non.
+
+\tableofcontents
 
 \section{\color{blue}Analyse du problème et architecture du projet}
 
@@ -80,7 +92,7 @@ Ou une liste de fonction à analyser :
 
 	\subsection{\color{blue}Analyse d'une boucle}
 
-Dans ce projet, nous ne traiterons que les boucles les plus internes. Pour ce faire, nous analyserons chaque fonction spécifiée dans le \textbf{pragma mihp vcheck}. L'analyse conciste dans un premier temps de vérifier que la fonction spécifiée contient bien une boucle, une fois que la boucle la plus interne à été déterminée, le plugin ajoute différents appels à la librairie :
+Dans ce projet, nous ne traiterons que les boucles les plus internes. Pour ce faire, nous analyserons chaque fonction spécifiée dans le \textbf{pragma mihp vcheck}. L'analyse conciste dans un premier temps à vérifier que la fonction spécifiée contient bien une boucle, une fois que la boucle la plus interne à été déterminée, le plugin ajoute différents appels à la librairie :
 \vspace{0.5cm}
 \begin{itemize}
 \item Une fonction qui spécifie le début d'une boucle
@@ -93,11 +105,28 @@ Dans ce projet, nous ne traiterons que les boucles les plus internes. Pour ce fa
 Le début de la boucle est précisé par la fonction
 \textbf{mihp\_newLoop}
 , cette fonction sera appelée juste avant le \textbf{header} de la boucle. La fonction \textbf{mihp\_endLoop} spécifie la fin d'une boucle et sera appelée sur chaque arrête sortante de la boucle. La fonction \textbf{mihp\_newIteration} indique une nouvelle itération, et sera appelée juste avant le
-\textbf{latch} de la boucle. La fonction \textbf{mihp\_address} quant à elle, sera appelée pour chaque opérande d'un \textbf{statement gimple} du type \textbf{GIMPLE\_ASSIGN}.
+\textbf{latch} de la boucle. La fonction \textbf{mihp\_address} quant à elle, sera appelée pour chaque opérande pertinente d'un \textbf{statement gimple} du type \textbf{GIMPLE\_ASSIGN}. Nous expliquerons ce qu'est une opérande pertinente un peut plus bas. 
+
+Les positions des différents appels aux fonctions de la biliothèque d'analyse sont illustré dans la figure \ref{DiagrammeAddFunction}.
+
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.5]{../Images/pluginInsertionFonctionAvant.png}
+	\end{center}
+	\caption{Illustration de l'ajout des appels au fonctions de la bibliothèque d'analyse par le plugin.}
+	\label{DiagrammeAddFunction}
+\end{figure}
+
+		\subsubsection{\color{blue}Analyse naïve}
 
 Dans un premier temps nous avons pris en compte toutes les opérandes non constantes, puisque les opérandes constantes ne peuvent être que lues (ce qui ne pose aucun problème pour la vectorisation). Comme gimple converti toutes les expressions en diadiques ou en triadique, il créé des variables temporaires de la forme \textbf{D.XXXX}, les adresses de ces variables sont généralement \textbf{0x1}, \textbf{0x2}, \textbf{0x3}, ect. Nous avons donc fait des tests pour vérifier que cela ne posait pas de problème avec notre librairie d'analyse (qui sera détaillée dans la section suivante).
 
-Nous avons vite mis en évidence que les variables temporaires créées par Gimple allaient nous poser problème, car elles ont toujours les mêmes adresses. La méthode naïve, consiste à tenir uniquement compte des varaibles décrites par \textbf{PARM\_DECL}, ce qui nous permet de n'utiliser que les variables définies dans le fichier source. Le problème c'est que ces varaibles sont toujours accédées en lecture. Il n'est donc pas possible de se contenter uniquement de ces varaibles.
+Nous avons vite mis en évidence le fait que les variables temporaires créées par Gimple allaient nous poser problème, car elles ont toujours les mêmes adresses. La méthode naïve, consiste à tenir uniquement compte des varaibles décrites par \textbf{PARM\_DECL}, ce qui nous permet de n'utiliser que les variables définies dans le fichier source. Le problème est que ces varaibles sont toujours accédées en lecture. Il n'est donc pas possible de se contenter uniquement de ces varaibles.
+
+		\subsubsection{\color{blue}Analyse efficace des opérandes}
+
+Comme nous l'avons vu dans la section précédente, l'anayse des opérandes ne peut se limité aux varaibles définies par l'utilisateur dans le fichier source. Nous devons donc analyser les opérations que Gimple génère à la compilation.
 
 Si nous prenons une itération simple, comme celle ci-dessous :
 
@@ -119,7 +148,7 @@ mihp_address(&c[i], sizeof(c[i]), MIHP_WRITE);
 \end{lstlisting}
 \end{center}
 
-Mais si nous observons, ce que génère Gimple :
+Mais si nous observons, ce que génère Gimple nous constatons que les variables pertinentes sont temporaires de la forme \textbf{D.XXXX} :
 
 \begin{center}
 \color{blue}
@@ -140,18 +169,29 @@ D.2752 = D.2747 + D.2751;         => tmp = a[i] + b[i]
 \end{lstlisting}
 \end{center}
 
-Donc, on vois dans cet exemple que si une varaible \textbf{PARM\_DECL} n'est pas l'opérande la plus a gauche, alors on lit d'adresse qui est dans l'opérande de gauche. Et si l'opérande de gauche est un \textbf{ADDR\_EXPR}, cette adresse sera alors écrite.
+On remarque dans cet exemple que si une varaible \textbf{PARM\_DECL} n'est pas l'opérande la plus a gauche, alors on lit d'adresse qui est dans l'opérande de gauche. Et si l'opérande de gauche est un \textbf{MEM\_REF}, cette adresse sera alors écrite.
 
+Le plugin a donc besoin de deux fonctions : une qui permet de dire si une opération contient une varaible \textbf{PARM\_DECL} à droite, pour pouvoir spécifier une lecture d'adresse, et une autre fonction qui indique si l'opérande de gauche est un \textbf{MEM\_REF} pour indiquer une écriture à l'adresse contenue dans l'opérande de gauche de l'opération.
+
+Ces fonctions sont disponibles dans le fichier \textbf{Plugin/src/mihp\_loop\_analysis.cpp} ligne \textbf{111} et \textbf{157} respectivement.
 
 \section{\color{blue}La librairie d'analyse}
 
-La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir partie 4.2). Si recouvrement il y a, on teste le types de recouvrement en verifiant les types d'accés qui ont été efféctués sur ses adresses (voir tableau XX).
+La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle, ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir partie 4.2). Si il y a recouvrement, on teste le type de recouvrement en verifiant les types d'accés qui ont été efféctués sur ses adresses (voir tableau XX).
 
-Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes: 	
+Dans l'implémentation de notre librarie nous avons définie 3 classes : Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes (voir figure \ref{DiagrammeClasseLib}).
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1.0]{../Images/diagrammeDeClasseLibVCheck.png}
+	\end{center}
+	\caption{Digramme de classe utilisé dans la bibliothèque d'analyse}
+	\label{DiagrammeClasseLib}
+\end{figure}
 
 \section{\color{blue}Les tests}
 
-Pour tester le projet dans son ensemble et de manière efficace, nous avons choisi de permettre l'utilisation de la librairie d'analyse sans utiliser le plugin, ce qui nous a permis de débugger les deux parties de manière indémendantes. Nous avons donc réaliser des tests qui n'utilisent pas le plugin comme :
+Pour tester le projet dans son ensemble et de manière efficace, nous avons choisi de permettre l'utilisation de la librairie d'analyse sans utiliser le plugin, ce qui nous a permis de débugger les deux parties de manière indépendantes. Nous avons donc réalisé des tests qui n'utilisent pas le plugin comme :
 
 \begin{itemize}
 \item TEST\_WITHOUT\_PLUGIN
@@ -167,16 +207,21 @@ Ces tests nous on permis de vérifier trois cas différents :
 \item La vectorisation est possible mais avec une taille de vecteur limité
 \end{itemize}
 
-En ce qui concerne le plugin, nous avons testé, les analyses de fonctions seules et multiples, le cas où il y a plusieurs boucles dans une fonction, le cas où il y a un nid de boucle.
+En ce qui concerne le plugin, nous avons testé, les analyses de fonctions seules et multiples, le cas où il y a plusieurs boucles dans une fonction, le cas où il y a un nid de boucle. Seules les boucles contenues dans une condition contenu elle-même dans une autre boucle ne sont pas traité efficacement.
 
+\section{\color{blue}Analyse statique}
+
+Nous n'avons pas eu le temps d'implémenter cette dernière partie mais nous y avons quand même réfléchis. Une analyse statique ne peut être efficace dans tout les cas mais nous l'avons vu comme un outil permettant d'alléger l'analyse dynamique. Car dans ce cas, seule les boucles n'ayant pas été résolues par l'analyse statique le seront par la dynamique.
+
+Nous avons trouvé des conditions nécéssaires pour la vectorisation dans la documentation d'intel. Comme l'absence d'appel de fonction autre que les fonctions mathématiques usuelles (comme sin, cos, tan, etc), ou le fait que le nombre d'itération doit être prévisible.
 
 \section{\color{blue}Problèmes rencontrés}
 
-Les principaux problèmes rencontrés lors de l'impémentation du plugin ont été pour ajouter l'appel à la fonction \textbf{mihp\_address}, car l'utilisation de la fonction \textbf{print\_gimple\_stmt} ne permet pas de vérifier dans tout les cas si le prototype de la fonction qui sera appelée par gimple est le bon ou non.
+Les principaux problèmes rencontrés lors de l'impémentation du plugin ont été pour ajouter l'appel à la fonction \textbf{mihp\_address}, car l'utilisation de la fonction \textbf{print\_gimple\_stmt} ne permet pas de vérifier dans tout les cas si le prototype de la fonction qui sera appelée par gimple correspond aux paramètre effectivement passés.
 
 \section{\color{blue}Conclusion}
 
-
+Notre biliothèque fournie une très bonne analyse dynamique, mais nous n'avons pas eut le temps de faire l'analyse statique avec le plugin. Les cas litigieux contenant des conditions contenant elles mêmes des boucles ne sont pas gérés, mais les nids de boucles simple et les boucles contenant des conditions simples sont traités.
 
 \end{document}
 
