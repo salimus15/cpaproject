@@ -151,6 +151,23 @@ Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adr
 
 \section{\color{blue}Les tests}
 
+Pour tester le projet dans son ensemble et de manière efficace, nous avons choisi de permettre l'utilisation de la librairie d'analyse sans utiliser le plugin, ce qui nous a permis de débugger les deux parties de manière indémendantes. Nous avons donc réaliser des tests qui n'utilisent pas le plugin comme :
+
+\begin{itemize}
+\item TEST\_WITHOUT\_PLUGIN
+\item TEST\_WITH\_NO\_PLUGIN
+\item TEST\_WITHOUT\_PLUGIN\_VECTOR\_SIZE
+\end{itemize}
+
+Ces tests nous on permis de vérifier trois cas différents :
+
+\begin{itemize}
+\item La vectorisation est complétement impossible
+\item La vectorisation est complétement possible
+\item La vectorisation est possible mais avec une taille de vecteur limité
+\end{itemize}
+
+En ce qui concerne le plugin, nous avons testé, les analyses de fonctions seules et multiples, le cas où il y a plusieurs boucles dans une fonction, le cas où il y a un nid de boucle.
 
 
 \section{\color{blue}Problèmes rencontrés}

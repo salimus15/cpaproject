@@ -111,8 +111,14 @@ void createGimpleCallAfterExitLoop(struct loop* boucle, const char * functionNam
 void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
 	
-	size_t nbBlock = int_size_in_bytes(TREE_TYPE(TREE_TYPE(op)));
-// 	size_t nbBlock = 4;
+	tree fisrtTypeUnref = TREE_TYPE(op);
+	size_t nbBlock;
+	if(fisrtTypeUnref->typed.type == NULL_TREE){ //on ne va pas plus loin
+		nbBlock = int_size_in_bytes(fisrtTypeUnref);
+	}else{                                 //comme c'est un pointeur, on prend le type du pointeur
+		nbBlock = int_size_in_bytes(TREE_TYPE(fisrtTypeUnref));
+	}
+	
 	//on définit la fonction, type retourné et paramètre(s)
 	//on a bien un void f(const void*, size_t, int )
 	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
@@ -137,13 +143,6 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 #endif
 	
 #ifndef DONT_ADD_GIMPLE_NODE_MIHP_ADDRESS
-// 	edge_iterator it = ei_start(bb->succs);
-// 	edge currentEdge;
-// 	ei_cond(it, &currentEdge);
-// 	basic_block prevBlock = currentEdge->dest;              //on a bien le premier précédent block
-// 	gimple_stmt_iterator gsi = gsi_last_bb(prevBlock);      //on récupère l'itérateur, on se met à la fin des statements
-// 	gsi_insert_after(&gsi, callOpInNode, GSI_NEW_STMT);
-	
 	gimple_stmt_iterator gsi = gsi_last_bb(bb);      //on récupère l'itérateur, on se met à la fin des statements
 	gsi_insert_after(&gsi, callOpInNode, GSI_NEW_STMT);
 #endif
@@ -157,27 +156,20 @@ void createGimpleCallForOpInLoop(const char * functionName, const_tree op, bool 
 */
 void createGimpleCallForOpInLoopMemRef(const char * functionName, const_tree op, bool isWrited, basic_block bb){
 	if(functionName == NULL) return;
+	//ne fonctionne pas sur autre chose qu'un pointeur
 	tree refOp = OBJ_TYPE_REF_EXPR(op);
-	size_t nbBlock = int_size_in_bytes(TREE_TYPE(TREE_TYPE(refOp)));
-// 	size_t nbBlock = 4;
-// 	size_t nbBlock = 1;
-	//on définit la fonction, type retourné et paramètre(s)
-	//on a bien un void f(const void*, size_t, int )
-	
-// 	tree op_type = build_pointer_type(TREE_TYPE(op));
-// 	tree op_unref_tree = build1(ADDR_EXPR, op_type, (tree)op);
-// 	tree op_unref_tree = build0(FDESC_EXPR, (tree)op);
-// 		tree op_unref_tree = build0(POINTER_TYPE, (tree)op);
-// 	tree op_unref_tree = build1(NOP_EXPR, op_type, (tree)op);
-// 	tree op_unref_tree = build1(TARGET_MEM_REF, op_type, (tree)op);
+	tree fisrtTypeUnref = TREE_TYPE(refOp);
+	size_t nbBlock;
+	if(fisrtTypeUnref->typed.type == NULL_TREE){ //on ne va pas plus loin
+		nbBlock = int_size_in_bytes(fisrtTypeUnref);
+	}else{                                 //comme c'est un pointeur, on prend le type du pointeur
+		nbBlock = int_size_in_bytes(TREE_TYPE(fisrtTypeUnref));
+	}
 	
 	tree enter_functionDefintion = build_function_type_list(void_type_node, const_ptr_type_node, long_unsigned_type_node, integer_type_node, NULL_TREE);
 	tree enter_functionBuild = build_fn_decl(functionName, enter_functionDefintion);
 	
 	gimple callOpInNode = gimple_build_call(enter_functionBuild, 3,
-// 						op_unref_tree,
-// 						op->base,
-// 						op,
 						refOp,
 						build_int_cst(long_unsigned_type_node, nbBlock),
 						build_int_cst(integer_type_node, isWrited));
@@ -266,6 +258,7 @@ bool isStatementContainsParmDecl(const_tree& op, gimple stmt){
 		tmpOp = gimple_op(stmt, j);                   //on récupère l'opérande courante
 		if(!tmpOp)continue;
 		if(TREE_CODE(tmpOp) == PARM_DECL){            //si on trouve un PARM_DECL on est content
+			printf("isStatementContainsParmDecl : op : %s\n", (char *)(get_tree_code_name(TREE_CODE(op))));
 			return true;
 		}
 	}
@@ -315,7 +308,7 @@ void analyseLoopBlockStmtOp(struct loop* boucle){
 				if(isStatementContainsParmDecl(op, stmt)){      //si c'est un PARM_DECL, on lit son adresse
 					createGimpleCallForOpInLoop("mihp_adress", op, false, bb);
 				}else if(isStatementContainsLeftMemRef(op, stmt)){  //si c'est un MEM_REF à gauche, on écrit à son adresse
-					printfMihp("Found MEM_REF!!!!!!!!!!!!!!!!!!!!!!!\n");
+// 					printfMihp("Found MEM_REF!!!!!!!!!!!!!!!!!!!!!!!\n");
 					createGimpleCallForOpInLoopMemRef("mihp_adress", op, true, bb);
 				}
 				
@@ -357,7 +350,12 @@ void addGimpleCallInLoop(struct loop* boucle){
 	if(boucle == NULL) return;                //si la liste est vide on s'arrête
 	struct loop* inner;                       //boucle plus interne
 	for(inner = boucle->inner; inner != NULL; inner = inner->next){
+// 		addGimpleCallInInnerLoop(inner);
+		cout << "Boucle externe" << endl;
+		printAllBlockInLoop(inner);
+		
 		if(inner->inner == NULL){ //on est bien dans une boucle interne
+			cout << "Boucle interne" << endl;
 			//on rajoute tout les appels de fonctions qui vont bien
 			//on a la garantie que l'on est dans une boucle interne
 // 			printAllBlockInLoop(inner);
