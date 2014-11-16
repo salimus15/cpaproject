@@ -64,6 +64,7 @@ static void initMihpPragmaListFunction(cpp_reader *dummy ATTRIBUTE_UNUSED){
 			token = pragma_lex(&x);          //on prend le prochain mot clè
 			while(token == CPP_COMMA){
 				token = pragma_lex(&x); //on prend le prochain mot clè
+				if(token == CPP_COMMA) warning(OPT_Wpragmas, "pragma mihp vcheck : redundant comma ','\n");
 			}
 		}
 		if(token != CPP_CLOSE_PAREN){warning(OPT_Wpragmas, "Missing close parentèse ')'\n");}

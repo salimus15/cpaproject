@@ -8,7 +8,7 @@
 \usepackage{amsmath}
 \usepackage{background}
 \usepackage{tikz}
-
+\usepackage{listings}
 %Pour les fontes
 \usefonttheme{serif}
 \usepackage[T1]{fontenc}
@@ -79,7 +79,7 @@
 	\end{center}%
 }
 
-\title[ ]{L'archivage de données}
+\title[ ]{Projet CPA \\ Vectorisation de boucle}
 
 \author{Pierre Aubert, Salim Nahi, Puchen Liu}
 
@@ -87,19 +87,29 @@
 
 \pgfdeclareimage[height=96mm,width=128mm]{bgTitle}{../images/happy_birthday_fraterchaos_by_jim373-d5vv1u7.jpg}
 
-\setbeamertemplate{background}{\pgfuseimage{bgTitle}}
+% \setbeamertemplate{background}{\pgfuseimage{bgTitle}}
 \frame{
 	%\maketitle
+	\begin{minipage}[b]{0.2\linewidth}
+		\centering
+		\includegraphics[scale=0.25]{../images/Logo_MIHPS.jpg}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.4\linewidth}
+		\centering
+		\includegraphics[scale=0.06]{../images/Logo_UVSQ.jpg}
+	\end{minipage}
+	
 	\begin{center}
 		\begin{Huge}
-			\color{white}
+% 			\color{white}
 			\setbeamerfont{serif}{shape=\itshape,family=\rmfamily}
 			\textbf{Projet CPA \\ Vectorisation de boucle}
 		\end{Huge}
 		\\
 		\vspace{1cm}
 		\begin{Large}
-			\color{white}
+% 			\color{white}
 			\textbf{Pierre Aubert, Salim Nahi, Puchen Liu}
 		\end{Large}
 	\end{center}
@@ -110,7 +120,120 @@
 \frame{
 	\frametitle{Introduction}
 	
-	
+	\begin{monblock}[0.8\textwidth]{Tester si une boucle est vectorisable}
+		\begin{itemize}
+			\item \textbf{Plugin GCC} : insérer des sondes dans le code source
+			\item \textbf{Bibliothèque} : analyser les accès mémoires / dire si les boucles sont vectorisables
+		\end{itemize}
+	\end{monblock}
+}
+
+\frame{
+	\begin{center}
+		\begin{Huge}
+			\color{blue}
+			\setbeamerfont{serif}{shape=\itshape,family=\rmfamily}
+			\textbf{Le plugin}
+		\end{Huge}
+	\end{center}
+}
+
+\frame{
+	\frametitle{Le plugin}
+	\begin{monblock}[0.8\textwidth]{Analyse}
+		\begin{itemize}
+			\item Liste de fonction à analyser (pragma)
+			\item Analyse des boucles les plus profondes
+			\item Insertion d'appels de fonction à la librairie
+		\end{itemize}
+	\end{monblock}
+}
+
+\frame{
+	\frametitle{Le plugin}
+	\begin{center}
+		\includegraphics[scale=0.5]{../images/pluginInsertionFonctionAvant.png}
+	\end{center}
+}
+
+\frame{
+	\frametitle{Détermination des Lectures/Ecritures}
+	\begin{columns}
+		\begin{column}{0.3\textwidth}
+			C \\
+			\color{blue}
+% 			\begin{lstlisting}
+c[i] = a[i] + b[i];
+% 			\end{lstlisting}
+		\end{column}
+		\begin{column}{0.7\textwidth}
+			Appels \\
+			\color{blue}
+mihp\_address(\&b[i], sizeof(b[i]), MIHP\_READ);\\
+mihp\_address(\&a[i], sizeof(a[i]), MIHP\_READ);\\
+mihp\_address(\&c[i], sizeof(c[i]), MIHP\_WRITE);
+		\end{column}
+	\end{columns}
+}
+
+\frame{
+	\frametitle{Détermination des Lectures/Ecritures}
+	\begin{columns}[t]
+		\begin{column}{0.5\textwidth}
+			Gimple \\
+			\color{blue}
+D.2741 = (long unsigned int) i; \\
+D.2742 = D.2741 * 4;\\
+D.2743 = c + D.2742;\\
+D.2744 = (long unsigned int) i;\\
+D.2745 = D.2744 * 4;\\
+D.2746 = a + D.2745;\\
+D.2747 = *D.2746;\\
+D.2748 = (long unsigned int) i;\\
+D.2749 = D.2748 * 4;\\
+D.2750 = b + D.2749;\\
+D.2751 = *D.2750;\\
+D.2752 = D.2747 + D.2751;\\
+*D.2743 = D.2752;
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			Traduction \\
+			\color{blue}
+\vspace{0.95cm}
+=> \&c[i]\\
+\vspace{0.95cm}
+=> \&a[i]\\
+=> a[i]\\
+\vspace{0.95cm}
+=> \&b[i]\\
+=> b[i]\\
+=> tmp = a[i] + b[i]\\
+=> c[i] = tmp
+		\end{column}
+	\end{columns}
+}
+
+\frame{
+	\frametitle{Détermination de la tailles des accès mémoire}
+	\begin{monblock}[0.8\textwidth]{L'opérande est un pointeur}
+		On récupère la taille du type pointé
+	\end{monblock}
+	\begin{monblock}[0.8\textwidth]{L'opérande n'est pas un pointeur}
+		On récupère la taille du type de la variable
+	\end{monblock}
+	\begin{monblock}[0.8\textwidth]{Taille de l'opérande}
+		Utilisation de la fonction : \textbf{int\_size\_in\_bytes}
+	\end{monblock}
+}
+
+\frame{
+	\begin{center}
+		\begin{Huge}
+			\color{blue}
+			\setbeamerfont{serif}{shape=\itshape,family=\rmfamily}
+			\textbf{La librairie d'analyse}
+		\end{Huge}
+	\end{center}
 }
 
 \frame{
@@ -126,20 +249,28 @@
 }
 
 \frame{
-	\frametitle{Le plugin}
-	\begin{monblock}[0.8\textwidth]{Les choses à analyser}
-		\begin{itemize}
-			\item Analyse des boucles les plus profondes
-			\item Insertion d'appels de fonction à la librairie
-		\end{itemize}
-	\end{monblock}
+	\frametitle{La classe Mihp\_Loop}
+	\begin{center}
+		\includegraphics[scale=0.15]{../images/Loop.png}
+	\end{center}
 }
 
 \frame{
-	\frametitle{Le plugin}
+	\frametitle{La classe Mihp\_Iteration}
 	\begin{center}
-		\includegraphics[scale=0.5]{../images/pluginInsertionFonctionAvant.png}
+		\includegraphics[scale=0.15]{../images/Iteration.png}
 	\end{center}
+}
+
+\frame{
+	\frametitle{Analyse statique}
+	
+	\begin{monblock}[0.8\textwidth]{Conditions necéssaires}
+		\begin{itemize}
+			\item Pas d'appels de fonction autre que sin, cos, ...
+			\item Nombre d'itérations connu à l'avance
+		\end{itemize}
+	\end{monblock}
 }
 
 \frame{

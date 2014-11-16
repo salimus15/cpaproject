@@ -10,4 +10,6 @@ add_subdirectory(DEMO_FWD_DEPEND)
 #demo avec une dependance arrière (non-vectorisable)
 add_subdirectory(DEMO_BACK_DEPEND)
 
+#demo completement vectorisable
+add_subdirectory(DEMO_NID_DE_BOUCLE)
 
