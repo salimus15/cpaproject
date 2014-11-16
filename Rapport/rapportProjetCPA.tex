@@ -10,9 +10,9 @@
 \usepackage{color}
 \usepackage{amsfonts}
 \usepackage{amsmath}
-<<<<<<< HEAD
+%<<<<<<< HEAD
 \usepackage{graphicx}
-=======
+%=======
 \usepackage{graphviz}
 % \usepackage[unicode=true,pdfusetitle,bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,breaklinks=false,pdfborder={0 0 0},backref=section,colorlinks=true]{hyperref}
 
@@ -20,7 +20,7 @@
 \usepackage{esint}
 \usepackage[toc,page]{appendix}
 
->>>>>>> 42bd9b058b74b17e4d33570f477bc559277efc63
+%>>>>>>> 42bd9b058b74b17e4d33570f477bc559277efc63
 \pagestyle{empty}
 \usepackage{float}
 %\usepackage{wrapfig}
@@ -134,7 +134,7 @@ Les positions des différents appels aux fonctions de la biliothèque d'analyse 
 	\label{DiagrammeAddFunction}
 \end{figure}
 
-		\subsubsection{\color{blue}Analyse naïve}
+\subsubsection{\color{blue}Analyse naïve}
 
 Dans un premier temps nous avons pris en compte toutes les opérandes non constantes, puisque les opérandes constantes ne peuvent être que lues (ce qui ne pose aucun problème pour la vectorisation). Comme gimple converti toutes les expressions en diadiques ou en triadique, il créé des variables temporaires de la forme \textbf{D.XXXX}, les adresses de ces variables sont généralement \textbf{0x1}, \textbf{0x2}, \textbf{0x3}, ect. Nous avons donc fait des tests pour vérifier que cela ne posait pas de problème avec notre librairie d'analyse (qui sera détaillée dans la section suivante).
 
@@ -193,30 +193,32 @@ Ces fonctions sont disponibles dans le fichier \textbf{Plugin/src/mihp\_loop\_an
 
 \section{\color{blue}La librairie d'analyse}
 
-La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle, ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir partie 4.2). Si il y a recouvrement, on teste le type de recouvrement en verifiant les types d'accés qui ont été efféctués sur ses adresses (voir tableau XX).
+La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle, ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir partie 4.2). Si il y a recouvrement, on teste le type de recouvrement en verifiant les types d'accés qui ont été efféctués sur ces adresses (voir tableau XX).
 
 Dans l'implémentation de notre librarie nous avons définie 3 classes : Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes (voir figure \ref{DiagrammeClasseLib}).
 
-<<<<<<< HEAD
+%<<<<<<< HEAD
 Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes: 
-\begin{wrapfigure}{o}
-	\begin{center}
-		%\centering
-		\includegraphics{../images/diagrammeDeClasseLibVCheck.png}
-	\end{center}
-	\caption{ classes de la librarie}
-	\label{classes de la librairie}
-\end{wrapfigure}
 
-=======
+
+%=======
 \begin{figure}
 	\begin{center}
 		\includegraphics[scale=1.0]{../Images/diagrammeDeClasseLibVCheck.png}
 	\end{center}
-	\caption{Digramme de classe utilisé dans la bibliothèque d'analyse}
+	\caption{Diagramme de classe utilisé dans la bibliothèque d'analyse}
 	\label{DiagrammeClasseLib}
 \end{figure}
->>>>>>> 42bd9b058b74b17e4d33570f477bc559277efc63
+
+\subsection{\color{blue} Details de l'implémentation de la lib}
+Comme specifié plus haut, nous avons 3 classes et chacune definie un certain niveau \textcolor{green}{d'abstraction} d'une boucle
+\subsubsection{\color{blue} Classe Mihp\_Adress}
+  Cette classe représente des objets de type adresse mémoire, à chaque fois au'une itération de la boucle accéde à une case mémoire (qui est généralement une variable), on crée un objet Mihp\_Adress qui va contenir 3 informations essentielles à notre analyse : l'adresse de début de cette case mémoire, le type d'accés qui a été fait sur cette adresse mémoire ainsi que la taille en nombre d'octets de cette case mémoire. \\
+  Donc nous aurons pour chaque itération, autant d'objets Mihp\_Adress qu'il y aura d'objets ( variables, constantes ...) manippulés et si il n'y a pas de conditions ou des structures de branchements, nous aurons le méme nombre d'objets dans toutes les itérations.\\
+  
+
+
+
 
 \section{\color{blue}Les tests}
 
