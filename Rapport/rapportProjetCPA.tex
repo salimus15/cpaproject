@@ -10,7 +10,10 @@
 \usepackage{color}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{graphicx}
 \pagestyle{empty}
+\usepackage{float}
+%\usepackage{wrapfig}
 \usepackage{babel}
 \addto\extrasfrench{%
    \providecommand{\og}{\leavevmode\flqq~}%
@@ -147,7 +150,16 @@ Donc, on vois dans cet exemple que si une varaible \textbf{PARM\_DECL} n'est pas
 
 La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir partie 4.2). Si recouvrement il y a, on teste le types de recouvrement en verifiant les types d'accés qui ont été efféctués sur ses adresses (voir tableau XX).
 
-Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes: 	
+Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes: 
+\begin{wrapfigure}{o}
+	\begin{center}
+		%\centering
+		\includegraphics{../images/diagrammeDeClasseLibVCheck.png}
+	\end{center}
+	\caption{ classes de la librarie}
+	\label{classes de la librairie}
+\end{wrapfigure}
+
 
 \section{\color{blue}Les tests}
 
