@@ -225,12 +225,35 @@ Comme specifié plus haut, nous avons 3 classes et chacune definie un certain ni
   Cette classe représente des objets de type adresse mémoire, à chaque fois qu'une itération de la boucle accéde à une case mémoire (qui est généralement une variable), on crée un objet Mihp\_Adress qui va contenir trois informations essentielles à notre analyse : l'adresse de début de cette case mémoire, le type d'accés qui a été fait sur cette adresse mémoire ainsi que la taille en nombre d'octets de cette case mémoire. \\
   Donc nous aurons pour chaque itération, autant d'objets Mihp\_Adress qu'il y aura d'objets ( variables, pointeurs ...) manippulés et si il n'y a pas de conditions ou des structures de branchements, nous aurons le méme nombre d'objets dans toutes les itérations.\\
   \subsubsection{\color{blue} Classe Mihp\_Iteration}
+Cette classe contient la liste de toutes les adresses (voir la figure \ref{Iteration}) accédées durant une itération de la boucle et elle définie des fonctions qui permettent 
+de faire l'analyse de recouvrement entre les adresses; la fonction \textit{ MihpCheckAdressRecouvrement} prends en entrée les adresses de debut et de fin de deux cases memoire et teste si il y a un recouvrement entre ces deux adresses, elle retourne vrai si il y a recouvrement qu'il soit totale ou partiel et retourne faux dans le cas contraire. et la fonction \textit{dependencesAnalysing} analyse quand à elle de quelle type de recouvrement il s'agit et renvoies vrai si c'est une dépendance bloquante (ex : read/write) et faux si c'est une dépendance qui ne risque pas de poser probléme à la vectorisation ( ex read/read). 
 
+\begin{figure} %{o}
+	\begin{center}
+	
+		%\centering
+		\includegraphics[scale = 0.2]{../Images/Iteration.png}
+	\end{center}
+	\caption{Mihp\_Iteration}
+	\label{Iteration}
+\end{figure}
 
+\subsubsection{\color{blue} Classe Mihp\_Loop}
+C'est cette classe que sont regroupées toutes les informations de la boucle (voir la figure \ref{Loop}) , et c'est elle aussi qui une fois reçue toutes les informations nécessaires à la vectorisation amorce le processus en analysant chaque itération avec ses suivantes en vérifiant si il y a des recouvrements, et s'arréte dés qu'un recouvrement bloquant est rencontré.
+
+\begin{figure} %{o}
+	\begin{center}
+		%\centering
+		\includegraphics[scale = 0.2]{../Images/Loop.png}
+	\end{center}
+	\caption{ Mihp\_Loop}
+	\label{Loop}
+\end{figure}
 
 
 
 \section{\color{blue}Les tests}
+
 
 Pour tester le projet dans son ensemble et de manière efficace, nous avons choisi de permettre l'utilisation de la librairie d'analyse sans utiliser le plugin, ce qui nous a permis de débugger les deux parties de manière indépendantes. Nous avons donc réalisé des tests qui n'utilisent pas le plugin comme :
 

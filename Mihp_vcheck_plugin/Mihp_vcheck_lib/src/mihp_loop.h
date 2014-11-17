@@ -110,6 +110,7 @@ class Mihp_Loop{
 		*	\return Vrai si il y a recouvrement et Faux sinon 
 		*/
 		bool MihpCheckRecouvement();
+		
 		/** \fn void MihpCheckIterDep()
 		* \brief Fonction qui vérifie si il y a des dépendances entre les itérations de la boucle
 		*/
