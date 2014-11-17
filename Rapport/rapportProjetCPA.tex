@@ -202,7 +202,7 @@ Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adr
 \begin{figure} %{o}
 	\begin{center}
 		%\centering
-		\includegraphics{../images/diagrammeDeClasseLibVCheck.png}
+		\includegraphics{../Images/diagrammeDeClasseLibVCheck.png}
 	\end{center}
 	\caption{ classes de la librarie}
 	\label{classes de la librairie}
@@ -215,6 +215,16 @@ Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adr
 % 	\caption{Digramme de classe utilisé dans la bibliothèque d'analyse}
 % 	\label{DiagrammeClasseLib}
 % \end{figure}
+
+\subsection{\color{blue} Details de l'implémentation de la lib}
+Comme specifié plus haut, nous avons 3 classes et chacune definie un certain niveau \textcolor{green}{d'abstraction} d'une boucle
+\subsubsection{\color{blue} Classe Mihp\_Adress}
+  Cette classe représente des objets de type adresse mémoire, à chaque fois qu'une itération de la boucle accéde à une case mémoire (qui est généralement une variable), on crée un objet Mihp\_Adress qui va contenir trois informations essentielles à notre analyse : l'adresse de début de cette case mémoire, le type d'accés qui a été fait sur cette adresse mémoire ainsi que la taille en nombre d'octets de cette case mémoire. \\
+  Donc nous aurons pour chaque itération, autant d'objets Mihp\_Adress qu'il y aura d'objets ( variables, constantes ...) manippulés et si il n'y a pas de conditions ou des structures de branchements, nous aurons le méme nombre d'objets dans toutes les itérations.\\
+  \subsubsection{\color{blue} Classe Mihp\_Iteration}
+
+
+
 
 
 \section{\color{blue}Les tests}

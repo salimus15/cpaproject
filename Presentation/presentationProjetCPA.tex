@@ -122,8 +122,8 @@
 	
 	\begin{monblock}[0.8\textwidth]{Tester si une boucle est vectorisable}
 		\begin{itemize}
-			\item \textbf{Plugin GCC} : insérer des sondes dans le code source
-			\item \textbf{Bibliothèque} : analyser les accès mémoires / dire si les boucles sont vectorisables
+			\item \textbf{Plugin GCC} : insérer des sondes dans le code source.
+			\item \textbf{Bibliothèque} : analyser les accès mémoires / dire si les boucles sont vectorisables ou non.
 		\end{itemize}
 	\end{monblock}
 }
@@ -142,9 +142,9 @@
 	\frametitle{Le plugin}
 	\begin{monblock}[0.8\textwidth]{Analyse}
 		\begin{itemize}
-			\item Liste de fonction à analyser (pragma)
-			\item Analyse des boucles les plus profondes
-			\item Insertion d'appels de fonction à la librairie
+			\item Liste de fonction à analyser (pragma).
+			\item Analyse des boucles les plus profondes.
+			\item Insertion d'appels de fonction à la librairie.
 		\end{itemize}
 	\end{monblock}
 }
@@ -237,13 +237,13 @@ D.2752 = D.2747 + D.2751;\\
 }
 
 \frame{
-	\frametitle{La librairie d'analyse}
-	\begin{monblock}[0.8\textwidth]{Les choses à analyser}
+	\frametitle{Récupération des données de la boucle}
+	\begin{monblock}[0.8\textwidth]{Un objet de type Mihp\_Loop}
 		\begin{itemize}
-			\item Lecture après lecture
-			\item Lecture après écriture
-			\item Écriture après lecture
-			\item Écriture après écriture
+			\item Nom du fichier.
+			\item Nom de la fonction.
+			\item Numéro de ligne de la boucle.
+			\item Liste des itérations ( objets Mihp\_Iteration ).
 		\end{itemize}
 	\end{monblock}
 }
@@ -256,11 +256,40 @@ D.2752 = D.2747 + D.2751;\\
 }
 
 \frame{
+	\frametitle{Récupération des données de la boule}
+	\begin{monblock}[0.8\textwidth]{Un objet de type Mihp\_Iteration}
+		\begin{itemize}
+			\item Liste des adress accédées durant l'itération ( objets Mihp\_Adress ):
+			\begin{itemize}
+				\item Adresse accédée.
+				\item Type d'accés ( Read / Write ). 
+				\item Taille de la mémoire accédée.
+			\end{itemize}
+		\end{itemize}
+	\end{monblock}
+}
+
+\frame{
 	\frametitle{La classe Mihp\_Iteration}
 	\begin{center}
 		\includegraphics[scale=0.15]{../images/Iteration.png}
 	\end{center}
 }
+
+
+
+\frame{
+	\frametitle{La librairie d'analyse}
+	\begin{monblock}[0.8\textwidth]{Les choses à analyser}
+		\begin{itemize}
+			\item Lecture après lecture
+			\item Lecture après écriture
+			\item Écriture après lecture
+			\item Écriture après écriture
+		\end{itemize}
+	\end{monblock}
+}
+
 
 \frame{
 	\frametitle{Analyse statique}
