@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// Constructeur de la classe
 Mihp_Loop :: Mihp_Loop(){ 
 	func_name = ""; 
 	file_name = ""; 
@@ -13,20 +14,20 @@ Mihp_Loop :: Mihp_Loop(){
 	it = iters.begin(); 
 }
 
+// fonction de copie 
 void Mihp_Loop :: CopieLoop(const Mihp_Loop & other){
 		
 	iters = other.iters;
 	it = iters.begin();
 }
 
-
-
+// Constructeur par copie de la classe
 Mihp_Loop :: Mihp_Loop(const Mihp_Loop & other){
 	CopieLoop(other);
 }
 
 
-
+// constructeur avec toutes les donnees relative a la boucle a analyser 
 Mihp_Loop :: Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb ){
 	func_name = funname;
 	file_name = filname;
@@ -34,6 +35,7 @@ Mihp_Loop :: Mihp_Loop(const std::string & funname, const std::string & filname,
 
 }
 
+// Destructeur de la classe
 Mihp_Loop :: ~Mihp_Loop(){}
 void Mihp_Loop :: Mihp_add_iter(const Mihp_Iteration & new_iter){
 	
@@ -42,6 +44,7 @@ void Mihp_Loop :: Mihp_add_iter(const Mihp_Iteration & new_iter){
 	
 }
 
+// efface une iteration
 void Mihp_Loop :: MihpLoopClear(){
 	for(it = iters.begin(); it != iters.end(); ++it){
 		it->MihpIterationClear();
@@ -73,11 +76,12 @@ void Mihp_Loop :: MihpSetFileName(const std :: string & filname){
 	file_name = filname;
 }
 
+
 void Mihp_Loop :: MihpSetLineNum(size_t numline){
 	loop_nline = numline;
 
 }
-/// Fonction qui vérifie si il y a des dépendances entre les itérations de la boucle
+// Fonction qui vérifie si il y a des dépendances entre les itérations de la boucle
 void Mihp_Loop :: MihpCheckIterDep(){
 	std::list<Mihp_Iteration> :: iterator it_intern;
 	
@@ -148,7 +152,7 @@ bool Mihp_Loop :: MihpCheckRecouvement(){
 	return true;
 }
 
-
+// affiche les iterations 
 void Mihp_Loop :: AfficherIterations(){
 	int i = 1;
 	for (it = iters.begin(); it != iters.end(); ++it){
