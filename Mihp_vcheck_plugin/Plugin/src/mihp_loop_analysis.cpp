@@ -244,7 +244,8 @@ void analyseSingleOperand(const_tree op, bool isWrited, basic_block bb){
 
 
 ///fonction qui dit si le statement gimple contient un PARM_DECL qui n'est pas l'opérande de gauche
-/**	@param stmt : statement gimple à analyser
+/**	@param op : opérande qui correspond à une lecture
+ * 	@param stmt : statement gimple à analyser
  * 	@return true si statement gimple contient un PARM_DECL qui n'est pas l'opérande de gauche, false sinon
 */
 bool isStatementContainsParmDecl(const_tree& op, gimple stmt){
@@ -266,7 +267,8 @@ bool isStatementContainsParmDecl(const_tree& op, gimple stmt){
 }
 
 ///fonction qui dit si un MEM_REF est l'opérande de gauche du statement courant
-/**	@param stmt : gimple statement à analyser
+/**	@param op : opérande qui correspond à une écriture
+ * 	@param stmt : gimple statement à analyser
  * 	@return true si un MEM_REF est l'opérande de gauche du statement Gimple stmt, false sinon
 */
 bool isStatementContainsLeftMemRef(const_tree & op, gimple stmt){
