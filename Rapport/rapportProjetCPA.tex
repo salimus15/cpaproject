@@ -58,13 +58,13 @@
 
 \section*{\color{blue}Introduction}
 
-Le but de ce projet est de fournir un plugin GCC et une librairie permettant d'étudier les accès mémoire du programme et ainsi déterminer si certaines boucles sont vectorisables ou non.
+Le but de ce projet est de fournir un plugin GCC et une librairie permettant d'étudier les accès mémoire d'un programme et ainsi déterminer si certaines boucles sont vectorisables ou non.
 
 \tableofcontents
 
 \section{\color{blue}Analyse du problème et architecture du projet}
 
-Comme les plugins GCC 4.9 s'écrivent en C++, nous avons choisi le langage C++. Nous avons séparé le projet en deux grandes parties. La première est un plugin GCC qui permet d'ajouter des appels de fonction pour la deuxième partie qui elle est une librairies qui analyse les accès mémoires. Pour permettre une avancée simultannée des deux parties nous avons ajouté des fonctions en C qui permettent d'appeler la librairie manuellement et ce sans utiliser le plugin, et permettait aussi de tester le plugin sans avoir à utiliser la librairie. Nous avons également dévoloppé plusieurs tests afin de vérifier le bon fonctionnement des parties développées.
+Comme les plugins GCC 4.9 s'écrivent en C++, nous avons choisi le langage C++. Nous avons séparé le projet en deux grandes parties. La première est un plugin GCC qui permet d'ajouter des appels de fonction pour la deuxième partie qui elle est une librairie qui analyse les accès mémoires. Pour permettre une avancée simultannée des deux parties nous avons ajouté des fonctions en C qui permettent d'appeler la librairie manuellement et ce sans utiliser le plugin, et permettent aussi de tester le plugin sans avoir à utiliser la librairie. Nous avons également dévoloppé plusieurs tests afin de vérifier le bon fonctionnement des parties développées.
 
 \section{\color{blue}L'analyse dynamique}
 
@@ -97,7 +97,7 @@ Il est possible de préciser une fonction à analyser :
 \end{lstlisting}
 \end{center}
 
-Ou une liste de fonction à analyser :
+Ou une liste de fonctions à analyser :
 
 \begin{center}
 \color{green}
@@ -130,7 +130,7 @@ Les positions des différents appels aux fonctions de la biliothèque d'analyse 
 	\begin{center}
 		\includegraphics[scale=0.5]{../Images/pluginInsertionFonctionAvant.png}
 	\end{center}
-	\caption{Illustration de l'ajout des appels au fonctions de la bibliothèque d'analyse par le plugin.}
+	\caption{Illustration de l'ajout des appels aux fonctions de la bibliothèque d'analyse par le plugin.}
 	\label{DiagrammeAddFunction}
 \end{figure}
 
@@ -193,19 +193,19 @@ Ces fonctions sont disponibles dans le fichier \textbf{Plugin/src/mihp\_loop\_an
 
 \section{\color{blue}La librairie d'analyse}
 
-La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle, ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir partie 4.2). Si il y a recouvrement, on teste le type de recouvrement en verifiant les types d'accés qui ont été efféctués sur ses adresses (voir tableau XX).
+La librarie d'analyse effectue l'analyse des accès mémoire du programme et va indiquer si la boucle est vectorisable ou non, elle prend en entrée les differentes adresses mémoire des variables manipulées durant chaque itération de la boucle, ainsi que le type de manipulation (lecture ou écriture) et compare dans un premier temps les adresses accédées entre une itération et ses suivantes ceci pour verifier si il y a des recouvrements entre les adresses mémoire (voir section \ref{ClasseMihpAddress}). Si il y a recouvrement, on teste le type de recouvrement en verifiant les types d'accés qui ont été efféctués sur ses adresses (voir tableau XX).
 
 Dans l'implémentation de notre librarie nous avons définie 3 classes : Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes (voir figure \ref{DiagrammeClasseLib}).
 
 
-Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes: 
+Dans l'implémentation de notre librarie nous avons définie 3 classes : Mihp\_Adress, Mihp\_Iteration, Mihp\_Loop pour recevoir les données envoyées grace au plugin, et pour permettre de faire l'analyse, voici ci-dessous un diagramme de nos classes: 
 \begin{figure} %{o}
 	\begin{center}
 		%\centering
 		\includegraphics{../Images/diagrammeDeClasseLibVCheck.png}
 	\end{center}
 	\caption{ classes de la librarie}
-	\label{classes de la librairie}
+	\label{DiagrammeClasseLib}
 \end{figure}
 
 % \begin{figure}
@@ -217,10 +217,13 @@ Dans l'implémentation de notre librarie nous avons définie 3 classe: Mihp\_Adr
 % \end{figure}
 
 \subsection{\color{blue} Details de l'implémentation de la lib}
-Comme specifié plus haut, nous avons 3 classes et chacune definie un certain niveau \textcolor{green}{d'abstraction} d'une boucle
+
+Comme specifié plus haut, nous avons 3 classes et chacune definie un certain niveau de détail d'une boucle.
+
 \subsubsection{\color{blue} Classe Mihp\_Adress}
+\label{ClasseMihpAddress}
   Cette classe représente des objets de type adresse mémoire, à chaque fois qu'une itération de la boucle accéde à une case mémoire (qui est généralement une variable), on crée un objet Mihp\_Adress qui va contenir trois informations essentielles à notre analyse : l'adresse de début de cette case mémoire, le type d'accés qui a été fait sur cette adresse mémoire ainsi que la taille en nombre d'octets de cette case mémoire. \\
-  Donc nous aurons pour chaque itération, autant d'objets Mihp\_Adress qu'il y aura d'objets ( variables, constantes ...) manippulés et si il n'y a pas de conditions ou des structures de branchements, nous aurons le méme nombre d'objets dans toutes les itérations.\\
+  Donc nous aurons pour chaque itération, autant d'objets Mihp\_Adress qu'il y aura d'objets ( variables, pointeurs ...) manippulés et si il n'y a pas de conditions ou des structures de branchements, nous aurons le méme nombre d'objets dans toutes les itérations.\\
   \subsubsection{\color{blue} Classe Mihp\_Iteration}
 
 
@@ -259,7 +262,7 @@ Les principaux problèmes rencontrés lors de l'impémentation du plugin ont ét
 
 \section{\color{blue}Conclusion}
 
-Notre biliothèque fournie une très bonne analyse dynamique, mais nous n'avons pas eut le temps de faire l'analyse statique avec le plugin. Les cas litigieux contenant des conditions contenant elles mêmes des boucles ne sont pas gérés, mais les nids de boucles simple et les boucles contenant des conditions simples sont traités.
+Notre biliothèque fournie une très bonne analyse dynamique, mais nous n'avons pas eut le temps de faire l'analyse statique avec le plugin. Les cas litigieux contenant des conditions contenant elles mêmes des boucles ne sont pas gérés de manière optimale, mais les nids de boucles simple et les boucles contenant des conditions simples sont traités.
 
 Les sources du projet sont également disponibles sur le site \url{https://github.com/salimus15/cpaproject}.
 
