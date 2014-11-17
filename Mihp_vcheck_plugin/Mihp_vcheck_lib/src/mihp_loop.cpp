@@ -28,7 +28,7 @@ Mihp_Loop :: Mihp_Loop(const Mihp_Loop & other){
 
 
 // constructeur avec toutes les donnees relative a la boucle a analyser 
-Mihp_Loop :: Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb ){
+Mihp_Loop :: Mihp_Loop(const std::string & funame, const std::string & filname, const unsigned int & linnumb ){
 	func_name = funname;
 	file_name = filname;
 	loop_nline = linnumb;
@@ -44,7 +44,7 @@ void Mihp_Loop :: Mihp_add_iter(const Mihp_Iteration & new_iter){
 	
 }
 
-// efface une iteration
+// efface les iterations de la boucle
 void Mihp_Loop :: MihpLoopClear(){
 	for(it = iters.begin(); it != iters.end(); ++it){
 		it->MihpIterationClear();
@@ -61,22 +61,23 @@ Mihp_Iteration Mihp_Loop :: Mihp_get_next_iter(){
 
 }
 */
-
+// ajoute une nouvelle adresse a l'iteration courante
 void Mihp_Loop :: Mihp_add_adr( const Mihp_Adress & new_adr){
 	it = iters.end();
 	it->MihpAddAdr(new_adr);
 }
 
-
+// initialise le nom de la fonction a fname
 void Mihp_Loop :: MihpSetFuncName(const std :: string & fname){
 	func_name = fname;
 }
 
+// initialise le nom du fichier a filname
 void Mihp_Loop :: MihpSetFileName(const std :: string & filname){
 	file_name = filname;
 }
 
-
+// initialise le numero de ligne de la boucle
 void Mihp_Loop :: MihpSetLineNum(size_t numline){
 	loop_nline = numline;
 

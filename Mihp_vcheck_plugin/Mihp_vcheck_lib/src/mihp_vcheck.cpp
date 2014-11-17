@@ -20,20 +20,7 @@ Mihp_Loop loop_util;
 
 using namespace std;
 
-void fonctionEnCpp(const std::string & str){
-	printMihpIO("fonctionEnCpp : str = " << str);
-}
 
-
-///fonction de test pour voir si on peut appeler du C++ à partir de C
-/**	@param param : paramètre simple
-*/
-void testFonction(int param, const char * str){
-	printMihpIO("testFonction : param = " << param);
-	
-	fonctionEnCpp(str);
-	
-}
 
 ///fonction qui permet de créer une nouvelle boucle
 /**	@param functionName : nom de la fonction où se trouve la boucle à analyser

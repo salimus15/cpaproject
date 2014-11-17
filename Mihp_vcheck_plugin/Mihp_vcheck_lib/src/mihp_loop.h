@@ -38,11 +38,11 @@ class Mihp_Loop{
 		
 		/** \fn Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb )		   
 		* \brief constructeur avec toutes les donnees relative a la boucle a analyser 
-		* \param funName nom de la fonction contenant la boucle a analyser
-		* \param filName nom duf fichier contenant la fonction funName
- 		* \param lineNumb Numero de la ligne de la boucle
+		* \param funname nom de la fonction contenant la boucle a analyser
+		* \param filname nom duf fichier contenant la fonction funName
+ 		* \param linenumb Numero de la ligne de la boucle
 		*/
-		Mihp_Loop(const std::string & funName, const std::string & filName, const unsigned int & lineNumb );		
+		Mihp_Loop(const std::string & funame, const std::string & filname, const unsigned int & linnumb );		
 		
 		/** \fn Mihp_Loop(const Mihp_Loop & other)
 		* \brief Constructeur par copie de la classe
@@ -50,7 +50,7 @@ class Mihp_Loop{
 		
 		Mihp_Loop(const Mihp_Loop & other);
 		
-		/** \fn ~Mihp_Loop()(
+		/** \fn virtual ~Mihp_Loop()
 		* \brief Destructeur de la classe
 		**/		
 		
@@ -58,7 +58,7 @@ class Mihp_Loop{
 		
 		/** \fn void MihpSetFuncName(const std :: string & fname) 
 		* \brief initialise le nom de la fonction a fname 
-		* \param nom qu'on de la fonction 
+		* \param fname nom de la fonction 
 		*
 		**/
 				
@@ -66,7 +66,7 @@ class Mihp_Loop{
 		
 		/** \fn void MihpSetFileName(const std :: string & filname) 
 		* \brief initialise le nom du fichier a filname 
-		* \param nom qu'on du fichier 
+		* \param filname nom du fichier 
 		*
 		**/
 		void MihpSetFileName(const std :: string & filname);
@@ -94,15 +94,14 @@ class Mihp_Loop{
 		**/		 
 		void Mihp_add_adr( const Mihp_Adress & new_adr);
 		
-		/** \fn void MihpLoopClear()
-		* \brief ajoute une nouvelle adresse a l'iteration courante ( derniere)
-		* \param new_adr nouvelle adresse a rajouter
-		*
-		**/
-		
+				
 		// récupère l'élément suivant si il y en a sinon NULL
 		//Mihp_Iteration Mihp_get_next_iter();
 		
+		/** \fn void MihpLoopClear()
+		* \brief efface les iterations de la boucle
+		*
+		**/
 		void MihpLoopClear();
 		
 		/** \fn bool MihpCheckRecouvement()
