@@ -36,8 +36,9 @@ class Mihp_Loop{
 		*/
 		Mihp_Loop();
 		
-		/** \fn Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb )		   
-		* \brief constructeur avec toutes les donnees relative a la boucle a analyser 
+		 //fn Mihp_Loop(const std::string & funname, const std::string & filname, const unsigned int & linnumb )		   
+		
+		/** \brief constructeur avec toutes les donnees relative a la boucle a analyser 
 		* \param funname nom de la fonction contenant la boucle a analyser
 		* \param filname nom duf fichier contenant la fonction funName
  		* \param linenumb Numero de la ligne de la boucle

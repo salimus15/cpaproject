@@ -26,7 +26,7 @@ class Mihp_Iteration{
 		std::list<Mihp_Adress> adres_acc; 		// liste des adresses accédées lors d'une itérationde la boucle
 		std::list<Mihp_Adress>::iterator it;	// iterateur pour parcourir la liste
 		
-		/** \fn void CopieMihpAdress( const Mihp_Adress & other)
+		/** \fn void CopieIteration (const Mihp_Iteration & other)
 		*	\brief fonction de copie 
 		*	\param other Objet à copier 
 		*	
@@ -36,7 +36,7 @@ class Mihp_Iteration{
 				
 	public:
 	
-		/** \fn Mihp_Iteration(
+		/** \fn Mihp_Iteration()
 		* \brief Constructeur de la classe
 		*/
 		Mihp_Iteration();
