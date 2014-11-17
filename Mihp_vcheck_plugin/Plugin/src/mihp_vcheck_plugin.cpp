@@ -29,7 +29,7 @@ bool isNameInListeFunction(ListeString & liste, const std::string & str){
 	return false;
 }
 
-///fonction qui permet de gérer le #pragma mihp vcheck
+///fonction qui permet de gérer le pragma mihp vcheck
 /**	@param dummy : variable qui sera inutilisée
  * 	Que l'on est obliger de mettre dans ce .cpp pour ne pas avoir de warning de variable non utilisée
 */
