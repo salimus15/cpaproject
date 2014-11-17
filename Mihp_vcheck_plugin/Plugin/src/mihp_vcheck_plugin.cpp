@@ -30,7 +30,7 @@ bool isNameInListeFunction(ListeString & liste, const std::string & str){
 }
 
 ///fonction qui permet de gérer le pragma mihp vcheck
-/**	@param dummy : variable qui sera inutilisée
+/**	@param ATTRIBUTE_UNUSED : variable qui sera inutilisée
  * 	Que l'on est obliger de mettre dans ce .cpp pour ne pas avoir de warning de variable non utilisée
 */
 static void initMihpPragmaListFunction(cpp_reader *dummy ATTRIBUTE_UNUSED){
