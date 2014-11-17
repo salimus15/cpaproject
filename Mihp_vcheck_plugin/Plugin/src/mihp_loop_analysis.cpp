@@ -5,7 +5,6 @@ using namespace std;
 
 ///fonction qui permet de créer une nouvelle boucle
 /**	@param loopHeader : block de base d'entrée de la boucle
- * 	@param loopLatch : block de base qui reboucle sur le block d'entrée
  * 	@param functionName : nom de la fonction où se trouve la boucle à analyser
  * 	@param currentFunctionName : nom de la fonction dans laquelle est la boucle
  * 	@param fileName : nom du fichier dans lequel est la fonction
