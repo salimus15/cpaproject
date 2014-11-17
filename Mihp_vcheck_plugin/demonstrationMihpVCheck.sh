@@ -22,7 +22,7 @@ make
 ./Demonstration/DEMO_BACK_DEPEND/demo_back_depend > ../Demonstration/Results/demo_back_depend.txt
 
 #on lance le cas vectorisable avec un nid de boucle
-./Demonstration/DEMO_VECTORISABLE/demo_nid_de_boucle > ../Demonstration/Results/demo_nid_de_boucle.txt
+./Demonstration/DEMO_NID_DE_BOUCLE/demo_nid_de_boucle > ../Demonstration/Results/demo_nid_de_boucle.txt
 
 #on vire les fichiers du dossier build
 rm -fr *
