@@ -73,19 +73,36 @@ class Mihp_Loop{
 
 		/** \fn void MihpSetLineNum(size_t numline)
 		* \brief initialise le numero de ligne de la boucle
-		* \param numero de ligne de la boucle 
+		* \param numline : numero de ligne de la boucle 
 		*
 		**/
 		void MihpSetLineNum(size_t numline);
 		
+		/** \fn void Mihp_add_iter(const Mihp_Iteration & new_iter)
+		* \brief ajout d'un élément a la liste des iterations
+		* \param new_iter nouvelle iteration a rajouter
+		*
+		**/
 		
-		/// ajout d'un élément a la liste des iterations
 		void Mihp_add_iter(const Mihp_Iteration & new_iter);
 		
-		// ajoute une nouvelle adresse a l'iteration courante ( derniere)
+		
+		/** \fn void Mihp_add_adr( const Mihp_Adress & new_adr)
+		* \brief ajoute une nouvelle adresse a l'iteration courante ( derniere)
+		* \param new_adr nouvelle adresse a rajouter
+		*
+		**/		 
 		void Mihp_add_adr( const Mihp_Adress & new_adr);
-		/// récupère l'élément suivant si il y en a sinon NULL
+		
+		/** \fn void MihpLoopClear()
+		* \brief ajoute une nouvelle adresse a l'iteration courante ( derniere)
+		* \param new_adr nouvelle adresse a rajouter
+		*
+		**/
+		
+		// récupère l'élément suivant si il y en a sinon NULL
 		//Mihp_Iteration Mihp_get_next_iter();
+		
 		void MihpLoopClear();
 		
 		/** \fn bool MihpCheckRecouvement()
@@ -93,9 +110,15 @@ class Mihp_Loop{
 		*	\return Vrai si il y a recouvrement et Faux sinon 
 		*/
 		bool MihpCheckRecouvement();
-		
+		/** \fn void MihpCheckIterDep()
+		* \brief Fonction qui vérifie si il y a des dépendances entre les itérations de la boucle
+		*/
 		void MihpCheckIterDep();
 		
+		/** \fn void AfficherIterations()
+		*	\brief affiche toutes les iterations
+		*	
+		*/
 		void AfficherIterations();
 };
 

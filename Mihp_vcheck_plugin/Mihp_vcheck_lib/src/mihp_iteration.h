@@ -68,7 +68,16 @@ class Mihp_Iteration{
 		*	\return Vrai si il y a recouvrement et Faux sinon 
 		*/
 		bool MihpCheckAdressRecouvrement(const void *  a_d1, const void *  a_f1, const void *  a_d2, const void *  a_f2 );
-			
+
+		/** \fn bool dependencesAnalysing(const Mihp_Adress & adress1, const Mihp_Adress & adress2, const int & indiceFirstAdr, const int & indiceSecondAdr)
+		*	\brief teste le type de dependance qu'il y a entre les deux adresses
+		*	\param adress1 premiere adresse accedee 
+		*	\param adress2 deuxieme adresse accedee
+		*	\param indiceFirstAdr indice de la premiere adresse dans la liste des adresse
+		*	\param indiceSecondAdr indice de la deuxieme adresse dans la liste des adresse 
+		*	\return Vrai si il y a recouverement bloquant et Faux sinon
+		*
+		*/ 
 			
 		bool dependencesAnalysing(const Mihp_Adress & adress1, const Mihp_Adress & adress2, const int & indiceFirstAdr, const int & indiceSecondAdr);
 			
@@ -80,9 +89,9 @@ class Mihp_Iteration{
 		*/ 
 		bool MihpCheckIterRecouvrement(const Mihp_Iteration & other);
 		
-		/// récupère l'élément suivant si il y en a sinon NULL
-		//Mihp_Adress MihpGetNext_adr();
-	
+		/** \fn void AfficherAdresses()
+		 * \brief 
+		 */
 		void AfficherAdresses();
 		
 };
